@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tibrules xmlns="exchange.tibco.com/tibreview" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="exchange.tibco.com/tibreview ../schemas/tibrules.xsd ">
+	<process>
+		<rule name="Copy File activity forbidden" ruleset="Forbidden activity"
+			prority="1"
+			description="The Copy File activity is forbidden, you must use xx instead"
+			enable="true">
+			<impl>
+				<xpath>a</xpath>
+			</impl>
+		</rule>
+		<rule name="Copy File activity forbidden" ruleset="Forbidden activity"
+			prority="1"
+			description="The Copy File activity is forbidden, you must use xx instead"
+			enable="true">
+			<impl>
+				<not>
+					<xpath>a</xpath>
+				</not>
+			</impl>
+		</rule>
+		<rule name="Copy File activity forbidden" ruleset="Forbidden activity"
+			prority="1"
+			description="The Copy File activity is forbidden, you must use xx instead"
+			enable="true">
+			<impl>
+				<cond>
+					<if>
+						<xpath></xpath>
+						<then>
+							<xpath></xpath>
+						</then>
+					</if>
+					<elseif>
+						<xpath></xpath>
+						<then>
+							<xpath></xpath>
+						</then>
+					</elseif>
+					<elseif>
+						<xpath></xpath>
+						<then>
+							<xpath></xpath>
+						</then>
+					</elseif>
+					<else>
+						<then>
+							<xpath></xpath>
+						</then>
+					</else>
+				</cond>
+			</impl>
+		</rule>
+	</process>
+</tibrules>

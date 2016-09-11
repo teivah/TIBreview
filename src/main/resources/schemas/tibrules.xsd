@@ -1,0 +1,88 @@
+<xs:schema xmlns="exchange.tibco.com/tibreview"
+	attributeFormDefault="unqualified" elementFormDefault="qualified"
+	targetNamespace="exchange.tibco.com/tibreview" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="tibrules" type="tibrules" />
+
+	<xs:complexType name="tibrules">
+		<xs:sequence>
+			<xs:element name="process" type="process" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="process">
+		<xs:sequence>
+			<xs:element name="rule" type="rule" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="rule">
+		<xs:sequence>
+			<xs:element name="impl" type="impl" />
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="name" />
+		<xs:attribute type="xs:string" name="ruleset" />
+		<xs:attribute type="xs:int" name="prority" />
+		<xs:attribute type="xs:string" name="description" />
+		<xs:attribute type="xs:boolean" name="enable" />
+	</xs:complexType>
+
+	<xs:complexType name="impl">
+		<xs:choice>
+			<xs:element name="xpath" type="xpath" />
+			<xs:element name="cond" type="cond" />
+			<xs:element name="not" type="not" />
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="cond">
+		<xs:sequence>
+			<xs:element name="if" type="if" />
+			<xs:element name="elseif" type="elseif" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="else" type="else" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="not">
+		<xs:choice>
+			<xs:element name="xpath" type="xpath" />
+			<xs:element name="cond" type="cond" />
+			<xs:element name="not" type="not" />
+		</xs:choice>
+	</xs:complexType>
+
+	<xs:complexType name="if">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="xpath" type="xpath" />
+				<xs:element name="cond" type="cond" />
+				<xs:element name="not" type="not" />
+			</xs:choice>
+			<xs:element name="then" type="impl" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="elseif">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="xpath" type="xpath" />
+				<xs:element name="cond" type="cond" />
+				<xs:element name="not" type="not" />
+			</xs:choice>
+			<xs:element name="then" type="impl" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="else">
+		<xs:sequence>
+			<xs:element name="then" type="impl" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="xpath">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+
+	<xs:complexType name="java">
+	</xs:complexType>
+</xs:schema>
