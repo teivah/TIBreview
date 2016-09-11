@@ -21,7 +21,7 @@ public class RulesParser {
 		File f = new File(file);
 
 		if (!f.exists()) {
-			throw new ParsingException("File " + file + " does not exist");
+			throw new IllegalArgumentException("File " + file + " does not exist");
 		}
 
 		FileInputStream is = null;
