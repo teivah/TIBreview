@@ -5,19 +5,30 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 
 import com.tibco.exchange.tibreview.common.NamespaceContextMap;
 import com.tibco.exchange.tibreview.exception.XPathProcessorException;
 
-public class XPathProcessor {
+public final class XPathProcessor implements Processable {
 	private final XPath xpath;
 
+	private static final Logger LOGGER = Logger.getLogger(Processable.class);
 	public static final String[] TIBCO_NAMESPACES = { "bpws",
 			"http://docs.oasis-open.org/wsbpel/2.0/process/executable", "tibex",
 			"http://www.tibco.com/bpel/2007/extensions" };
+	private static XPathProcessor INSTANCE;
 
-	public XPathProcessor() {
+	public static XPathProcessor getInstance() {
+		if(INSTANCE == null) {
+			INSTANCE = new XPathProcessor();
+		}
+		
+		return INSTANCE;
+	}
+	
+	private XPathProcessor() {
 		NamespaceContext context = new NamespaceContextMap(TIBCO_NAMESPACES);
 		XPathFactory factory = XPathFactory.newInstance();
 		this.xpath = factory.newXPath();
@@ -30,6 +41,20 @@ public class XPathProcessor {
 			return (String) expression.evaluate(is);
 		} catch(Exception e) {
 			throw new XPathProcessorException("Unable to evaluate query [" + xpath + "]");
+		}
+	}
+
+	@Override
+	public boolean process(String file, Object impl) {
+		String el = (String) impl;
+		
+		try {
+			//TODO Better management of the InputSource object without having to open it each time
+			InputSource is = new InputSource(file);
+			return Boolean.valueOf(eval(is, el));
+		} catch(Exception e) {
+			LOGGER.error("Query evaluation error on the file " + file, e);
+			return true;
 		}
 	}
 }

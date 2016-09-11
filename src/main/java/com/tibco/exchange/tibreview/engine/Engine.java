@@ -9,11 +9,14 @@ import org.apache.log4j.Logger;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.exception.EngineException;
 import com.tibco.exchange.tibreview.exception.ParsingException;
+import com.tibco.exchange.tibreview.model.Impl;
+import com.tibco.exchange.tibreview.model.Rule;
 import com.tibco.exchange.tibreview.model.Tibrules;
 import com.tibco.exchange.tibreview.model.parser.RulesParser;
+import com.tibco.exchange.tibreview.processor.ImplProcessor;
 
 public class Engine {
-	private final Tibrules rules;
+	private final Tibrules tibrules;
 	private final String project;
 	private final List<String> processes;
 	
@@ -28,7 +31,7 @@ public class Engine {
 		}
 		this.project = projectFile.getAbsolutePath();
 		
-		this.rules = RulesParser.parseFile(ruleLocation);
+		this.tibrules = RulesParser.parseFile(ruleLocation);
 		
 		try {
 			this.processes = listProcesses(projectFile.getAbsolutePath());
@@ -41,7 +44,13 @@ public class Engine {
 		return Util.listFile(project, PROCESS_EXTENSION);
 	}
 	
-	public void process() {
+	public void processRules(String file) {
+		List<Rule> rules = tibrules.getProcess().getRule();
 		
+		for(Rule rule : rules) {
+			Impl impl = rule.getImpl();
+			ImplProcessor processor = new ImplProcessor();
+			System.out.println(processor.process(file, impl));
+		}
 	}
 }
