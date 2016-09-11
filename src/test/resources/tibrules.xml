@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tibrules xmlns="exchange.tibco.com/tibreview" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="exchange.tibco.com/tibreview ../schemas/tibrules.xsd ">
+	xsi:schemaLocation="exchange.tibco.com/tibreview ../../main/resources/schemas/tibrules.xsd ">
 	<process>
 		<rule name="Copy File activity forbidden" ruleset="Forbidden activity"
 			prority="1"
