@@ -1,4 +1,4 @@
-package com.tibco.exchange.tibreview.util;
+package com.tibco.exchange.tibreview.common;
 
 import java.io.File;
 import java.io.IOException;
