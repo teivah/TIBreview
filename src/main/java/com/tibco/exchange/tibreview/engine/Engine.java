@@ -28,6 +28,7 @@ public class Engine {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(Engine.class);
 	private static final String PROCESS_EXTENSION = ".bwp";
+	private static final String PATH_PROCESSES = "/Processes";
 	public static final String INPUT_PROJECT = "project";
 	public static final String INPUT_PROCESS = "process";
 	public static final String OUTPUT_CSV = "csv";
@@ -44,7 +45,7 @@ public class Engine {
 		this.inputType = inputType;
 		if(INPUT_PROJECT.equals(inputType)) {
 			try {
-				this.processes = listProcesses(sourcePath);
+				this.processes = listProcesses(sourcePath + PATH_PROCESSES);
 			} catch (IOException e) {
 				throw new EngineException("Unable to list processes", e);
 			}
