@@ -13,4 +13,4 @@ buildNumber.properties
 .metadata
 *.tmp
 .settings
-src/test/java/Trash.java
+*/Trash.java
