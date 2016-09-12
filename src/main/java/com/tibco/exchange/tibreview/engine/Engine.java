@@ -25,7 +25,6 @@ public class Engine {
 	private String sourcePath;
 	private String targetPath;
 	
-	@SuppressWarnings("unused")
 	private static final Logger LOGGER = Logger.getLogger(Engine.class);
 	private static final String PROCESS_EXTENSION = ".bwp";
 	private static final String PATH_PROCESSES = "/Processes";
@@ -87,7 +86,7 @@ public class Engine {
 		for(Rule rule : rules) {
 			Impl impl = rule.getImpl();
 			ImplProcessor processor = new ImplProcessor();
-			System.out.println(processor.process(tibProcess, impl));
+			processor.process(tibProcess, impl);
 		}
 	}
 }

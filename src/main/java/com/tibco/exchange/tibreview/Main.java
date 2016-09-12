@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.tibco.exchange.tibreview.engine.Engine;
 import com.tibco.exchange.tibreview.exception.EngineException;
 import com.tibco.exchange.tibreview.exception.ParsingException;
@@ -12,6 +14,7 @@ public class Main {
 	private static final String USAGE = "Syntax error. Usage: TIBreview.jar -r <ruleFilePath> -c <configFilePath> -i {project|process} -s <sourcePath> -o {csv|pmd} -t <targetFilePath>";
 	private static final int NB_ARGS = 6;
 	private static final String DELIMITER = "-";
+	private static final Logger LOGGER = Logger.getLogger(Main.class);
 	
 	public static enum Args {
 		r, c, i, s, o, t;
@@ -19,7 +22,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		if (args == null || args.length != NB_ARGS * 2) {
-			System.err.println(USAGE);
+			LOGGER.error(USAGE);
 			throw new IllegalArgumentException();
 		}
 
@@ -28,7 +31,7 @@ public class Main {
 			map = parseArgs(args);
 			validateArgs(map);
 		} catch (Exception e) {
-			System.err.println(USAGE + "\n" + e.getMessage());
+			LOGGER.error(USAGE + "\n" + e.getMessage());
 			throw e;
 		}
 		
@@ -36,10 +39,10 @@ public class Main {
 		try {
 			engine = new Engine(map.get("r"), map.get("c"), map.get("i"), map.get("s"), map.get("o"), map.get("t"));
 		} catch (ParsingException e) {
-			System.err.println(e);
+			LOGGER.error(e);
 			throw e;
 		} catch (EngineException e) {
-			System.err.println(e);
+			LOGGER.error(e);
 			throw e;
 		}
 		
