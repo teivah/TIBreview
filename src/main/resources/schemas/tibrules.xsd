@@ -102,5 +102,8 @@
 	</xs:simpleType>
 
 	<xs:complexType name="java">
+		<xs:simpleContent>
+			<xs:extension base="xs:string" />
+		</xs:simpleContent>
 	</xs:complexType>
 </xs:schema>
