@@ -2,55 +2,107 @@
 <tibrules xmlns="exchange.tibco.com/tibreview" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="exchange.tibco.com/tibreview ../../main/resources/schemas/tibrules.xsd ">
 	<process>
-		<rule name="Copy File activity forbidden" ruleset="Forbidden activity"
+		<!-- Forbidden activity -->
+		<rule name="Copy File activity" ruleset="Forbidden activity"
 			prority="1"
-			description="The Copy File activity is forbidden, you must use xx instead">
+			description="The Copy File activity is forbidden. You must use xx.">
 			<impl>
-				<xpath>a</xpath>
+				<xpath>
+					count(*activityExtensionConfig*/bwext:BWActivity[@activityTypeID = 'bw.file.copy']) = 0
+				</xpath>
 			</impl>
 		</rule>
-		<rule name="Copy File activity forbidden 2" ruleset="Forbidden activity"
+		<rule name="Checkpoint activity" ruleset="Forbidden activity"
 			prority="1"
-			description="The Copy File activity is forbidden, you must use xx instead">
+			description="The Checkpoint activity is forbidden.">
 			<impl>
-				<not>
-					<xpath>a</xpath>
-				</not>
+				<xpath>
+					count(*extActivity*[@type = 'bw.internal.checkpoint']) = 0
+				</xpath>
 			</impl>
 		</rule>
-		<rule name="Copy File activity forbidden 3" ruleset="Forbidden activity"
+		<rule name="SQL Direct activity" ruleset="Forbidden activity"
 			prority="1"
-			description="The Copy File activity is forbidden, you must use xx instead">
+			description="The SQL Direct activity is forbidden. You must use a JDBC Query activity or a JDBC Update activity">
 			<impl>
-				<cond>
-					<if>
-						<xpath></xpath>
-						<then>
-							<xpath></xpath>
-						</then>
-					</if>
-					<elseif>
-						<xpath></xpath>
-						<then>
-							<xpath></xpath>
-						</then>
-					</elseif>
-					<elseif>
-						<xpath></xpath>
-						<then>
-							<xpath></xpath>
-						</then>
-					</elseif>
-					<else>
-						<then>
-							<xpath></xpath>
-						</then>
-					</else>
-				</cond>
+				<xpath>
+					count(*activityExtensionConfig*/bwext:BWActivity[@activityTypeID = 'bw.jdbc.SQLDirect']) = 0
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="File Poller activity" ruleset="Forbidden activity"
+			prority="1"
+			description="The File Poller activity is forbidden. For improving the monitoring, you must use a Timer activity and a List Files activity.">
+			<impl>
+				<xpath>
+					count(*eventSource*/bwext:BWActivity[@activityTypeID = 'bw.file.poller']) = 0
+				</xpath>
+			</impl>
+		</rule>
+		<!-- Forbidden asset -->
+		<rule name="Direct subprocess" ruleset="Forbidden asset" prority="1"
+			description="Direct subprocesses are forbidden. You must use a service subprocess.">
+			<impl>
+				<xpath>
+					*processInfo*/@callable = 'false'
+				</xpath>
+			</impl>
+		</rule>
+		<!-- TIBCO standard conventions -->
+		<rule name="Process without activity" ruleset="TIBCO conventions" prority="1"
+			description="The process contains no activity. If the process is not used, you must remove it. Otherwise use at least a Mapper activity.">
+			<impl>
+				<xpath>
+					count(*extensionActivity*) > 0
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Process containing too many activities" ruleset="TIBCO conventions" prority="1"
+			description="The process contains too many activities. You should split it in new subprocesses.">
+			<impl>
+				<xpath>
+					%process.max.activities% > count(*extensionActivity*) 
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Default namespace" ruleset="TIBCO conventions" prority="1"
+			description="The use of the default TIBCO namespace is discouraged.">
+			<impl>
+				<xpath>
+					not(contains(*process*/@targetNamespace, 'http://xmlns.example.com')) 
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Process description empty" ruleset="TIBCO conventions" prority="1"
+			description="A process description must be set.">
+			<impl>
+				<xpath>
+					*documentation* != ''
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Conditioned transition not documented" ruleset="TIBCO conventions" prority="1"
+			description="A conditioned transition is not documented. You must set a Label value.">
+			<impl>
+				<xpath type="none">
+					*link*[@tibex:linkType = 'SUCCESSWITHCONDITION' and not(boolean(@tibex:label))]
+				</xpath>
 			</impl>
 		</rule>
 	</process>
 	<xpathfunctions>
-		<xpathfunction id="processStarter">aa</xpathfunction>
+		<xpathfunction id="process">/bpws:process</xpathfunction>
+		<xpathfunction id="scope">/bpws:process/bpws:scope</xpathfunction>
+		<xpathfunction id="flow">/bpws:process/bpws:scope/bpws:flow</xpathfunction>
+		<xpathfunction id="links">/bpws:process/bpws:scope/bpws:flow/bpws:links</xpathfunction>
+		<xpathfunction id="link">/bpws:process/bpws:scope/bpws:flow/bpws:links/bpws:link</xpathfunction>
+		<xpathfunction id="extensionActivity">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity</xpathfunction>
+		<xpathfunction id="extActivity">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:extActivity</xpathfunction>
+		<xpathfunction id="activityExtension">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:activityExtension</xpathfunction>
+		<xpathfunction id="activityExtensionConfig">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:activityExtension/tibex:config</xpathfunction>
+		<xpathfunction id="processInfo">/bpws:process/tibex:ProcessInfo</xpathfunction>
+		<xpathfunction id="receiveEvent">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
+		<xpathfunction id="eventSource">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
+		<xpathfunction id="documentation">/bpws:process/bpws:documentation</xpathfunction>
 	</xpathfunctions>
 </tibrules>

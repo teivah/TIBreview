@@ -1,8 +1,7 @@
+package perso;
 
-import javax.xml.namespace.NamespaceContext;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathFactory;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.xml.sax.InputSource;
 
@@ -12,19 +11,20 @@ import com.tibco.exchange.tibreview.model.Tibrules;
 import com.tibco.exchange.tibreview.model.parser.RulesParser;
 import com.tibco.exchange.tibreview.processor.XPathProcessor;
 
-@SuppressWarnings("unused")
-public class Trash {
+public class Test {
+
+	private static String[] main = { "-r", "C:/pro/workspace/java_workspace/tibreview/src/test/resources/tibrules.xml", "-c",
+			"C:/pro/workspace/java_workspace/tibreview/src/test/resources/config.properties", "-i", "project", "-s",
+			"C:/pro/workspace/tibco_workspace2/Test", "-o", "csv", "-t", "C:/tmp/output" };
+
 	public static void main(String[] args) throws Exception {
 		// Test.parsing();
 		// Trash.list();
 		// Trash.xpath();
-		
-		String[] main = { "-r", "C:/pro/workspace/java_workspace/tibreview/src/test/resources/tibrules.xml", "-c",
-				"C:/pro/workspace/java_workspace/tibreview/src/test/resources/config.properties", "-i", "project", "-s",
-				"C:/pro/workspace/tibco_workspace2/Test", "-o", "csv", "-t", "C:/tmp/output" };
+		//Trash.regexp();
 		Main.main(main);
 	}
-
+	
 	public static void list() throws Exception {
 		System.out.println(Util.listFile("C:/pro/workspace/tibco_workspace2/", ".bwp"));
 	}
@@ -42,5 +42,17 @@ public class Trash {
 		InputSource is = new InputSource("C:/tmp/emp.xml");
 		XPathProcessor processor = XPathProcessor.getInstance();
 		System.out.println(processor.eval(is, "count(/bpws:process/tibex:ProcessInfo) >= 1"));
+	}
+
+	public static void regexp() throws Exception {
+		String input = "aaaa%AFZAFAZ%%%X";
+		Pattern p = Pattern.compile("\\%(.*?)\\%");
+		Matcher m = p.matcher(input);
+		while (m.find()) {
+			String found = m.group(1);
+			System.out.println(found);
+			input = input.replaceAll("\\%"+found+"\\%", found);
+			System.out.println("input="+input);
+		}
 	}
 }

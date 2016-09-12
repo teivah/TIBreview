@@ -176,20 +176,21 @@ public class Engine {
 	}
 	
 	private void processProcess(TIBProcess tibProcess) {
-		LOGGER.debug("Process TIBCO process " + tibProcess.getFilePath());
+		LOGGER.debug("Testing TIBCO process: " + tibProcess.getFilePath());
 		
 		List<Rule> rules = tibrules.getProcess().getRule();
 		
 		for(Rule rule : rules) {
 			if(!context.getDisabledRules().containsKey(rule.getName())) {
-				LOGGER.debug("Applying rule " + rule.getName());
+				LOGGER.debug("Applying rule: " + rule.getName());
 				
 				Impl impl = rule.getImpl();
 				ImplProcessor processor = new ImplProcessor();
 				try {
-					processor.process(context, tibProcess, impl);
+					Boolean result = processor.process(context, tibProcess, impl);
+					LOGGER.debug("Result: "+result);
 				} catch (ProcessorException e) {
-					LOGGER.error("Processing exception " + e.getMessage());
+					LOGGER.error("Processing exception: " + e.getMessage());
 				}
 			} else {
 				LOGGER.debug("Rule " + rule.getName() + " is disabled");
