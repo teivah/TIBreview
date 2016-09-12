@@ -6,6 +6,8 @@
 	<xs:complexType name="tibrules">
 		<xs:sequence>
 			<xs:element name="process" type="process" minOccurs="0" />
+			<xs:element name="xpathfunctions" type="xpathfunctions"
+				minOccurs="0" />
 		</xs:sequence>
 	</xs:complexType>
 
@@ -13,6 +15,22 @@
 		<xs:sequence>
 			<xs:element name="rule" type="rule" maxOccurs="unbounded" />
 		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="xpathfunctions">
+		<xs:sequence>
+			<xs:element name="xpathfunction" type="xpathfunction"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="xpathfunction">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="id" type="xs:string">
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
 	</xs:complexType>
 
 	<xs:complexType name="rule">

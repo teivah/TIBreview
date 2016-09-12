@@ -53,4 +53,7 @@
 			</impl>
 		</rule>
 	</process>
+	<xpathfunctions>
+		<xpathfunction id="processStarter">aa</xpathfunction>	
+	</xpathfunctions>
 </tibrules>

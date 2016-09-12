@@ -24,6 +24,7 @@ public class Engine {
 	private String outputType;
 	private String sourcePath;
 	private String targetPath;
+	private final Context context;
 	
 	private static final Logger LOGGER = Logger.getLogger(Engine.class);
 	private static final String PROCESS_EXTENSION = ".bwp";
@@ -54,6 +55,13 @@ public class Engine {
 		} else {
 			processes = null;
 		}
+		
+		//Parse xpathfunctions
+		//TODO
+		
+		//Init context
+		//TODO
+		this.context = new Context(null);
 		
 		//Output
 		this.outputType = outputType;
@@ -86,7 +94,7 @@ public class Engine {
 		for(Rule rule : rules) {
 			Impl impl = rule.getImpl();
 			ImplProcessor processor = new ImplProcessor();
-			processor.process(tibProcess, impl);
+			processor.process(context, tibProcess, impl);
 		}
 	}
 }

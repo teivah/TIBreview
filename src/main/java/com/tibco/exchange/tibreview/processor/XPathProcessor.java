@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 
 import com.tibco.exchange.tibreview.common.NamespaceContextMap;
+import com.tibco.exchange.tibreview.engine.Context;
 import com.tibco.exchange.tibreview.exception.XPathProcessorException;
 import com.tibco.exchange.tibreview.view.TIBProcess;
 
@@ -46,7 +47,7 @@ public final class XPathProcessor implements Processable {
 	}
 
 	@Override
-	public boolean process(TIBProcess process, Object impl) {
+	public boolean process(Context context, TIBProcess process, Object impl) {
 		String el = (String) impl;
 		
 		try {
