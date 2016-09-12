@@ -1,5 +1,7 @@
 package com.tibco.exchange.tibreview.processor;
 
+import com.tibco.exchange.tibreview.view.TIBProcess;
+
 public interface ConditionProcessable {
-	public boolean processCondition(String file, Object impl);
+	public boolean processCondition(TIBProcess process, Object impl);
 }

@@ -10,6 +10,7 @@ import org.xml.sax.InputSource;
 
 import com.tibco.exchange.tibreview.common.NamespaceContextMap;
 import com.tibco.exchange.tibreview.exception.XPathProcessorException;
+import com.tibco.exchange.tibreview.view.TIBProcess;
 
 public final class XPathProcessor implements Processable {
 	private final XPath xpath;
@@ -45,15 +46,15 @@ public final class XPathProcessor implements Processable {
 	}
 
 	@Override
-	public boolean process(String file, Object impl) {
+	public boolean process(TIBProcess process, Object impl) {
 		String el = (String) impl;
 		
 		try {
 			//TODO Better management of the InputSource object without having to open it each time
-			InputSource is = new InputSource(file);
+			InputSource is = new InputSource(process.getFile());
 			return Boolean.valueOf(eval(is, el));
 		} catch(Exception e) {
-			LOGGER.error("Query evaluation error on the file " + file, e);
+			LOGGER.error("Query evaluation error on the file " + process.getFile(), e);
 			return true;
 		}
 	}
