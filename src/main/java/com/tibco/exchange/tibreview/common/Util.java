@@ -32,7 +32,7 @@ public class Util {
 		
 		sb.append("[");
 		
-		if(map != null || map.size() > 0) {
+		if(map != null && map.size() > 0) {
 			int i = 0;
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				if(i + 1 == map.size()) {

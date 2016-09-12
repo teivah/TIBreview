@@ -10,7 +10,7 @@ import org.xml.sax.InputSource;
 
 import com.tibco.exchange.tibreview.common.NamespaceContextMap;
 import com.tibco.exchange.tibreview.engine.Context;
-import com.tibco.exchange.tibreview.exception.XPathProcessorException;
+import com.tibco.exchange.tibreview.exception.ProcessorException;
 import com.tibco.exchange.tibreview.view.TIBProcess;
 
 public final class XPathProcessor implements Processable {
@@ -37,26 +37,28 @@ public final class XPathProcessor implements Processable {
 		this.xpath.setNamespaceContext(context);
 	}
 
-	public String eval(InputSource is, String xpath) throws XPathProcessorException {
+	public String eval(InputSource is, String xpath) throws ProcessorException {
 		try {
 			XPathExpression expression = this.xpath.compile(xpath);
 			return (String) expression.evaluate(is);
 		} catch(Exception e) {
-			throw new XPathProcessorException("Unable to evaluate query [" + xpath + "]");
+			throw new ProcessorException("Unable to evaluate query [" + xpath + "]");
 		}
 	}
 
 	@Override
-	public boolean process(Context context, TIBProcess process, Object impl) {
+	public boolean process(Context context, TIBProcess process, Object impl) throws ProcessorException {
 		String el = (String) impl;
 		
 		try {
 			//TODO Better management of the InputSource object without having to open it each time
-			InputSource is = new InputSource(process.getFile());
+			InputSource is = new InputSource(process.getFilePath());
 			return Boolean.valueOf(eval(is, el));
+		} catch(ProcessorException e) {
+			throw e;
 		} catch(Exception e) {
-			LOGGER.error("Query evaluation error on the file " + process.getFile(), e);
-			return true;
+			LOGGER.error("Query evaluation error on the file " + process.getFilePath(), e);
+			throw new ProcessorException(e);
 		}
 	}
 }

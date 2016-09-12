@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.exception.EngineException;
 import com.tibco.exchange.tibreview.exception.ParsingException;
+import com.tibco.exchange.tibreview.exception.ProcessorException;
 import com.tibco.exchange.tibreview.model.Impl;
 import com.tibco.exchange.tibreview.model.Rule;
 import com.tibco.exchange.tibreview.model.Tibrules;
@@ -56,10 +57,10 @@ public class Engine {
 		this.context = new Context();
 		
 		//Parse config
-		loadPropertiesFile(configPath, this.context);
+		loadPropertiesFile(configPath);
 		
 		//Parse xpathfunctions
-		loadXPathFunctions(tibrules, context);
+		loadXPathFunctions();
 		
 		LOGGER.debug("Context initialized: " + context);
 		
@@ -93,7 +94,7 @@ public class Engine {
 		return Util.listFile(project, PROCESS_EXTENSION);
 	}
 	
-	private void loadXPathFunctions(Tibrules tibrules, Context context) {
+	private void loadXPathFunctions() {
 		Xpathfunctions xpathFunctions = tibrules.getXpathfunctions();
 		
 		if(xpathFunctions != null) {
@@ -107,10 +108,11 @@ public class Engine {
 		}
 	}
 	
-	private void loadPropertiesFile(String configPath, Context context) throws EngineException {
+	private void loadPropertiesFile(String configPath) throws EngineException {
 		Properties properties = new Properties();
 		
-		try(InputStream input = new FileInputStream(configPath)) {
+		try(InputStream is = new FileInputStream(configPath)) {
+			properties.load(is);
 			Set<Object> set = properties.keySet();
 			Iterator<Object> it = set.iterator();
 			
@@ -153,17 +155,20 @@ public class Engine {
 		}
 		
 		for(int i=0; i<rules.length; i++) {
-			map.put(rules[i], null);
+			map.put(rules[i], "false");
 		}
 		
 		return map;
 	}
 	
 	public void process() {
+		LOGGER.info("Engine processing start");
 		processProcesses();
+		LOGGER.info("Engine processing stop");
 	}
 	
 	private void processProcesses() {
+		LOGGER.info("Process TIBCO processes");
 		for(String process : processes) {
 			TIBProcess tibProcess = new TIBProcess(process);
 			processProcess(tibProcess);
@@ -171,12 +176,24 @@ public class Engine {
 	}
 	
 	private void processProcess(TIBProcess tibProcess) {
+		LOGGER.debug("Process TIBCO process " + tibProcess.getFilePath());
+		
 		List<Rule> rules = tibrules.getProcess().getRule();
 		
 		for(Rule rule : rules) {
-			Impl impl = rule.getImpl();
-			ImplProcessor processor = new ImplProcessor();
-			processor.process(context, tibProcess, impl);
+			if(!context.getDisabledRules().containsKey(rule.getName())) {
+				LOGGER.debug("Applying rule " + rule.getName());
+				
+				Impl impl = rule.getImpl();
+				ImplProcessor processor = new ImplProcessor();
+				try {
+					processor.process(context, tibProcess, impl);
+				} catch (ProcessorException e) {
+					LOGGER.error("Processing exception " + e.getMessage());
+				}
+			} else {
+				LOGGER.debug("Rule " + rule.getName() + " is disabled");
+			}
 		}
 	}
 }

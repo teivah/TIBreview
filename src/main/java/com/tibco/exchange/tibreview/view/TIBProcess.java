@@ -1,17 +1,17 @@
 package com.tibco.exchange.tibreview.view;
 
 public class TIBProcess {
-	private String file;
+	private String filePath;
 
-	public TIBProcess(String file) {
-		this.file = file;
+	public TIBProcess(String filePath) {
+		this.filePath = filePath;
 	}
 	
-	public String getFile() {
-		return file;
+	public String getFilePath() {
+		return filePath;
 	}
 
-	public void setFile(String file) {
-		this.file = file;
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 }

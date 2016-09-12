@@ -3,6 +3,7 @@ package com.tibco.exchange.tibreview.processor;
 import java.util.List;
 
 import com.tibco.exchange.tibreview.engine.Context;
+import com.tibco.exchange.tibreview.exception.ProcessorException;
 import com.tibco.exchange.tibreview.model.Cond;
 import com.tibco.exchange.tibreview.model.Else;
 import com.tibco.exchange.tibreview.model.Elseif;
@@ -11,7 +12,7 @@ import com.tibco.exchange.tibreview.view.TIBProcess;
 
 public final class CondProcessor implements Processable {
 	@Override
-	public boolean process(Context context, TIBProcess process, Object impl) {
+	public boolean process(Context context, TIBProcess process, Object impl) throws ProcessorException {
 		Cond el = (Cond) impl;
 		
 		If ifCond = el.getIf();
