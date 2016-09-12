@@ -4,26 +4,23 @@
 	<process>
 		<rule name="Copy File activity forbidden" ruleset="Forbidden activity"
 			prority="1"
-			description="The Copy File activity is forbidden, you must use xx instead"
-			enable="true">
+			description="The Copy File activity is forbidden, you must use xx instead">
 			<impl>
 				<xpath>a</xpath>
 			</impl>
 		</rule>
-		<rule name="Copy File activity forbidden" ruleset="Forbidden activity"
+		<rule name="Copy File activity forbidden 2" ruleset="Forbidden activity"
 			prority="1"
-			description="The Copy File activity is forbidden, you must use xx instead"
-			enable="true">
+			description="The Copy File activity is forbidden, you must use xx instead">
 			<impl>
 				<not>
 					<xpath>a</xpath>
 				</not>
 			</impl>
 		</rule>
-		<rule name="Copy File activity forbidden" ruleset="Forbidden activity"
+		<rule name="Copy File activity forbidden 3" ruleset="Forbidden activity"
 			prority="1"
-			description="The Copy File activity is forbidden, you must use xx instead"
-			enable="true">
+			description="The Copy File activity is forbidden, you must use xx instead">
 			<impl>
 				<cond>
 					<if>
@@ -54,6 +51,6 @@
 		</rule>
 	</process>
 	<xpathfunctions>
-		<xpathfunction id="processStarter">aa</xpathfunction>	
+		<xpathfunction id="processStarter">aa</xpathfunction>
 	</xpathfunctions>
 </tibrules>

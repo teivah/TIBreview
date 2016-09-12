@@ -1,9 +1,16 @@
 package com.tibco.exchange.tibreview.engine;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 
@@ -13,6 +20,8 @@ import com.tibco.exchange.tibreview.exception.ParsingException;
 import com.tibco.exchange.tibreview.model.Impl;
 import com.tibco.exchange.tibreview.model.Rule;
 import com.tibco.exchange.tibreview.model.Tibrules;
+import com.tibco.exchange.tibreview.model.Xpathfunction;
+import com.tibco.exchange.tibreview.model.Xpathfunctions;
 import com.tibco.exchange.tibreview.model.parser.RulesParser;
 import com.tibco.exchange.tibreview.processor.ImplProcessor;
 import com.tibco.exchange.tibreview.view.TIBProcess;
@@ -33,13 +42,26 @@ public class Engine {
 	public static final String INPUT_PROCESS = "process";
 	public static final String OUTPUT_CSV = "csv";
 	public static final String OUTPUT_PMD = "pmd";
+	public static final String PROPERTY_DISABLE = "rules.disable";
+	public static final String PROPERTY_VALUE = "property.";
+	public static final String DELIMITER = ";";
 	
 	public Engine(String rulePath, String configPath, String inputType, String sourcePath, String outputType, String targetPath) throws ParsingException, EngineException {
+		LOGGER.info("Initializing engine with rulePath=" + rulePath + ", configPath=" + configPath + ", inputType=" + inputType + ", sourcePath=" + sourcePath + ", outputType=" + outputType + ", targetPath=" + targetPath);
+		
 		//Parse rule
 		this.tibrules = RulesParser.parseFile(rulePath);
 		
+		//Init context
+		this.context = new Context();
+		
 		//Parse config
-		//TODO
+		loadPropertiesFile(configPath, this.context);
+		
+		//Parse xpathfunctions
+		loadXPathFunctions(tibrules, context);
+		
+		LOGGER.debug("Context initialized: " + context);
 		
 		//Input
 		this.inputType = inputType;
@@ -55,13 +77,7 @@ public class Engine {
 		} else {
 			processes = null;
 		}
-		
-		//Parse xpathfunctions
-		//TODO
-		
-		//Init context
-		//TODO
-		this.context = new Context(null);
+		LOGGER.debug("processes="+processes);
 		
 		//Output
 		this.outputType = outputType;
@@ -75,6 +91,72 @@ public class Engine {
 	
 	private List<String> listProcesses(String project) throws IOException {
 		return Util.listFile(project, PROCESS_EXTENSION);
+	}
+	
+	private void loadXPathFunctions(Tibrules tibrules, Context context) {
+		Xpathfunctions xpathFunctions = tibrules.getXpathfunctions();
+		
+		if(xpathFunctions != null) {
+			List<Xpathfunction> functions =xpathFunctions.getXpathfunction();
+			
+			if(functions != null) {
+				for(Xpathfunction function : functions) {
+					context.getXpathFunctions().put(function.getId(), function.getValue());
+				}
+			}
+		}
+	}
+	
+	private void loadPropertiesFile(String configPath, Context context) throws EngineException {
+		Properties properties = new Properties();
+		
+		try(InputStream input = new FileInputStream(configPath)) {
+			Set<Object> set = properties.keySet();
+			Iterator<Object> it = set.iterator();
+			
+			while(it.hasNext()) {
+				String key = (String)it.next();
+				if(key == null || key.length() == 0) {
+					continue;
+				}
+				
+				if(PROPERTY_DISABLE.equals(key)) {
+					context.setDisabledRules(parseDisabledRules(properties.getProperty(PROPERTY_DISABLE)));
+				} else if(key.startsWith(PROPERTY_VALUE)) {
+					String subKey = key.substring(key.indexOf(PROPERTY_VALUE) + PROPERTY_VALUE.length(), key.length());
+					context.getProperties().put(subKey, properties.getProperty(key));
+				}
+			}
+		} catch (FileNotFoundException e) {
+			LOGGER.error("Config file " + configPath + " not found");
+			throw new EngineException("Config file " + configPath + " not found");
+		} catch (IOException e) {
+			LOGGER.error("Error while parsing config file " + configPath + ": " + e.getMessage());
+			throw new EngineException("Error while parsing config file " + configPath, e);
+		} catch(Exception e) {
+			LOGGER.error("Error while parsing config file " + configPath + ": " + e.getMessage());
+			throw new EngineException("Error while parsing config file " + configPath, e);
+		}
+	}
+	
+	private Map<String, String> parseDisabledRules(String disabled) {
+		Map<String, String> map = new HashMap<>();
+		
+		if(disabled == null || disabled.length() == 0) {
+			return map;
+		}
+		
+		String[] rules = disabled.split(DELIMITER);
+		
+		if(rules == null || rules.length == 0) {
+			return map;
+		}
+		
+		for(int i=0; i<rules.length; i++) {
+			map.put(rules[i], null);
+		}
+		
+		return map;
 	}
 	
 	public void process() {

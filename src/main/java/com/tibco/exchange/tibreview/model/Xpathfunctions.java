@@ -17,16 +17,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for process complex type.
+ * <p>Java class for xpathfunctions complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="process">
+ * &lt;complexType name="xpathfunctions">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="rule" type="{exchange.tibco.com/tibreview}rule" maxOccurs="unbounded"/>
+ *         &lt;element name="xpathfunction" type="{exchange.tibco.com/tibreview}xpathfunction" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,41 +36,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "process", propOrder = {
-    "rule"
+@XmlType(name = "xpathfunctions", propOrder = {
+    "xpathfunction"
 })
-public class Process {
+public class Xpathfunctions {
 
     @XmlElement(required = true)
-    protected List<Rule> rule;
+    protected List<Xpathfunction> xpathfunction;
 
     /**
-     * Gets the value of the rule property.
+     * Gets the value of the xpathfunction property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the rule property.
+     * This is why there is not a <CODE>set</CODE> method for the xpathfunction property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getRule().add(newItem);
+     *    getXpathfunction().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Rule }
+     * {@link Xpathfunction }
      * 
      * 
      */
-    public List<Rule> getRule() {
-        if (rule == null) {
-            rule = new ArrayList<Rule>();
+    public List<Xpathfunction> getXpathfunction() {
+        if (xpathfunction == null) {
+            xpathfunction = new ArrayList<Xpathfunction>();
         }
-        return this.rule;
+        return this.xpathfunction;
     }
 
 }

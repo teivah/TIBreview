@@ -41,7 +41,6 @@
 		<xs:attribute type="xs:string" name="ruleset" />
 		<xs:attribute type="xs:int" name="prority" />
 		<xs:attribute type="xs:string" name="description" />
-		<xs:attribute type="xs:boolean" name="enable" />
 	</xs:complexType>
 
 	<xs:complexType name="impl">
