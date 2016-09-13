@@ -1,5 +1,6 @@
 package com.tibco.exchange.tibreview.engine;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,7 +35,6 @@ public class Engine {
 	private final List<String> processes;
 	private String inputType;
 	private String outputType;
-	private String sourcePath;
 	private PMDManager manager;
 	private String targetPath;
 	private final Context context;
@@ -88,9 +88,6 @@ public class Engine {
 		
 		//Output
 		this.outputType = outputType;
-		
-		//Source
-		this.sourcePath = sourcePath;
 		
 		//Target
 		this.targetPath = targetPath;
@@ -181,9 +178,9 @@ public class Engine {
 	private void generateOutput() throws EngineException {
 		try {
 			if(OUTPUT_CSV.equals(outputType)) {
-				manager.generateCSVFile(targetPath);
+				manager.generateCSVFile(targetPath + File.separator + "csv_" + Util.getCurrentTimestamp() + ".csv");
 			} else if(OUTPUT_PMD.equals(outputType)) {
-				manager.generatePMDFile(targetPath);
+				manager.generatePMDFile(targetPath + File.separator + "pmd_" + Util.getCurrentTimestamp() + ".xml");
 			}
 		} catch(ParsingException e) {
 			throw new EngineException(e);

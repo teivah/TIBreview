@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.tibco.exchange.tibreview.exception.ParsingException;
 import com.tibco.exchange.tibreview.model.parser.PMDParser;
 import com.tibco.exchange.tibreview.model.pmd.File;
@@ -12,6 +14,7 @@ import com.tibco.exchange.tibreview.model.pmd.Pmd;
 import com.tibco.exchange.tibreview.model.pmd.Violation;
 
 public class PMDManager {
+	private static final Logger LOGGER = Logger.getLogger(PMDManager.class);
 	private Map<String, List<Violation>> current;
 	
 	public PMDManager() {
@@ -54,6 +57,8 @@ public class PMDManager {
 			}
 			pmd.setFile(files);
 		}
+		
+		LOGGER.debug("PMD: " + pmd);
 		
 		return pmd;
 	}

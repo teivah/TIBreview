@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -78,6 +80,17 @@ public class Util {
 		return violation;
 	}
 	
+	public static Violation formatViolation(Rule rule, String detail) {
+		Violation violation = new Violation();
+		
+		violation.setPriority(rule.getPrority());
+		violation.setRule(rule.getName());
+		violation.setRuleset(rule.getRuleset());
+		violation.setValue(rule.getDescription() + " Detail: " + detail);
+		
+		return violation;
+	}
+	
 	public static Violation formatViolation(Rule rule, int line) {
 		Violation violation = new Violation();
 		
@@ -88,5 +101,9 @@ public class Util {
 		violation.setValue(rule.getDescription());
 		
 		return violation;
+	}
+	
+	public static String getCurrentTimestamp() {
+		return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 	}
 }

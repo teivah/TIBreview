@@ -47,6 +47,7 @@
 			<xs:element name="xpath" type="xpath" />
 			<xs:element name="cond" type="cond" />
 			<xs:element name="not" type="not" />
+			<xs:element name="java" type="java" />
 		</xs:choice>
 	</xs:complexType>
 
@@ -64,6 +65,7 @@
 			<xs:element name="xpath" type="xpath" />
 			<xs:element name="cond" type="cond" />
 			<xs:element name="not" type="not" />
+			<xs:element name="java" type="java" />
 		</xs:choice>
 	</xs:complexType>
 
@@ -73,6 +75,7 @@
 				<xs:element name="xpath" type="xpath" />
 				<xs:element name="cond" type="cond" />
 				<xs:element name="not" type="not" />
+				<xs:element name="java" type="java" />
 			</xs:choice>
 			<xs:element name="then" type="impl" />
 		</xs:sequence>
@@ -84,6 +87,7 @@
 				<xs:element name="xpath" type="xpath" />
 				<xs:element name="cond" type="cond" />
 				<xs:element name="not" type="not" />
+				<xs:element name="java" type="java" />
 			</xs:choice>
 			<xs:element name="then" type="impl" />
 		</xs:sequence>
@@ -99,6 +103,7 @@
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
 				<xs:attribute name="type" type="xs:string" use="optional"/>
+				<xs:attribute name="detail" type="xs:string" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>

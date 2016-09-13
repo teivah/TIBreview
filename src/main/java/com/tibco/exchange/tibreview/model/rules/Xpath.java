@@ -42,6 +42,8 @@ public class Xpath {
     protected String value;
     @XmlAttribute(name = "type")
     protected String type;
+    @XmlAttribute(name = "detail")
+    protected String detail;
 
     /**
      * Gets the value of the value property.
@@ -90,5 +92,12 @@ public class Xpath {
     public void setType(String value) {
         this.type = value;
     }
-
+    
+    public String getDetail() {
+		return detail;
+	}
+    
+    public void setDetail(String detail) {
+		this.detail = detail;
+	}
 }

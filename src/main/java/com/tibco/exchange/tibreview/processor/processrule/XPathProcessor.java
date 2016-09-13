@@ -58,7 +58,8 @@ public final class XPathProcessor implements PRProcessable {
 			LOGGER.debug("Eval: " + eval);
 			return eval;
 		} catch (Exception e) {
-			throw new ProcessorException("Unable to evaluate XPath query: " + xpath);
+			LOGGER.error("Unable to evaluate XPath query {" + xpath + "}: " + e);
+			throw new ProcessorException("Unable to evaluate XPath query {" + xpath + "}", e);
 		}
 	}
 
@@ -74,29 +75,51 @@ public final class XPathProcessor implements PRProcessable {
 		} catch (ProcessorException e) {
 			throw e;
 		} catch (Exception e) {
-			LOGGER.error("Unable to manage XPath query: " + xpath);
-			throw new ProcessorException("Unable to manage XPath query: " + xpath);
+			LOGGER.error("Unable to manage XPath query {" + xpath + "}: " + e);
+			throw new ProcessorException("Unable to manage XPath query {" + xpath + "}: ", e);
 		}
 	}
 
-	private List<Violation> evalList(Rule rule, InputSource is, String xpath) throws ProcessorException {
+	private List<Violation> evalList(Rule rule, InputSource is, String xpath, String detail) throws ProcessorException {
 		try {
 			XPathExpression expression = this.xpath.compile(xpath);
 			NodeList nodeList = (NodeList) expression.evaluate(is, XPathConstants.NODESET);
-
+			
 			if (nodeList == null || nodeList.getLength() == 0) {
 				return null;
 			}
+			
+			LOGGER.debug("Found " + nodeList.getLength() + " violations");
 
+			NodeList nodeListDetail = null;
+			boolean mapDetail = false;
+			if(detail != null) {
+				try {
+					XPathExpression expressionDetail = this.xpath.compile(detail);
+					nodeListDetail = (NodeList) expressionDetail.evaluate(is, XPathConstants.NODESET);
+				} catch(Exception e) {
+					LOGGER.warn("XPath detail error: " + e);
+				}
+			}
+			
+			if(nodeListDetail != null && nodeListDetail.getLength() == nodeList.getLength()) {
+				mapDetail = true;
+			}
+			
 			List<Violation> list = new ArrayList<>();
 
 			for (int i = 0; i < nodeList.getLength(); i++) {
-				list.add(Util.formatViolation(rule, (Integer)nodeList.item(i).getUserData("lineNumber")));
+				if(mapDetail) {
+					list.add(Util.formatViolation(rule, nodeListDetail.item(i).getNodeValue()));
+				} else {
+					list.add(Util.formatViolation(rule));
+				}
 			}
 
 			return list;
 		} catch (Exception e) {
-			throw new ProcessorException("Unable to evaluate query: " + xpath);
+			LOGGER.error("Unable to evaluate query list {" + xpath + "}: " + e);
+			throw new ProcessorException("Unable to evaluate query list {" + xpath + "}", e);
 		}
 	}
 
@@ -149,12 +172,21 @@ public final class XPathProcessor implements PRProcessable {
 		Xpath el = (Xpath) impl;
 
 		String xpath = el.getValue();
+		String detail = el.getDetail();
 
 		try {
 			xpath = replaceFunctions(replaceProperties(cleanXPathRequest(xpath), context), context);
 		} catch (Exception e) {
 			LOGGER.error("XPath request [" + xpath + "] handling error: " + e.getMessage());
 			throw new ProcessorException(e);
+		}
+		
+		if(detail != null || !"".equals(detail)) {
+			try {
+				detail = replaceFunctions(replaceProperties(cleanXPathRequest(detail), context), context);
+			} catch (Exception e) {
+				LOGGER.warn("XPath detail [" + xpath + "] handling error: " + e.getMessage());
+			}
 		}
 
 		LOGGER.debug("XPath request: " + xpath);
@@ -173,7 +205,7 @@ public final class XPathProcessor implements PRProcessable {
 					return violations;
 				}
 			} else if (TYPE_NONE.equals(el.getType())) {
-				return evalList(rule, is, xpath);
+				return evalList(rule, is, xpath, detail);
 			} else {
 				LOGGER.error("XPath type " + el.getType() + "not recognized");
 				throw new ProcessorException("XPath type " + el.getType() + "not recognized");

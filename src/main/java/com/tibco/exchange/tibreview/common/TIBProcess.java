@@ -14,4 +14,9 @@ public class TIBProcess {
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
+
+	@Override
+	public String toString() {
+		return "TIBProcess [filePath=" + filePath + "]";
+	}
 }

@@ -70,16 +70,17 @@ public class PMDParser {
 			LOGGER.error("Error while generating CSV file " + filename + ": " + e);
 			throw new ParsingException(e);
 		} finally {
-			if (fos != null) {
+			if (bw != null) {
 				try {
-					fos.close();
+					bw.close();
 				} catch (Exception e) {
 					LOGGER.error(e);
 				}
 			}
-			if (bw != null) {
+			
+			if (fos != null) {
 				try {
-					bw.close();
+					fos.close();
 				} catch (Exception e) {
 					LOGGER.error(e);
 				}

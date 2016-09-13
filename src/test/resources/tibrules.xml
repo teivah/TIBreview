@@ -50,7 +50,7 @@
 		</rule>
 		<!-- TIBCO standard conventions -->
 		<rule name="Process without activity" ruleset="TIBCO conventions" prority="1"
-			description="The process contains no activity. If the process is not used, you must remove it. Otherwise use at least a Mapper activity.">
+			description="The process contains no activity. If the process is not used, you must remove it. Otherwise use at least a Mapper activity in between start and stop.">
 			<impl>
 				<xpath>
 					count(*extensionActivity*) > 0
@@ -84,9 +84,15 @@
 		<rule name="Conditioned transition not documented" ruleset="TIBCO conventions" prority="1"
 			description="A conditioned transition is not documented. You must set a Label value.">
 			<impl>
-				<xpath type="none">
+				<xpath type="none" detail="*link*[@tibex:linkType = 'SUCCESSWITHCONDITION' and not(boolean(@tibex:label))]/@name">
 					*link*[@tibex:linkType = 'SUCCESSWITHCONDITION' and not(boolean(@tibex:label))]
 				</xpath>
+			</impl>
+		</rule>
+		<rule name="Java" ruleset="TIBCO conventions" prority="1"
+			description="A conditioned transition is not documented. You must set a Label value.">
+			<impl>
+				<java></java>
 			</impl>
 		</rule>
 	</process>
