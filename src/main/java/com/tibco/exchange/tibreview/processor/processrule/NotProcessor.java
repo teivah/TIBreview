@@ -23,9 +23,14 @@ public final class NotProcessor implements PRProcessable {
 		} else if(el.getNot() != null) {
 			NotProcessor processor = new NotProcessor();
 			violations = processor.process(context, process, rule, el.getNot());
-		} else { //Xpath
+		} else if(el.getXpath() != null) {
 			XPathProcessor processor = XPathProcessor.getInstance();
 			violations = processor.process(context, process, rule, el.getXpath()); 
+		} else if(el.getJava() != null) {
+			JavaProcessor processor = new JavaProcessor();
+			violations = processor.process(context, process, rule, el.getJava());
+		} else {
+			return null;
 		}
 		
 		if(violations == null || violations.size() == 0) {

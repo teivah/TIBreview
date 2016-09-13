@@ -92,7 +92,7 @@
 		<rule name="Java" ruleset="TIBCO conventions" prority="1"
 			description="A conditioned transition is not documented. You must set a Label value.">
 			<impl>
-				<java></java>
+				<java>PRJavaTest</java>
 			</impl>
 		</rule>
 	</process>

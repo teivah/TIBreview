@@ -28,10 +28,16 @@ public final class IfProcessor implements PRProcessable, PRConditionProcessable 
 			NotProcessor processor = new NotProcessor();
 			List<Violation> violations = processor.process(context, process, rule, el.getNot());
 			return violations == null || violations.size() == 0;
-		} else { //Xpath
+		} else if(el.getXpath() != null) {
 			XPathProcessor processor = XPathProcessor.getInstance();
 			List<Violation> violations = processor.process(context, process, rule, el.getXpath());
 			return violations == null || violations.size() == 0;
+		} else if(el.getJava() != null) {
+			JavaProcessor processor = new JavaProcessor();
+			List<Violation> violations = processor.process(context, process, rule, el.getJava());
+			return violations == null || violations.size() == 0;
+		} else {
+			return false;
 		}
 	}
 }

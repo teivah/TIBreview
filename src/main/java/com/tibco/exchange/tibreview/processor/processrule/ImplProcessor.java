@@ -19,9 +19,14 @@ public class ImplProcessor implements PRProcessable {
 		} else if(el.getNot() != null) {
 			NotProcessor processor = new NotProcessor();
 			return processor.process(context, process, rule, el.getNot());
-		} else { //Xpath
+		} else if(el.getXpath() != null) {
 			XPathProcessor processor = XPathProcessor.getInstance();
 			return processor.process(context, process, rule, el.getXpath()); 
+		} else if(el.getJava() != null) {
+			JavaProcessor processor = new JavaProcessor();
+			return processor.process(context, process, rule, el.getJava()); 
+		} else {
+			return null;
 		}
 	}
 }
