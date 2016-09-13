@@ -2,7 +2,7 @@ package com.tibco.exchange.tibreview.processor;
 
 import com.tibco.exchange.tibreview.engine.Context;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
-import com.tibco.exchange.tibreview.model.Elseif;
+import com.tibco.exchange.tibreview.model.rules.Elseif;
 import com.tibco.exchange.tibreview.view.TIBProcess;
 
 public final class ElseifProcessor implements Processable, ConditionProcessable {

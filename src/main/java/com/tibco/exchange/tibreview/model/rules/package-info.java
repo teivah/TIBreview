@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "exchange.tibco.com/tibreview", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package com.tibco.exchange.tibreview.model;
+package com.tibco.exchange.tibreview.model.rules;

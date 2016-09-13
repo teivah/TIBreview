@@ -6,61 +6,64 @@
 //
 
 
-package com.tibco.exchange.tibreview.model;
+package com.tibco.exchange.tibreview.model.rules;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for java complex type.
+ * <p>Java class for else complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="java">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *     &lt;/extension>
- *   &lt;/simpleContent>
+ * &lt;complexType name="else">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element name="then" type="{exchange.tibco.com/tibreview}impl"/>
+ *       &lt;/sequence>
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "java", propOrder = {
-    "value"
+@XmlType(name = "else", propOrder = {
+    "then"
 })
-public class Java {
+public class Else {
 
-    @XmlValue
-    protected String value;
+    @XmlElement(required = true)
+    protected Impl then;
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the then property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Impl }
      *     
      */
-    public String getValue() {
-        return value;
+    public Impl getThen() {
+        return then;
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the value of the then property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Impl }
      *     
      */
-    public void setValue(String value) {
-        this.value = value;
+    public void setThen(Impl value) {
+        this.then = value;
     }
 
 }

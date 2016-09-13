@@ -6,31 +6,27 @@
 //
 
 
-package com.tibco.exchange.tibreview.model;
+package com.tibco.exchange.tibreview.model.rules;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for elseif complex type.
+ * <p>Java class for not complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="elseif">
+ * &lt;complexType name="not">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;choice>
- *           &lt;element name="xpath" type="{exchange.tibco.com/tibreview}xpath"/>
- *           &lt;element name="cond" type="{exchange.tibco.com/tibreview}cond"/>
- *           &lt;element name="not" type="{exchange.tibco.com/tibreview}not"/>
- *         &lt;/choice>
- *         &lt;element name="then" type="{exchange.tibco.com/tibreview}impl"/>
- *       &lt;/sequence>
+ *       &lt;choice>
+ *         &lt;element name="xpath" type="{exchange.tibco.com/tibreview}xpath"/>
+ *         &lt;element name="cond" type="{exchange.tibco.com/tibreview}cond"/>
+ *         &lt;element name="not" type="{exchange.tibco.com/tibreview}not"/>
+ *       &lt;/choice>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -39,19 +35,16 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "elseif", propOrder = {
+@XmlType(name = "not", propOrder = {
     "xpath",
     "cond",
-    "not",
-    "then"
+    "not"
 })
-public class Elseif {
+public class Not {
 
     protected Xpath xpath;
     protected Cond cond;
     protected Not not;
-    @XmlElement(required = true)
-    protected Impl then;
 
     /**
      * Gets the value of the xpath property.
@@ -123,30 +116,6 @@ public class Elseif {
      */
     public void setNot(Not value) {
         this.not = value;
-    }
-
-    /**
-     * Gets the value of the then property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Impl }
-     *     
-     */
-    public Impl getThen() {
-        return then;
-    }
-
-    /**
-     * Sets the value of the then property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Impl }
-     *     
-     */
-    public void setThen(Impl value) {
-        this.then = value;
     }
 
 }

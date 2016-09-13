@@ -18,7 +18,7 @@ import com.tibco.exchange.tibreview.common.NamespaceContextMap;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.engine.Context;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
-import com.tibco.exchange.tibreview.model.Xpath;
+import com.tibco.exchange.tibreview.model.rules.Xpath;
 import com.tibco.exchange.tibreview.view.TIBProcess;
 
 public final class XPathProcessor implements Processable {

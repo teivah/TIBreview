@@ -7,8 +7,8 @@ import org.xml.sax.InputSource;
 
 import com.tibco.exchange.tibreview.Main;
 import com.tibco.exchange.tibreview.common.Util;
-import com.tibco.exchange.tibreview.model.Tibrules;
 import com.tibco.exchange.tibreview.model.parser.RulesParser;
+import com.tibco.exchange.tibreview.model.rules.Tibrules;
 import com.tibco.exchange.tibreview.processor.XPathProcessor;
 
 public class Test {

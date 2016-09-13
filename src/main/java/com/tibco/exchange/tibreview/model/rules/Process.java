@@ -6,7 +6,7 @@
 //
 
 
-package com.tibco.exchange.tibreview.model;
+package com.tibco.exchange.tibreview.model.rules;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +17,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for xpathfunctions complex type.
+ * <p>Java class for process complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="xpathfunctions">
+ * &lt;complexType name="process">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="xpathfunction" type="{exchange.tibco.com/tibreview}xpathfunction" maxOccurs="unbounded"/>
+ *         &lt;element name="rule" type="{exchange.tibco.com/tibreview}rule" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,41 +36,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "xpathfunctions", propOrder = {
-    "xpathfunction"
+@XmlType(name = "process", propOrder = {
+    "rule"
 })
-public class Xpathfunctions {
+public class Process {
 
     @XmlElement(required = true)
-    protected List<Xpathfunction> xpathfunction;
+    protected List<Rule> rule;
 
     /**
-     * Gets the value of the xpathfunction property.
+     * Gets the value of the rule property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the xpathfunction property.
+     * This is why there is not a <CODE>set</CODE> method for the rule property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getXpathfunction().add(newItem);
+     *    getRule().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Xpathfunction }
+     * {@link Rule }
      * 
      * 
      */
-    public List<Xpathfunction> getXpathfunction() {
-        if (xpathfunction == null) {
-            xpathfunction = new ArrayList<Xpathfunction>();
+    public List<Rule> getRule() {
+        if (rule == null) {
+            rule = new ArrayList<Rule>();
         }
-        return this.xpathfunction;
+        return this.rule;
     }
 
 }

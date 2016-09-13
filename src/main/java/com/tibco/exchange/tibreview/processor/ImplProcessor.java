@@ -2,7 +2,7 @@ package com.tibco.exchange.tibreview.processor;
 
 import com.tibco.exchange.tibreview.engine.Context;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
-import com.tibco.exchange.tibreview.model.Impl;
+import com.tibco.exchange.tibreview.model.rules.Impl;
 import com.tibco.exchange.tibreview.view.TIBProcess;
 
 public class ImplProcessor implements Processable {

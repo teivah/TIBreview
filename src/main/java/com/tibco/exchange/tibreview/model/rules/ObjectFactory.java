@@ -6,7 +6,7 @@
 //
 
 
-package com.tibco.exchange.tibreview.model;
+package com.tibco.exchange.tibreview.model.rules;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

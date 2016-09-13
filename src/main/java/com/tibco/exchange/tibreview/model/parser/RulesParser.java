@@ -12,7 +12,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
 import com.tibco.exchange.tibreview.exception.ParsingException;
-import com.tibco.exchange.tibreview.model.Tibrules;
+import com.tibco.exchange.tibreview.model.rules.Tibrules;
 
 public class RulesParser {
 	private static final String SCHEMA_LOCATION = "src/main/resources/schemas/tibrules.xsd";
@@ -31,7 +31,7 @@ public class RulesParser {
 			
 			SchemaFactory sf = SchemaFactory.newInstance(javax.xml.XMLConstants.W3C_XML_SCHEMA_NS_URI);
 			Schema schema = sf.newSchema(new File(SCHEMA_LOCATION));
-			JAXBContext jc = JAXBContext.newInstance("com.tibco.exchange.tibreview.model");
+			JAXBContext jc = JAXBContext.newInstance("com.tibco.exchange.tibreview.model.rules");
 			
 			Unmarshaller unmarshaller = jc.createUnmarshaller();
 			unmarshaller.setSchema(schema);

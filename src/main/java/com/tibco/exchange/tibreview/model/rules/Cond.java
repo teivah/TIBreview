@@ -6,7 +6,7 @@
 //
 
 
-package com.tibco.exchange.tibreview.model;
+package com.tibco.exchange.tibreview.model.rules;
 
 import java.util.ArrayList;
 import java.util.List;

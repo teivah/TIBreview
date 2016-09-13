@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.tibco.exchange.tibreview.engine.Context;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
-import com.tibco.exchange.tibreview.model.Cond;
-import com.tibco.exchange.tibreview.model.Else;
-import com.tibco.exchange.tibreview.model.Elseif;
-import com.tibco.exchange.tibreview.model.If;
+import com.tibco.exchange.tibreview.model.rules.Cond;
+import com.tibco.exchange.tibreview.model.rules.Else;
+import com.tibco.exchange.tibreview.model.rules.Elseif;
+import com.tibco.exchange.tibreview.model.rules.If;
 import com.tibco.exchange.tibreview.view.TIBProcess;
 
 public final class CondProcessor implements Processable {
