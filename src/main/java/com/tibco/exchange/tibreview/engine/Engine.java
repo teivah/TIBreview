@@ -14,18 +14,20 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 
+import com.tibco.exchange.tibreview.common.PMDManager;
+import com.tibco.exchange.tibreview.common.TIBProcess;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.exception.EngineException;
 import com.tibco.exchange.tibreview.exception.ParsingException;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
 import com.tibco.exchange.tibreview.model.parser.RulesParser;
+import com.tibco.exchange.tibreview.model.pmd.Violation;
 import com.tibco.exchange.tibreview.model.rules.Impl;
 import com.tibco.exchange.tibreview.model.rules.Rule;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
 import com.tibco.exchange.tibreview.model.rules.Xpathfunction;
 import com.tibco.exchange.tibreview.model.rules.Xpathfunctions;
-import com.tibco.exchange.tibreview.processor.ImplProcessor;
-import com.tibco.exchange.tibreview.view.TIBProcess;
+import com.tibco.exchange.tibreview.processor.processrule.ImplProcessor;
 
 public class Engine {
 	private final Tibrules tibrules;
@@ -33,6 +35,7 @@ public class Engine {
 	private String inputType;
 	private String outputType;
 	private String sourcePath;
+	private PMDManager manager;
 	private String targetPath;
 	private final Context context;
 	
@@ -51,10 +54,13 @@ public class Engine {
 		LOGGER.info("Initializing engine with rulePath=" + rulePath + ", configPath=" + configPath + ", inputType=" + inputType + ", sourcePath=" + sourcePath + ", outputType=" + outputType + ", targetPath=" + targetPath);
 		
 		//Parse rule
-		this.tibrules = RulesParser.parseFile(rulePath);
+		this.tibrules = RulesParser.getInstance().parseFile(rulePath);
 		
 		//Init context
 		this.context = new Context();
+		
+		//Init PMDManager
+		this.manager = new PMDManager();
 		
 		//Parse config
 		loadPropertiesFile(configPath);
@@ -165,6 +171,23 @@ public class Engine {
 		LOGGER.info("Engine processing start");
 		processProcesses();
 		LOGGER.info("Engine processing stop");
+		try {
+			generateOutput();
+		} catch (EngineException e) {
+			LOGGER.error("Unable to generate output");
+		}
+	}
+	
+	private void generateOutput() throws EngineException {
+		try {
+			if(OUTPUT_CSV.equals(outputType)) {
+				manager.generateCSVFile(targetPath);
+			} else if(OUTPUT_PMD.equals(outputType)) {
+				manager.generatePMDFile(targetPath);
+			}
+		} catch(ParsingException e) {
+			throw new EngineException(e);
+		}
 	}
 	
 	private void processProcesses() {
@@ -181,19 +204,22 @@ public class Engine {
 		List<Rule> rules = tibrules.getProcess().getRule();
 		
 		for(Rule rule : rules) {
-			if(!context.getDisabledRules().containsKey(rule.getName())) {
-				LOGGER.debug("Applying rule: " + rule.getName());
-				
-				Impl impl = rule.getImpl();
-				ImplProcessor processor = new ImplProcessor();
-				try {
-					Boolean result = processor.process(context, tibProcess, impl);
-					LOGGER.debug("Result: "+result);
-				} catch (ProcessorException e) {
-					LOGGER.error("Processing exception: " + e.getMessage());
+			try {
+				if(!context.getDisabledRules().containsKey(rule.getName())) {
+					LOGGER.debug("Applying rule: " + rule.getName());
+					
+					Impl impl = rule.getImpl();
+					ImplProcessor processor = new ImplProcessor();
+					try {
+						manager.addViolations(tibProcess.getFilePath(), processor.process(context, tibProcess, rule, impl));
+					} catch (ProcessorException e) {
+						LOGGER.error("Processing exception: " + e.getMessage());
+					}
+				} else {
+					LOGGER.debug("Rule " + rule.getName() + " is disabled");
 				}
-			} else {
-				LOGGER.debug("Rule " + rule.getName() + " is disabled");
+			} catch(Exception e) {
+				LOGGER.error("Processing exception: " + e.getMessage());
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package com.tibco.exchange.tibreview.processor;
+package com.tibco.exchange.tibreview.processor.processrule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +15,18 @@ import org.xml.sax.InputSource;
 
 import com.tibco.exchange.tibreview.common.ContextReplaceable;
 import com.tibco.exchange.tibreview.common.NamespaceContextMap;
+import com.tibco.exchange.tibreview.common.TIBProcess;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.engine.Context;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
+import com.tibco.exchange.tibreview.model.pmd.Violation;
+import com.tibco.exchange.tibreview.model.rules.Rule;
 import com.tibco.exchange.tibreview.model.rules.Xpath;
-import com.tibco.exchange.tibreview.view.TIBProcess;
 
-public final class XPathProcessor implements Processable {
+public final class XPathProcessor implements PRProcessable {
 	private final XPath xpath;
 
-	private static final Logger LOGGER = Logger.getLogger(Processable.class);
+	private static final Logger LOGGER = Logger.getLogger(PRProcessable.class);
 	public static final String[] TIBCO_NAMESPACES = { "bpws",
 			"http://docs.oasis-open.org/wsbpel/2.0/process/executable", "tibex",
 			"http://www.tibco.com/bpel/2007/extensions", "bwext", "http://tns.tibco.com/bw/model/core/bwext", "xsl",
@@ -48,20 +50,36 @@ public final class XPathProcessor implements Processable {
 		this.xpath = factory.newXPath();
 		this.xpath.setNamespaceContext(context);
 	}
-
-	public boolean eval(InputSource is, String xpath) throws ProcessorException {
+	
+	public String eval(InputSource is, String xpath) throws ProcessorException {
 		try {
 			XPathExpression expression = this.xpath.compile(xpath);
 			String eval = (String) expression.evaluate(is);
 			LOGGER.debug("Eval: " + eval);
-			return Boolean.valueOf(eval);
+			return eval;
 		} catch (Exception e) {
-			throw new ProcessorException("Unable to evaluate query: " + xpath);
+			throw new ProcessorException("Unable to evaluate XPath query: " + xpath);
 		}
 	}
 
-	public List<Boolean> evalList(InputSource is, String xpath) throws ProcessorException {
-		// TODO return type ?
+	private Violation eval(Rule rule, InputSource is, String xpath) throws ProcessorException {
+		try {
+			String eval = eval(is, xpath);
+			boolean fine = Boolean.valueOf(eval);
+			if(fine) {
+				return null;
+			} else {
+				return Util.formatViolation(rule);
+			}
+		} catch (ProcessorException e) {
+			throw e;
+		} catch (Exception e) {
+			LOGGER.error("Unable to manage XPath query: " + xpath);
+			throw new ProcessorException("Unable to manage XPath query: " + xpath);
+		}
+	}
+
+	private List<Violation> evalList(Rule rule, InputSource is, String xpath) throws ProcessorException {
 		try {
 			XPathExpression expression = this.xpath.compile(xpath);
 			NodeList nodeList = (NodeList) expression.evaluate(is, XPathConstants.NODESET);
@@ -70,10 +88,10 @@ public final class XPathProcessor implements Processable {
 				return null;
 			}
 
-			List<Boolean> list = new ArrayList<>();
+			List<Violation> list = new ArrayList<>();
 
 			for (int i = 0; i < nodeList.getLength(); i++) {
-				// TODO add to a list
+				list.add(Util.formatViolation(rule, (Integer)nodeList.item(i).getUserData("lineNumber")));
 			}
 
 			return list;
@@ -125,8 +143,7 @@ public final class XPathProcessor implements Processable {
 	}
 
 	@Override
-	public boolean process(Context context, TIBProcess process, Object impl) throws ProcessorException {
-		// TODO return type (list of violation?)
+	public List<Violation> process(Context context, TIBProcess process, Rule rule, Object impl) throws ProcessorException {
 		// TODO compensation for being able to retrieve a value helping the developer (e.g. bpws:link/@name) 
 
 		Xpath el = (Xpath) impl;
@@ -147,10 +164,16 @@ public final class XPathProcessor implements Processable {
 			InputSource is = new InputSource(process.getFilePath());
 
 			if (el.getType() == null) {
-				return eval(is, xpath);
+				Violation violation = eval(rule, is, xpath);
+				if(violation == null) {
+					return null;
+				} else {
+					List<Violation> violations = new ArrayList<>();
+					violations.add(violation);
+					return violations;
+				}
 			} else if (TYPE_NONE.equals(el.getType())) {
-				evalList(is, xpath);
-				return true;
+				return evalList(rule, is, xpath);
 			} else {
 				LOGGER.error("XPath type " + el.getType() + "not recognized");
 				throw new ProcessorException("XPath type " + el.getType() + "not recognized");

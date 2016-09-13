@@ -156,4 +156,9 @@ public class Violation {
         this.priority = value;
     }
 
+	@Override
+	public String toString() {
+		return "Violation [value=" + value + ", line=" + line + ", rule=" + rule + ", ruleset=" + ruleset
+				+ ", priority=" + priority + "]";
+	}
 }

@@ -15,9 +15,22 @@ import com.tibco.exchange.tibreview.exception.ParsingException;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
 
 public class RulesParser {
+	private static RulesParser instance = null;
 	private static final String SCHEMA_LOCATION = "src/main/resources/schemas/tibrules.xsd";
+	
+	private RulesParser() {
+		
+	}
+	
+	public static RulesParser getInstance() {
+		if(instance == null) {
+			instance = new RulesParser();
+		}
+		
+		return instance;
+	}
 
-	public static Tibrules parseFile(String file) throws ParsingException {
+	public Tibrules parseFile(String file) throws ParsingException {
 		File f = new File(file);
 
 		if (!f.exists()) {

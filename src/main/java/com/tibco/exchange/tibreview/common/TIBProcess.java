@@ -1,4 +1,4 @@
-package com.tibco.exchange.tibreview.view;
+package com.tibco.exchange.tibreview.common;
 
 public class TIBProcess {
 	private String filePath;

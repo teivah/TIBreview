@@ -75,4 +75,12 @@ public class Pmd {
         return this.file;
     }
 
+    public void setFile(List<File> file) {
+    	this.file = file;
+    }
+
+	@Override
+	public String toString() {
+		return "Pmd [file=" + file + "]";
+	}
 }

@@ -9,7 +9,7 @@ import com.tibco.exchange.tibreview.Main;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.model.parser.RulesParser;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
-import com.tibco.exchange.tibreview.processor.XPathProcessor;
+import com.tibco.exchange.tibreview.processor.processrule.XPathProcessor;
 
 public class Test {
 
@@ -30,7 +30,7 @@ public class Test {
 	}
 
 	public static void parsing() throws Exception {
-		Tibrules rules = RulesParser.parseFile("src/test/resources/tibrules.xml");
+		Tibrules rules = RulesParser.getInstance().parseFile("src/test/resources/tibrules.xml");
 		System.out.println(rules.getProcess().getRule().get(0).getImpl().getXpath());
 	}
 

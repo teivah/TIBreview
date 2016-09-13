@@ -13,6 +13,8 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 
 import com.tibco.exchange.tibreview.engine.Context;
+import com.tibco.exchange.tibreview.model.pmd.Violation;
+import com.tibco.exchange.tibreview.model.rules.Rule;
 
 public class Util {
 	@SuppressWarnings("unused")
@@ -63,5 +65,28 @@ public class Util {
 		}
 		
 		return input;
+	}
+	
+	public static Violation formatViolation(Rule rule) {
+		Violation violation = new Violation();
+		
+		violation.setPriority(rule.getPrority());
+		violation.setRule(rule.getName());
+		violation.setRuleset(rule.getRuleset());
+		violation.setValue(rule.getDescription());
+		
+		return violation;
+	}
+	
+	public static Violation formatViolation(Rule rule, int line) {
+		Violation violation = new Violation();
+		
+		violation.setLine(line);
+		violation.setPriority(rule.getPrority());
+		violation.setRule(rule.getName());
+		violation.setRuleset(rule.getRuleset());
+		violation.setValue(rule.getDescription());
+		
+		return violation;
 	}
 }

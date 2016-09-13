@@ -1,32 +1,34 @@
-package com.tibco.exchange.tibreview.processor;
+package com.tibco.exchange.tibreview.processor.processrule;
 
 import java.util.List;
 
+import com.tibco.exchange.tibreview.common.TIBProcess;
 import com.tibco.exchange.tibreview.engine.Context;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
+import com.tibco.exchange.tibreview.model.pmd.Violation;
 import com.tibco.exchange.tibreview.model.rules.Cond;
 import com.tibco.exchange.tibreview.model.rules.Else;
 import com.tibco.exchange.tibreview.model.rules.Elseif;
 import com.tibco.exchange.tibreview.model.rules.If;
-import com.tibco.exchange.tibreview.view.TIBProcess;
+import com.tibco.exchange.tibreview.model.rules.Rule;
 
-public final class CondProcessor implements Processable {
+public final class CondProcessor implements PRProcessable {
 	@Override
-	public boolean process(Context context, TIBProcess process, Object impl) throws ProcessorException {
+	public List<Violation> process(Context context, TIBProcess process, Rule rule, Object impl) throws ProcessorException {
 		Cond el = (Cond) impl;
 		
 		If ifCond = el.getIf();
 		IfProcessor ifProcessor = new IfProcessor();
-		if(ifProcessor.processCondition(context, process, ifCond)) {
-			return ifProcessor.process(context, process, ifCond);
+		if(ifProcessor.processCondition(context, process, rule, ifCond)) {
+			return ifProcessor.process(context, process, rule, ifCond);
 		}
 		
 		List<Elseif> elseConds = el.getElseif();
 		if(elseConds != null) {
 			ElseifProcessor elseifProcessor = new ElseifProcessor();
 			for(Elseif elseifCond : elseConds) {
-				if(elseifProcessor.processCondition(context, process, elseifCond)) {
-					return elseifProcessor.process(context, process, elseifCond);
+				if(elseifProcessor.processCondition(context, process, rule, elseifCond)) {
+					return elseifProcessor.process(context, process, rule, elseifCond);
 				}
 			}
 		}
@@ -34,9 +36,9 @@ public final class CondProcessor implements Processable {
 		Else elseCond = el.getElse();
 		if(elseCond != null) {
 			ElseProcessor elseProcessor = new ElseProcessor();
-			return elseProcessor.process(context, process, elseCond);
+			return elseProcessor.process(context, process, rule, elseCond);
 		}	
 		
-		return true;
+		return null;
 	}
 }

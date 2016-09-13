@@ -101,4 +101,12 @@ public class File {
         this.name = value;
     }
 
+    public void setViolation(List<Violation> violation) {
+		this.violation = violation;
+	}
+
+	@Override
+	public String toString() {
+		return "File [violation=" + violation + ", name=" + name + "]";
+	}
 }
