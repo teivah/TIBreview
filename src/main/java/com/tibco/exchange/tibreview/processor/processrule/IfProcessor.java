@@ -34,8 +34,7 @@ public final class IfProcessor implements PRProcessable, PRConditionProcessable 
 			return violations == null || violations.size() == 0;
 		} else if(el.getJava() != null) {
 			JavaProcessor processor = new JavaProcessor();
-			List<Violation> violations = processor.process(context, process, rule, el.getJava());
-			return violations == null || violations.size() == 0;
+			return processor.processCondition(context, process, rule, el.getJava());
 		} else {
 			return false;
 		}

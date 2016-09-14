@@ -12,7 +12,7 @@ import com.tibco.exchange.tibreview.model.rules.Java;
 import com.tibco.exchange.tibreview.model.rules.Rule;
 import com.tibco.exchange.tibreview.processor.processrule.java.PRJava;
 
-public class JavaProcessor implements PRProcessable {
+public class JavaProcessor implements PRProcessable, PRConditionProcessable {
 	private static final Logger LOGGER = Logger.getLogger(JavaProcessor.class);
 	private static final String BASE = "com.tibco.exchange.tibreview.processor.processrule.java.";
 
@@ -24,6 +24,21 @@ public class JavaProcessor implements PRProcessable {
 			Class<PRJava> c = (Class<PRJava>)Class.forName(BASE + el.getValue());
 			PRJava prJava = c.newInstance();
 			return prJava.process(context, process, rule, impl);
+		} catch(Exception e) {
+			LOGGER.error("Java rule " + el.getValue() + " processing error: " + e);
+			throw new ProcessorException("Java rule " + el.getValue() + " processing error", e);
+		}
+	}
+
+	@Override
+	public boolean processCondition(Context context, TIBProcess process, Rule rule, Object impl)
+			throws ProcessorException {
+		Java el = (Java) impl;
+		try {
+			@SuppressWarnings("unchecked")
+			Class<PRJava> c = (Class<PRJava>)Class.forName(BASE + el.getValue());
+			PRJava prJava = c.newInstance();
+			return prJava.processCondition(context, process, rule, impl);
 		} catch(Exception e) {
 			LOGGER.error("Java rule " + el.getValue() + " processing error: " + e);
 			throw new ProcessorException("Java rule " + el.getValue() + " processing error", e);

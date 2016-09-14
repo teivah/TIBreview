@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tibrules xmlns="exchange.tibco.com/tibreview" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="exchange.tibco.com/tibreview ../../main/resources/schemas/tibrules.xsd ">
+	<process>
+		<!-- Forbidden activity -->
+		<rule name="Copy File activity" ruleset="Forbidden activity"
+			prority="1" description="The Copy File activity is forbidden. You must use xx.">
+			<impl>
+				<cond>
+					<if>
+						<xpath>*processInfo*/@callable = 'false'</xpath>
+						<then><xpath>*processInfo*/@callable = 'true'</xpath></then>
+					</if>
+					<elseif>
+						<xpath>*processInfo*/@callable = 'true'</xpath>
+						<then><xpath>*processInfo*/@callable = 'false'</xpath></then>
+					</elseif>
+					<else>
+						<then><xpath>*processInfo*/@callable = 'false'</xpath></then>
+					</else>
+				</cond>
+			</impl>
+		</rule>
+	</process>
+	<xpathfunctions>
+		<xpathfunction id="process">/bpws:process</xpathfunction>
+		<xpathfunction id="scope">/bpws:process/bpws:scope</xpathfunction>
+		<xpathfunction id="flow">/bpws:process/bpws:scope/bpws:flow</xpathfunction>
+		<xpathfunction id="links">/bpws:process/bpws:scope/bpws:flow/bpws:links</xpathfunction>
+		<xpathfunction id="link">/bpws:process/bpws:scope/bpws:flow/bpws:links/bpws:link</xpathfunction>
+		<xpathfunction id="extensionActivity">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity</xpathfunction>
+		<xpathfunction id="extActivity">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:extActivity</xpathfunction>
+		<xpathfunction id="activityExtension">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:activityExtension</xpathfunction>
+		<xpathfunction id="activityExtensionConfig">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:activityExtension/tibex:config</xpathfunction>
+		<xpathfunction id="processInfo">/bpws:process/tibex:ProcessInfo</xpathfunction>
+		<xpathfunction id="receiveEvent">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
+		<xpathfunction id="eventSource">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
+		<xpathfunction id="documentation">/bpws:process/bpws:documentation</xpathfunction>
+	</xpathfunctions>
+</tibrules>

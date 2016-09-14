@@ -16,5 +16,4 @@ public class PRJavaTest extends PRJava {
 		System.out.println("Java rule: context=" + context + ", process=" + process + ", rule=" + rule + ", impl=" + impl);
 		return null;
 	}
-
 }

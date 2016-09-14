@@ -181,7 +181,7 @@ public final class XPathProcessor implements PRProcessable {
 			throw new ProcessorException(e);
 		}
 		
-		if(detail != null || !"".equals(detail)) {
+		if(detail != null && !"".equals(detail)) {
 			try {
 				detail = replaceFunctions(replaceProperties(cleanXPathRequest(detail), context), context);
 			} catch (Exception e) {
