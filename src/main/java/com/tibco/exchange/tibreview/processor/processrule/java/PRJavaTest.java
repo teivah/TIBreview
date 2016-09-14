@@ -13,7 +13,7 @@ public class PRJavaTest extends PRJava {
 	@Override
 	public List<Violation> process(Context context, TIBProcess process, Rule rule, Object impl)
 			throws ProcessorException {
-		System.out.println("Java rule: context=" + context + ", process=" + process + ", rule=" + rule + ", impl=" + impl);
+		System.out.println(process.getProcess().getName());
 		return null;
 	}
 	

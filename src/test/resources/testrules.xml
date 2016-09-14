@@ -6,15 +6,7 @@
 		<rule name="Copy File activity" ruleset="Forbidden activity"
 			prority="1" description="The Copy File activity is forbidden. You must use xx.">
 			<impl>
-				<cond>
-					<if>
-						<java>PRJavaTest</java>
-						<then><xpath>*processInfo*/@callable = 'true'</xpath></then>
-					</if>
-					<else>
-						<then><xpath>*processInfo*/@callable = 'false'</xpath></then>
-					</else>
-				</cond>
+				<java>PRJavaTest</java>
 			</impl>
 		</rule>
 	</process>
