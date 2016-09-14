@@ -167,8 +167,6 @@ public final class XPathProcessor implements PRProcessable {
 
 	@Override
 	public List<Violation> process(Context context, TIBProcess process, Rule rule, Object impl) throws ProcessorException {
-		// TODO compensation for being able to retrieve a value helping the developer (e.g. bpws:link/@name) 
-
 		Xpath el = (Xpath) impl;
 
 		String xpath = el.getValue();

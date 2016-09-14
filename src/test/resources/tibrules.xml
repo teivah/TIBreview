@@ -95,6 +95,7 @@
 				<java>PRJavaTest</java>
 			</impl>
 		</rule>
+		<!-- CIF conventions -->
 	</process>
 	<xpathfunctions>
 		<xpathfunction id="process">/bpws:process</xpathfunction>

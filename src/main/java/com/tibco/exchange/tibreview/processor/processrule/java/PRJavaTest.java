@@ -16,4 +16,10 @@ public class PRJavaTest extends PRJava {
 		System.out.println("Java rule: context=" + context + ", process=" + process + ", rule=" + rule + ", impl=" + impl);
 		return null;
 	}
+	
+	@Override
+	public boolean processCondition(Context context, TIBProcess process, Rule rule, Object impl)
+			throws ProcessorException {
+		return false;
+	}
 }
