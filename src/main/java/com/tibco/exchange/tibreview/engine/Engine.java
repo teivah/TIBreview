@@ -144,12 +144,20 @@ public class Engine {
 	
 	public void process() {
 		LOGGER.info("Engine processing start");
+		
+		//Test process
 		AssetProcessable processProcessor = new ProcessProcessor();
 		try {
 			processProcessor.process(context, tibrules, manager);
 		} catch (EngineException e) {
 			LOGGER.error("Unable to process processes: " + e);
 		}
+		
+		//Test MANIFEST
+		
+		//Test properties
+		
+		
 		LOGGER.info("Engine processing stop");
 		try {
 			generateOutput();

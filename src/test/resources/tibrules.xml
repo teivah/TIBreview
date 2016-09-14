@@ -95,6 +95,13 @@
 				<java>PRJavaTest</java>
 			</impl>
 		</rule>
+		<!--
+		Instead of JMS Queue Requestor use JMS Queue Sender and Wait for JMS Actives. Boz JMS queue requestor open a new primary thread. 
+		At least a catch all per sub service
+		Process structure 
+		 -->
+		
+		<!-- Property -->
 		<!-- CIF conventions -->
 	</process>
 	<xpathfunctions>
