@@ -170,22 +170,13 @@ public final class XPathProcessor implements PRProcessable {
 		Xpath el = (Xpath) impl;
 
 		String xpath = el.getValue();
-		String detail = el.getDetail();
 
 		try {
 			xpath = replaceFunctions(replaceProperties(cleanXPathRequest(xpath), context), context);
 		} catch (Exception e) {
 			LOGGER.error("XPath request [" + xpath + "] handling error: " + e.getMessage());
 			throw new ProcessorException(e);
-		}
-		
-		if(detail != null && !"".equals(detail)) {
-			try {
-				detail = replaceFunctions(replaceProperties(cleanXPathRequest(detail), context), context);
-			} catch (Exception e) {
-				LOGGER.warn("XPath detail [" + xpath + "] handling error: " + e.getMessage());
-			}
-		}
+		}		
 
 		LOGGER.debug("XPath request: " + xpath);
 
@@ -203,6 +194,15 @@ public final class XPathProcessor implements PRProcessable {
 					return violations;
 				}
 			} else if (TYPE_NONE.equals(el.getType())) {
+				String detail = el.getDetail();
+				if(detail != null && !"".equals(detail)) {
+					try {
+						detail = replaceFunctions(replaceProperties(cleanXPathRequest(detail), context), context);
+						LOGGER.debug("XPath detail request: " + detail);
+					} catch (Exception e) {
+						LOGGER.warn("XPath detail [" + xpath + "] handling error: " + e.getMessage());
+					}
+				}
 				return evalList(rule, is, xpath, detail);
 			} else {
 				LOGGER.error("XPath type " + el.getType() + "not recognized");

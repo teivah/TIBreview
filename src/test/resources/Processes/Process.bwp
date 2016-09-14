@@ -409,7 +409,7 @@
 			<element name="ReadActivityInputClass" type="tns:ReadActivityInputClass" />
 		</schema>
 	</tibex:Types>
-	<tibex:ProcessInfo callable="true" createdBy="harsanta"
+	<tibex:ProcessInfo callable="false" createdBy="harsanta"
 		createdOn="Mon Sep 12 22:24:07 CEST 2016" description="" modifiers="public"
 		productVersion="6.3.3 V23 2016-08-10" scalable="true" singleton="true"
 		stateless="false" type="IT" />

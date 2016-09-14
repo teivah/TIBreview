@@ -20,6 +20,6 @@ public class PRJavaTest extends PRJava {
 	@Override
 	public boolean processCondition(Context context, TIBProcess process, Rule rule, Object impl)
 			throws ProcessorException {
-		return false;
+		return true;
 	}
 }

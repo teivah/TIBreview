@@ -32,16 +32,12 @@ import com.tibco.exchange.tibreview.processor.processrule.ImplProcessor;
 
 public class Engine {
 	private final Tibrules tibrules;
-	private final List<String> processes;
-	private String inputType;
 	private String outputType;
 	private PMDManager manager;
 	private String targetPath;
 	private final Context context;
 	
 	private static final Logger LOGGER = Logger.getLogger(Engine.class);
-	private static final String PROCESS_EXTENSION = ".bwp";
-	private static final String PATH_PROCESSES = "/Processes";
 	public static final String INPUT_PROJECT = "project";
 	public static final String INPUT_PROCESS = "process";
 	public static final String OUTPUT_CSV = "csv";
@@ -58,43 +54,25 @@ public class Engine {
 		
 		//Init context
 		this.context = new Context();
+		this.context.setInputType(inputType);
+		this.context.setSource(sourcePath);
 		
 		//Init PMDManager
 		this.manager = new PMDManager();
 		
 		//Parse config
-		loadPropertiesFile(configPath);
+		loadConfigurationFile(configPath);
 		
 		//Parse xpathfunctions
 		loadXPathFunctions();
 		
 		LOGGER.debug("Context initialized: " + context);
-		
-		//Input
-		this.inputType = inputType;
-		if(INPUT_PROJECT.equals(inputType)) {
-			try {
-				this.processes = listProcesses(sourcePath + PATH_PROCESSES);
-			} catch (IOException e) {
-				throw new EngineException("Unable to list processes", e);
-			}
-		} else if(INPUT_PROCESS.equals(inputType)){
-			processes = new ArrayList<>();
-			processes.add(sourcePath);
-		} else {
-			processes = null;
-		}
-		LOGGER.debug("processes="+processes);
-		
+				
 		//Output
 		this.outputType = outputType;
 		
 		//Target
 		this.targetPath = targetPath;
-	}
-	
-	private List<String> listProcesses(String project) throws IOException {
-		return Util.listFile(project, PROCESS_EXTENSION);
 	}
 	
 	private void loadXPathFunctions() {
@@ -111,7 +89,7 @@ public class Engine {
 		}
 	}
 	
-	private void loadPropertiesFile(String configPath) throws EngineException {
+	private void loadConfigurationFile(String configPath) throws EngineException {
 		Properties properties = new Properties();
 		
 		try(InputStream is = new FileInputStream(configPath)) {
@@ -166,12 +144,17 @@ public class Engine {
 	
 	public void process() {
 		LOGGER.info("Engine processing start");
-		processProcesses();
+		AssetProcessable processProcessor = new ProcessProcessor();
+		try {
+			processProcessor.process(context, tibrules, manager);
+		} catch (EngineException e) {
+			LOGGER.error("Unable to process processes: " + e);
+		}
 		LOGGER.info("Engine processing stop");
 		try {
 			generateOutput();
 		} catch (EngineException e) {
-			LOGGER.error("Unable to generate output");
+			LOGGER.error("Unable to generate output: " + e);
 		}
 	}
 	
@@ -184,40 +167,6 @@ public class Engine {
 			}
 		} catch(ParsingException e) {
 			throw new EngineException(e);
-		}
-	}
-	
-	private void processProcesses() {
-		LOGGER.info("Process TIBCO processes");
-		for(String process : processes) {
-			TIBProcess tibProcess = new TIBProcess(process);
-			processProcess(tibProcess);
-		}
-	}
-	
-	private void processProcess(TIBProcess tibProcess) {
-		LOGGER.debug("Testing TIBCO process: " + tibProcess.getFilePath());
-		
-		List<Rule> rules = tibrules.getProcess().getRule();
-		
-		for(Rule rule : rules) {
-			try {
-				if(!context.getDisabledRules().containsKey(rule.getName())) {
-					LOGGER.debug("Applying rule: " + rule.getName());
-					
-					Impl impl = rule.getImpl();
-					ImplProcessor processor = new ImplProcessor();
-					try {
-						manager.addViolations(tibProcess.getFilePath(), processor.process(context, tibProcess, rule, impl));
-					} catch (ProcessorException e) {
-						LOGGER.error("Processing exception: " + e.getMessage());
-					}
-				} else {
-					LOGGER.debug("Rule " + rule.getName() + " is disabled");
-				}
-			} catch(Exception e) {
-				LOGGER.error("Processing exception: " + e.getMessage());
-			}
 		}
 	}
 }

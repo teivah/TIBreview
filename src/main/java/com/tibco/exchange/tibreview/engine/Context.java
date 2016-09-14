@@ -9,6 +9,8 @@ public class Context {
 	private Map<String, String> xpathFunctions;
 	private Map<String, String> disabledRules;
 	private Map<String, String> properties;
+	private String source;
+	private String inputType;
 
 	public Context() {
 		this.xpathFunctions = new HashMap<>();
@@ -39,11 +41,26 @@ public class Context {
 	public void setProperties(Map<String, String> properties) {
 		this.properties = properties;
 	}
+	
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public String getInputType() {
+		return inputType;
+	}
+
+	public void setInputType(String inputType) {
+		this.inputType = inputType;
+	}
 
 	@Override
 	public String toString() {
-		return "Context [xpathFunctions=" + Util.mapToString(xpathFunctions) + ", disabledRules="
-				+ Util.mapToString(disabledRules) + ", properties=" + Util.mapToString(properties) + "]";
+		return "Context [xpathFunctions=" + xpathFunctions + ", disabledRules=" + disabledRules + ", properties="
+				+ properties + ", source=" + source + ", inputType=" + inputType + "]";
 	}
-
 }
