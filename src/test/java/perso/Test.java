@@ -1,11 +1,12 @@
 package perso;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.xml.sax.InputSource;
 
-import com.tibco.exchange.tibreview.Main;
+import com.tibco.businessworks6.sonar.plugin.ProcessSource;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.model.parser.RulesParser;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
@@ -22,7 +23,9 @@ public class Test {
 		// Trash.list();
 		// Trash.xpath();
 		//Trash.regexp();
-		Main.main(main);
+		//Main.main(main);
+		ProcessSource ps = new ProcessSource(new File("src/test/resources/Processes/Process.bwp"));
+		System.out.println(ps.getProcessModel());
 	}
 	
 	public static void list() throws Exception {
