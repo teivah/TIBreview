@@ -3,10 +3,13 @@
 	xsi:schemaLocation="exchange.tibco.com/tibreview ../../main/resources/schemas/tibrules.xsd ">
 	<process>
 		<!-- Forbidden activity -->
-		<rule name="Copy File activity" ruleset="Forbidden activity"
-			prority="1" description="The Copy File activity is forbidden. You must use xx.">
+		<rule name="Multiple transitions join" ruleset="TIBCO conventions"
+			prority="1"
+			description="An Empty activity must be used to join multiple transitions in success.">
 			<impl>
-				<java>PRJavaTest</java>
+				<xpath type="none" detail= "//bpws:sources[count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHCONDITION']/@name]) > 0 and count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHNOCONDITION']/@name]) = 0]/../@name">					
+					//bpws:sources[count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHCONDITION']/@name]) > 0 and count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHNOCONDITION']/@name]) = 0]
+				</xpath>
 			</impl>
 		</rule>
 	</process>
@@ -24,5 +27,6 @@
 		<xpathfunction id="receiveEvent">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
 		<xpathfunction id="eventSource">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
 		<xpathfunction id="documentation">/bpws:process/bpws:documentation</xpathfunction>
+		<xpathfunction id="reply">//bpws:reply</xpathfunction>
 	</xpathfunctions>
 </tibrules>

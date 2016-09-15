@@ -13,9 +13,13 @@ import com.tibco.exchange.tibreview.processor.processrule.XPathProcessor;
 
 public class Test {
 
-	private static String[] main = { "-r", "src/test/resources/testrules.xml", "-c",
+//	private static String[] main = { "-r", "src/test/resources/testrules.xml", "-c",
+//			"src/test/resources/config.properties", "-i", "project", "-s",
+//			"src/test/resources", "-o", "pmd", "-t", "C:/tmp/output" };
+	
+	private static String[] main = { "-r", "src/test/resources/tibrules.xml", "-c",
 			"src/test/resources/config.properties", "-i", "project", "-s",
-			"src/test/resources", "-o", "pmd", "-t", "C:/tmp/output" };
+			"C:/pro/workspace/tibco_workspace2/Test", "-o", "pmd", "-t", "C:/tmp/output" };
 
 	public static void main(String[] args) throws Exception {
 		// Test.parsing();

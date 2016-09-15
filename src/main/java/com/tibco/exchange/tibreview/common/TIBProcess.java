@@ -1,18 +1,13 @@
 package com.tibco.exchange.tibreview.common;
 
-import java.io.File;
-
-import com.tibco.businessworks6.sonar.plugin.ProcessSource;
-import com.tibco.businessworks6.sonar.plugin.Process;
-
 public class TIBProcess {
 	private String filePath;
-	private Process process;
+	//private Process process;
 
 	public TIBProcess(String filePath) {
 		this.filePath = filePath;
 		//Lazy loading
-		this.process = null;
+		//this.process = null;
 	}
 	
 	public String getFilePath() {
@@ -23,12 +18,12 @@ public class TIBProcess {
 		this.filePath = filePath;
 	}
 	
-	public Process getProcess() {
-		if(process == null) {
-			process = new ProcessSource(new File(filePath)).getProcessModel();
-		}
-		return process;
-	}
+//	public Process getProcess() {
+//		if(process == null) {
+//			//process = new ProcessSource(new File(filePath)).getProcessModel();
+//		}
+//		return process;
+//	}
 
 	@Override
 	public String toString() {

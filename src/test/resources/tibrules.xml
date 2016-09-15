@@ -49,7 +49,7 @@
 			</impl>
 		</rule>
 		<!-- TIBCO standard conventions -->
-		<rule name="Process without activity" ruleset="TIBCO conventions" prority="1"
+		<rule name="Process without activity" ruleset="TIBCO convention" prority="1"
 			description="The process contains no activity. If the process is not used, you must remove it. Otherwise use at least a Mapper activity in between start and stop.">
 			<impl>
 				<xpath>
@@ -57,7 +57,7 @@
 				</xpath>
 			</impl>
 		</rule>
-		<rule name="Process containing too many activities" ruleset="TIBCO conventions" prority="1"
+		<rule name="Process containing too many activities" ruleset="TIBCO convention" prority="1"
 			description="The process contains too many activities. You should split it in new subprocesses.">
 			<impl>
 				<xpath>
@@ -65,7 +65,7 @@
 				</xpath>
 			</impl>
 		</rule>
-		<rule name="Default namespace" ruleset="TIBCO conventions" prority="1"
+		<rule name="Default namespace" ruleset="TIBCO convention" prority="1"
 			description="The use of the default TIBCO namespace is discouraged.">
 			<impl>
 				<xpath>
@@ -73,7 +73,7 @@
 				</xpath>
 			</impl>
 		</rule>
-		<rule name="Process description empty" ruleset="TIBCO conventions" prority="1"
+		<rule name="Process description empty" ruleset="TIBCO convention" prority="1"
 			description="A process description must be set.">
 			<impl>
 				<xpath>
@@ -81,7 +81,7 @@
 				</xpath>
 			</impl>
 		</rule>
-		<rule name="Conditioned transition not documented" ruleset="TIBCO conventions" prority="1"
+		<rule name="Conditioned transition not documented" ruleset="TIBCO convention" prority="1"
 			description="A conditioned transition is not documented. You must set a Label value.">
 			<impl>
 				<xpath type="none" detail="*link*[@tibex:linkType = 'SUCCESSWITHCONDITION' and not(boolean(@tibex:label))]/@name">
@@ -89,18 +89,71 @@
 				</xpath>
 			</impl>
 		</rule>
-		<rule name="Java" ruleset="TIBCO conventions" prority="1"
+		<rule name="Java" ruleset="TIBCO convention" prority="1"
 			description="A conditioned transition is not documented. You must set a Label value.">
 			<impl>
 				<java>PRJavaTest</java>
 			</impl>
 		</rule>
-		<!--
-		Instead of JMS Queue Requestor use JMS Queue Sender and Wait for JMS Actives. Boz JMS queue requestor open a new primary thread. 
-		At least a catch all per sub service
-		Process structure 
-		 -->
-		
+		<rule name="Critical section: Send HTTP Request" ruleset="TIBCO convention"
+			prority="1" description="A synchronous blocking Send HTTP Request activity must no be called within a critical section scope.">
+			<impl>
+				<xpath type="none" detail="*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity/../../@name">
+					*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity[@activityTypeID = 'bw.http.sendHTTPRequest']
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Critical section: Invoke REST API" ruleset="TIBCO convention"
+			prority="1" description="A synchronous blocking Invoke REST API activity must no be called within a critical section scope.">
+			<impl>
+				<xpath type="none" detail="*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity/../../@name">
+					*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity[@activityTypeID = 'bw.http.sendHTTPRequest']
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Critical section: Sleep" ruleset="TIBCO convention"
+			prority="1" description="A Sleep activity must no be called within a critical section scope.">
+			<impl>
+				<xpath type="none" detail="*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity[@activityTypeID = 'bw.generalactivities.sleep']/../../@name">
+					*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity[@activityTypeID = 'bw.generalactivities.sleep']
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Critical section: Invoke Binding" ruleset="TIBCO convention"
+			prority="1" description="An Invoke Binding activity must not be called within a critical section scope.">
+			<impl>
+				<xpath type="none" detail ="*scope*/.//bpws:scope[@tibex:group = 'critical' and .//bpws:invoke[@partnerLink = /*//bpws:partnerLink[boolean(./tibex:ReferenceBinding)]/@name]]/@name">
+					*scope*/.//bpws:scope[@tibex:group = 'critical' and .//bpws:invoke[@partnerLink = /*//bpws:partnerLink[boolean(./tibex:ReferenceBinding)]/@name]]
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Multiple transitions join" ruleset="TIBCO convention"
+			prority="1"
+			description="An Empty activity must be used to join multiple success transitions.">
+			<impl>
+				<xpath type="none" detail= "//bpws:targets[count(bpws:target [@linkName = ../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESS']/@name]) > 1]/../@name">
+					//bpws:targets[count(bpws:target [@linkName = ../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESS']/@name]) > 1]
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Multiple transitions join" ruleset="TIBCO convention"
+			prority="1"
+			description="An Empty activity must be used to join multiple success transitions.">
+			<impl>
+				<xpath type="none" detail= "//bpws:targets[count(bpws:target [@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESS']/@name]) > 1]/../@name">
+					//bpws:targets[count(bpws:target [@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESS']/@name]) > 1]
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Success with no matching condition transition missing" ruleset="TIBCO convention"
+			prority="1"
+			description="When at least one Success with condition transition is used, you must use a Success with no matching condition transition.">
+			<impl>
+				<xpath type="none" detail= "//bpws:sources[count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHCONDITION']/@name]) > 0 and count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHNOCONDITION']/@name]) = 0]/../@name">					
+					//bpws:sources[count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHCONDITION']/@name]) > 0 and count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHNOCONDITION']/@name]) = 0]
+				</xpath>
+			</impl>
+		</rule>
 		<!-- Property -->
 		<!-- CIF conventions -->
 	</process>
@@ -108,15 +161,14 @@
 		<xpathfunction id="process">/bpws:process</xpathfunction>
 		<xpathfunction id="scope">/bpws:process/bpws:scope</xpathfunction>
 		<xpathfunction id="flow">/bpws:process/bpws:scope/bpws:flow</xpathfunction>
-		<xpathfunction id="links">/bpws:process/bpws:scope/bpws:flow/bpws:links</xpathfunction>
-		<xpathfunction id="link">/bpws:process/bpws:scope/bpws:flow/bpws:links/bpws:link</xpathfunction>
-		<xpathfunction id="extensionActivity">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity</xpathfunction>
-		<xpathfunction id="extActivity">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:extActivity</xpathfunction>
-		<xpathfunction id="activityExtension">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:activityExtension</xpathfunction>
-		<xpathfunction id="activityExtensionConfig">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:activityExtension/tibex:config</xpathfunction>
+		<xpathfunction id="extensionActivity">//bpws:extensionActivity</xpathfunction>
+		<xpathfunction id="extActivity">//tibex:extActivity</xpathfunction>
+		<xpathfunction id="activityExtension">//tibex:activityExtension</xpathfunction>
+		<xpathfunction id="activityExtensionConfig">//tibex:config</xpathfunction>
 		<xpathfunction id="processInfo">/bpws:process/tibex:ProcessInfo</xpathfunction>
-		<xpathfunction id="receiveEvent">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
-		<xpathfunction id="eventSource">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
+		<xpathfunction id="receiveEvent">//bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
+		<xpathfunction id="eventSource">//bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
 		<xpathfunction id="documentation">/bpws:process/bpws:documentation</xpathfunction>
+		<xpathfunction id="reply">//bpws:reply</xpathfunction>
 	</xpathfunctions>
 </tibrules>
