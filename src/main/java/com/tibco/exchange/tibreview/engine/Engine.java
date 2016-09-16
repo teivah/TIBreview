@@ -21,13 +21,13 @@ import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.exception.EngineException;
 import com.tibco.exchange.tibreview.exception.ParsingException;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
-import com.tibco.exchange.tibreview.model.parser.RulesParser;
 import com.tibco.exchange.tibreview.model.pmd.Violation;
 import com.tibco.exchange.tibreview.model.rules.Impl;
 import com.tibco.exchange.tibreview.model.rules.Rule;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
 import com.tibco.exchange.tibreview.model.rules.Xpathfunction;
 import com.tibco.exchange.tibreview.model.rules.Xpathfunctions;
+import com.tibco.exchange.tibreview.parser.RulesParser;
 import com.tibco.exchange.tibreview.processor.processrule.ImplProcessor;
 
 public class Engine {

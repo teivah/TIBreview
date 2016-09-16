@@ -1,7 +1,9 @@
 package com.tibco.exchange.tibreview.engine;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Stack;
 
 import com.tibco.exchange.tibreview.common.Util;
 
@@ -11,11 +13,13 @@ public class Context {
 	private Map<String, String> properties;
 	private String source;
 	private String inputType;
+	private LinkedList<String> filenames;
 
 	public Context() {
 		this.xpathFunctions = new HashMap<>();
 		this.disabledRules = new HashMap<>();
 		this.properties = new HashMap<>();
+		this.filenames = new LinkedList<>();
 	}
 
 	public Map<String, String> getXpathFunctions() {
@@ -58,6 +62,10 @@ public class Context {
 		this.inputType = inputType;
 	}
 
+	public LinkedList<String> getFilenames() {
+		return filenames;
+	}
+	
 	@Override
 	public String toString() {
 		return "Context [xpathFunctions=" + xpathFunctions + ", disabledRules=" + disabledRules + ", properties="

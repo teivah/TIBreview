@@ -10,7 +10,9 @@ import com.tibco.exchange.tibreview.common.PMDManager;
 import com.tibco.exchange.tibreview.common.TIBProcess;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.exception.EngineException;
+import com.tibco.exchange.tibreview.exception.ParsingException;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
+import com.tibco.exchange.tibreview.model.pmd.Violation;
 import com.tibco.exchange.tibreview.model.rules.Impl;
 import com.tibco.exchange.tibreview.model.rules.Rule;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
@@ -51,34 +53,74 @@ public class ProcessProcessor implements AssetProcessable {
 	
 	private void processProcesses(Context context, Tibrules tibrules, PMDManager manager, List<String> processes) {
 		LOGGER.info("Process TIBCO processes");
+		List<TIBProcess> tibProcesses = new ArrayList<>();
 		for(String process : processes) {
-			TIBProcess tibProcess = new TIBProcess(process);
-			processProcess(context, tibrules, manager, tibProcess);
+			try {
+				TIBProcess tibProcess = new TIBProcess(process);
+				LOGGER.debug("Process: " + tibProcess);
+				tibProcesses.add(tibProcess);
+				processUnitProcess(context, tibrules, manager, tibProcess);
+			} catch(ParsingException e) {
+				LOGGER.error("Unable to parse process " + process + ": " + e);
+			}
 		}
+		
+		processGlobalProcess(context, tibrules, manager, tibProcesses);
 	}
 	
-	private void processProcess(Context context, Tibrules tibrules, PMDManager manager, TIBProcess tibProcess) {
-		LOGGER.debug("Testing TIBCO process: " + tibProcess.getFilePath());
+	private void processUnitProcess(Context context, Tibrules tibrules, PMDManager manager, TIBProcess tibProcess) {
+		LOGGER.debug("Testing unit TIBCO process: " + tibProcess.getFilePath());		
 		
 		List<Rule> rules = tibrules.getProcess().getRule();
 		
 		for(Rule rule : rules) {
-			try {
-				if(!context.getDisabledRules().containsKey(rule.getName())) {
-					LOGGER.debug("Applying rule: " + rule.getName());
-					
-					Impl impl = rule.getImpl();
-					ImplProcessor processor = new ImplProcessor();
-					try {
-						manager.addViolations(tibProcess.getFilePath(), processor.process(context, tibProcess, rule, impl));
-					} catch (ProcessorException e) {
-						LOGGER.error("Processing exception: " + e.getMessage());
+			if(!rule.isGlobal()) {
+				try {
+					if(!context.getDisabledRules().containsKey(rule.getName())) {
+						LOGGER.debug("Applying rule: " + rule.getName());
+						
+						Impl impl = rule.getImpl();
+						ImplProcessor processor = new ImplProcessor();
+						try {
+							manager.addViolations(tibProcess.getFilePath(), processor.process(context, tibProcess, rule, impl));
+						} catch (ProcessorException e) {
+							LOGGER.error("Processing exception: " + e.getMessage());
+						}
+					} else {
+						LOGGER.debug("Rule " + rule.getName() + " is disabled");
 					}
-				} else {
-					LOGGER.debug("Rule " + rule.getName() + " is disabled");
+				} catch(Exception e) {
+					LOGGER.error("Processing exception: " + e.getMessage());
 				}
-			} catch(Exception e) {
-				LOGGER.error("Processing exception: " + e.getMessage());
+			}
+		}
+	}
+	
+	private void processGlobalProcess(Context context, Tibrules tibrules, PMDManager manager, List<TIBProcess> tibProcesses) {
+		LOGGER.debug("Testing global TIBCO processes");
+		
+		List<Rule> rules = tibrules.getProcess().getRule();
+		
+		for(Rule rule : rules) {
+			if(rule.isGlobal()) {
+				try {
+					if(!context.getDisabledRules().containsKey(rule.getName())) {
+						LOGGER.debug("Applying rule: " + rule.getName());
+						
+						Impl impl = rule.getImpl();
+						ImplProcessor processor = new ImplProcessor();
+						try {
+							List<Violation> violations = processor.process(context, tibProcesses, rule, impl);
+							manager.addViolations(context.getFilenames(), violations);
+						} catch (ProcessorException e) {
+							LOGGER.error("Processing exception: " + e.getMessage());
+						}
+					} else {
+						LOGGER.debug("Rule " + rule.getName() + " is disabled");
+					}
+				} catch(Exception e) {
+					LOGGER.error("Processing exception: " + e.getMessage());
+				}
 			}
 		}
 	}

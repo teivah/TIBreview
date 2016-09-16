@@ -1,4 +1,4 @@
-package com.tibco.exchange.tibreview.model.parser;
+package com.tibco.exchange.tibreview.parser;
 
 import java.io.BufferedWriter;
 import java.io.File;

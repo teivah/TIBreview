@@ -7,8 +7,8 @@ import org.xml.sax.InputSource;
 
 import com.tibco.exchange.tibreview.Main;
 import com.tibco.exchange.tibreview.common.Util;
-import com.tibco.exchange.tibreview.model.parser.RulesParser;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
+import com.tibco.exchange.tibreview.parser.RulesParser;
 import com.tibco.exchange.tibreview.processor.processrule.XPathProcessor;
 
 public class Test {
@@ -17,16 +17,33 @@ public class Test {
 //			"src/test/resources/config.properties", "-i", "project", "-s",
 //			"src/test/resources", "-o", "pmd", "-t", "C:/tmp/output" };
 	
-	private static String[] main = { "-r", "src/test/resources/tibrules.xml", "-c",
+	private static String[] main = { "-r", "src/test/resources/testrules.xml", "-c",
 			"src/test/resources/config.properties", "-i", "project", "-s",
 			"C:/pro/workspace/tibco_workspace2/Test", "-o", "pmd", "-t", "C:/tmp/output" };
 
+	private static final String PROCESSES_PACKAGE = "Processes";
+	private static final String PACKAGE_DELIMITER = ".";
+	private static final String PROCESS_EXTENSION = ".bwp";
+	
 	public static void main(String[] args) throws Exception {
 		// Test.parsing();
 		// Trash.list();
 		// Trash.xpath();
 		//Trash.regexp();
+//		String tmp = "adzaddza.dzadza.Processes.package.subpackage.Test.bwp";
+//		String PROCESS_PACKAGE_DELIMITER = PACKAGE_DELIMITER + PROCESSES_PACKAGE + PACKAGE_DELIMITER;
+//
+//		tmp = tmp.substring(0, tmp.indexOf(PROCESS_EXTENSION));
+//		int a = tmp.indexOf(PROCESS_PACKAGE_DELIMITER);
+//		int b = tmp.lastIndexOf(PACKAGE_DELIMITER);
+//		
+//		System.out.println(tmp.substring(a + PROCESS_PACKAGE_DELIMITER.length(), b));
+//		System.out.println(tmp.substring(b + 1, tmp.length()));
+//		
+//		
+//		
 		Main.main(main);
+		
 		//ProcessSource ps = new ProcessSource(new File("src/test/resources/Processes/Process.bwp"));
 		//System.out.println(ps.getProcessModel());
 	}

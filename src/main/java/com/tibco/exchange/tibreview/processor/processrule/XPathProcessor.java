@@ -30,7 +30,7 @@ public final class XPathProcessor implements PRProcessable {
 	public static final String[] TIBCO_NAMESPACES = { "bpws",
 			"http://docs.oasis-open.org/wsbpel/2.0/process/executable", "tibex",
 			"http://www.tibco.com/bpel/2007/extensions", "bwext", "http://tns.tibco.com/bw/model/core/bwext", "xsl",
-			"http://www.w3.org/1999/XSL/Transform" };
+			"http://www.w3.org/1999/XSL/Transform", "notation", "http://www.eclipse.org/gmf/runtime/1.0.2/notation"};
 	private static XPathProcessor INSTANCE = null;
 	private static String DELIMITER_PROPERTY = "%";
 	private static String DELIMITER_FUNCTION = "*";

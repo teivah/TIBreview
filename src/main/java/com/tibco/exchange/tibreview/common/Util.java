@@ -1,7 +1,9 @@
 package com.tibco.exchange.tibreview.common;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -12,11 +14,17 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import org.apache.log4j.Logger;
 
 import com.tibco.exchange.tibreview.engine.Context;
+import com.tibco.exchange.tibreview.exception.ParsingException;
 import com.tibco.exchange.tibreview.model.pmd.Violation;
 import com.tibco.exchange.tibreview.model.rules.Rule;
+import com.tibco.exchange.tibreview.model.sax.PartnerLinkModel;
+import com.tibco.exchange.tibreview.parser.ProcessHandler;
 
 public class Util {
 	@SuppressWarnings("unused")
@@ -105,5 +113,22 @@ public class Util {
 	
 	public static String getCurrentTimestamp() {
 		return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+	}
+	
+	public static ProcessHandler handleProcess(String filePath) throws ParsingException {
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+        try {
+            InputStream    xmlInput  =
+                new FileInputStream(filePath);
+
+            SAXParser      saxParser = factory.newSAXParser();
+            ProcessHandler handler   = new ProcessHandler();
+            saxParser.parse(xmlInput, handler);
+
+            return handler;
+        } catch (Exception e) {
+            LOGGER.error("Error while handling process " + filePath + ": " + e);
+            throw new ParsingException("Error while handling process " + filePath, e);
+        }
 	}
 }

@@ -54,6 +54,8 @@ public class Rule {
     protected Integer prority;
     @XmlAttribute(name = "description")
     protected String description;
+    @XmlAttribute(name = "global")
+    protected boolean global;
 
     /**
      * Gets the value of the impl property.
@@ -174,5 +176,12 @@ public class Rule {
     public void setDescription(String value) {
         this.description = value;
     }
-
+    
+    public boolean isGlobal() {
+		return global;
+	}
+    
+    public void setGlobal(boolean global) {
+		this.global = global;
+	}
 }

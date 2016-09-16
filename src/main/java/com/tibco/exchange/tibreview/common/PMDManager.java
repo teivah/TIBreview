@@ -2,16 +2,17 @@ package com.tibco.exchange.tibreview.common;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
 import com.tibco.exchange.tibreview.exception.ParsingException;
-import com.tibco.exchange.tibreview.model.parser.PMDParser;
 import com.tibco.exchange.tibreview.model.pmd.File;
 import com.tibco.exchange.tibreview.model.pmd.Pmd;
 import com.tibco.exchange.tibreview.model.pmd.Violation;
+import com.tibco.exchange.tibreview.parser.PMDParser;
 
 public class PMDManager {
 	private static final Logger LOGGER = Logger.getLogger(PMDManager.class);
@@ -38,6 +39,29 @@ public class PMDManager {
 			current.put(file, list);
 		} else {
 			list.addAll(violations);
+		}
+	}
+	
+	public void addViolations(LinkedList<String> filenames, List<Violation> violations) {
+		if(violations == null) {
+			return;
+		}
+		
+		for(Violation violation : violations) {
+			String file = null;
+			if(filenames.isEmpty()) {
+				file = "Global";
+			} else {
+				file = filenames.removeFirst();
+			}
+			List<Violation> list = current.get(file);
+			if(list == null) {
+				list = new ArrayList<>();
+				list.add(violation);
+				current.put(file, list);
+			} else {
+				list.add(violation);
+			}
 		}
 	}
 	

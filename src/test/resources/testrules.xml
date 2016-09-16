@@ -2,13 +2,11 @@
 <tibrules xmlns="exchange.tibco.com/tibreview" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="exchange.tibco.com/tibreview ../../main/resources/schemas/tibrules.xsd ">
 	<process>
-		<!-- Forbidden activity -->
-		<rule name="Multiple transitions join" ruleset="TIBCO conventions"
-			prority="1"
-			description="An Empty activity must be used to join multiple transitions in success.">
+		<rule name="Catch All missing" ruleset="TIBCO conventions" prority="1"
+			description="A Catch All scope must be implemented.">
 			<impl>
-				<xpath type="none" detail= "//bpws:sources[count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHCONDITION']/@name]) > 0 and count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHNOCONDITION']/@name]) = 0]/../@name">					
-					//bpws:sources[count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHCONDITION']/@name]) > 0 and count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHNOCONDITION']/@name]) = 0]
+				<xpath>
+					boolean(//bpws:catchAll)
 				</xpath>
 			</impl>
 		</rule>
@@ -17,16 +15,16 @@
 		<xpathfunction id="process">/bpws:process</xpathfunction>
 		<xpathfunction id="scope">/bpws:process/bpws:scope</xpathfunction>
 		<xpathfunction id="flow">/bpws:process/bpws:scope/bpws:flow</xpathfunction>
-		<xpathfunction id="links">/bpws:process/bpws:scope/bpws:flow/bpws:links</xpathfunction>
-		<xpathfunction id="link">/bpws:process/bpws:scope/bpws:flow/bpws:links/bpws:link</xpathfunction>
-		<xpathfunction id="extensionActivity">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity</xpathfunction>
-		<xpathfunction id="extActivity">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:extActivity</xpathfunction>
-		<xpathfunction id="activityExtension">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:activityExtension</xpathfunction>
-		<xpathfunction id="activityExtensionConfig">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:activityExtension/tibex:config</xpathfunction>
+		<xpathfunction id="extensionActivity">//bpws:extensionActivity</xpathfunction>
+		<xpathfunction id="extActivity">//tibex:extActivity</xpathfunction>
+		<xpathfunction id="activityExtension">//tibex:activityExtension</xpathfunction>
+		<xpathfunction id="activityExtensionConfig">//tibex:config</xpathfunction>
 		<xpathfunction id="processInfo">/bpws:process/tibex:ProcessInfo</xpathfunction>
-		<xpathfunction id="receiveEvent">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
-		<xpathfunction id="eventSource">/bpws:process/bpws:scope/bpws:flow/bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
+		<xpathfunction id="receiveEvent">//bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
+		<xpathfunction id="eventSource">//bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
 		<xpathfunction id="documentation">/bpws:process/bpws:documentation</xpathfunction>
 		<xpathfunction id="reply">//bpws:reply</xpathfunction>
+		<xpathfunction id="layoutConstraint">//layoutConstraint</xpathfunction>
+		<xpathfunction id="diagram">//notation:Diagram</xpathfunction>
 	</xpathfunctions>
 </tibrules>
