@@ -6,6 +6,7 @@
 	<xs:complexType name="tibrules">
 		<xs:sequence>
 			<xs:element name="process" type="process" minOccurs="0" />
+			<xs:element name="resource" type="resource" minOccurs="0" />
 			<xs:element name="xpathfunctions" type="xpathfunctions"
 				minOccurs="0" />
 		</xs:sequence>
@@ -13,7 +14,13 @@
 
 	<xs:complexType name="process">
 		<xs:sequence>
-			<xs:element name="rule" type="rule" maxOccurs="unbounded" />
+			<xs:element name="rule" type="rule" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="resource">
+		<xs:sequence>
+			<xs:element name="rule" type="resourcerule" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 
@@ -27,7 +34,7 @@
 	<xs:complexType name="xpathfunction">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-				<xs:attribute name="id" type="xs:string"/>
+				<xs:attribute name="id" type="xs:string" />
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -41,6 +48,28 @@
 		<xs:attribute type="xs:int" name="prority" />
 		<xs:attribute type="xs:string" name="description" />
 		<xs:attribute type="xs:boolean" name="global" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="resourcerule">
+		<xs:sequence>
+			<xs:element name="configuration" type="configuration" />
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="name" />
+		<xs:attribute type="xs:string" name="ruleset" />
+		<xs:attribute type="xs:int" name="prority" />
+		<xs:attribute type="xs:string" name="description" />
+	</xs:complexType>
+
+	<xs:complexType name="configuration">
+		<xs:sequence>
+			<xs:element name="property" type="property" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="type" />
+	</xs:complexType>
+
+	<xs:complexType name="property">
+		<xs:attribute name="name" type="xs:string" />
+		<xs:attribute name="check" type="xs:string" />
 	</xs:complexType>
 
 	<xs:complexType name="impl">
@@ -103,8 +132,8 @@
 	<xs:complexType name="xpath">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-				<xs:attribute name="type" type="xs:string" use="optional"/>
-				<xs:attribute name="detail" type="xs:string" use="optional"/>
+				<xs:attribute name="type" type="xs:string" use="optional" />
+				<xs:attribute name="detail" type="xs:string" use="optional" />
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>

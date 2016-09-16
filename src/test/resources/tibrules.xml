@@ -169,7 +169,8 @@
 				<java>PRCycleCheck</java>
 			</impl>
 		</rule>
-		<rule name="Process size: width" ruleset="TIBCO conventions" prority="5"
+		<rule name="Process size: width" ruleset="TIBCO conventions"
+			prority="5"
 			description="The process width is too great. You may consider to redesign your process or to split it in another subprocess.">
 			<impl>
 				<xpath>
@@ -177,7 +178,8 @@
 				</xpath>
 			</impl>
 		</rule>
-		<rule name="Process size: height" ruleset="TIBCO conventions" prority="5"
+		<rule name="Process size: height" ruleset="TIBCO conventions"
+			prority="5"
 			description="The process height is too great. You may consider to redesign your process or to split it in another subprocess.">
 			<impl>
 				<xpath>
@@ -185,8 +187,8 @@
 				</xpath>
 			</impl>
 		</rule>
-		<rule name="Catch All missing" ruleset="TIBCO conventions" prority="1"
-			description="A Catch All scope must be implemented.">
+		<rule name="Catch All missing" ruleset="TIBCO conventions"
+			prority="1" description="A Catch All scope must be implemented.">
 			<impl>
 				<xpath>
 					boolean(//bpws:catchAll)
@@ -194,6 +196,70 @@
 			</impl>
 		</rule>
 	</process>
+	<resource>
+		<rule name="HTTP Client resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="HTTP Client resource configuration error.">
+			<configuration type="http:HttpClientConfiguration">
+				<property name="maxTotalConnections" check="configurable" />
+				<property name="retryCount" check="configurable" />
+				<property name="connectionTimeout" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="FTP Connection resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="FTP Connection resource configuration error.">
+			<configuration type="ftpconnection:ftpconnection">
+				<property name="host" check="configurable" />
+				<property name="port" check="configurable" />
+				<property name="userName" check="configurable" />
+				<property name="password" check="configurable" />
+				<property name="timeout" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="HTTP Connector resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="HTTP Connector resource configuration error.">
+			<configuration type="httpconnector:HttpConnectorConfiguration">
+				<property name="host" check="configurable" />
+				<property name="port" check="configurable" />
+				<property name="acceptQueueSize" check="configurable" />
+				<property name="acceptors" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="JDBC Connection resource configuration error"
+			ruleset="TIBCO conventions" prority="2"
+			description="JDBC Connection resource configuration error.">
+			<configuration type="jdbc:JdbcDataSource">
+				<property name="maxConnections" check="configurable" />
+				<property name="username" check="configurable" />
+				<property name="password" check="configurable" />
+				<property name="jdbcDriver" check="configurable" />
+				<property name="dbURL" check="configurable" />
+				<property name="loginTimeout" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="JMS Connection resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="JMS Connection resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory">
+				<property name="jndiName" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="JNDI Connection resource configuration error"
+			ruleset="TIBCO conventions" prority="2"
+			description="JNDI Connection resource configuration error.">
+			<configuration type="jms:JNDIConnection">
+				<property name="initialContextFactory" check="configurable" />
+				<property name="providerUrl" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="TCP Connection resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="TCP Connection resource configuration error.">
+			<configuration type="tcpconnection:tcpconnection">
+				<property name="host" check="configurable" />
+				<property name="port" check="configurable" />
+				<property name="maxConnections" check="configurable" />
+				<property name="maxWaitTime" check="configurable" />
+			</configuration>
+		</rule>
+	</resource>
 	<xpathfunctions>
 		<xpathfunction id="process">/bpws:process</xpathfunction>
 		<xpathfunction id="scope">/bpws:process/bpws:scope</xpathfunction>

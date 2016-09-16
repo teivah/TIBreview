@@ -13,3 +13,4 @@ buildNumber.properties
 .metadata
 *.tmp
 .settings
+src/test/java/perso/

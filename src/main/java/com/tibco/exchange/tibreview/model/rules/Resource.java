@@ -17,16 +17,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for process complex type.
+ * <p>Java class for resource complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="process">
+ * &lt;complexType name="resource">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="rule" type="{exchange.tibco.com/tibreview}rule" maxOccurs="unbounded"/>
+ *         &lt;element name="rule" type="{exchange.tibco.com/tibreview}resourcerule" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,13 +36,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "process", propOrder = {
+@XmlType(name = "resource", propOrder = {
     "rule"
 })
-public class Process {
+public class Resource {
 
     @XmlElement(required = true)
-    protected List<Rule> rule;
+    protected List<Resourcerule> rule;
 
     /**
      * Gets the value of the rule property.
@@ -62,13 +62,13 @@ public class Process {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Rule }
+     * {@link Resourcerule }
      * 
      * 
      */
-    public List<Rule> getRule() {
+    public List<Resourcerule> getRule() {
         if (rule == null) {
-            rule = new ArrayList<Rule>();
+            rule = new ArrayList<Resourcerule>();
         }
         return this.rule;
     }

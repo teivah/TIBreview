@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -16,19 +15,13 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 
 import com.tibco.exchange.tibreview.common.PMDManager;
-import com.tibco.exchange.tibreview.common.TIBProcess;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.exception.EngineException;
 import com.tibco.exchange.tibreview.exception.ParsingException;
-import com.tibco.exchange.tibreview.exception.ProcessorException;
-import com.tibco.exchange.tibreview.model.pmd.Violation;
-import com.tibco.exchange.tibreview.model.rules.Impl;
-import com.tibco.exchange.tibreview.model.rules.Rule;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
 import com.tibco.exchange.tibreview.model.rules.Xpathfunction;
 import com.tibco.exchange.tibreview.model.rules.Xpathfunctions;
 import com.tibco.exchange.tibreview.parser.RulesParser;
-import com.tibco.exchange.tibreview.processor.processrule.ImplProcessor;
 
 public class Engine {
 	private final Tibrules tibrules;
@@ -38,6 +31,7 @@ public class Engine {
 	private final Context context;
 	
 	private static final Logger LOGGER = Logger.getLogger(Engine.class);
+	public static final String INPUT_RESOURCE = "resource";
 	public static final String INPUT_PROJECT = "project";
 	public static final String INPUT_PROCESS = "process";
 	public static final String OUTPUT_CSV = "csv";
@@ -153,10 +147,13 @@ public class Engine {
 			LOGGER.error("Unable to process processes: " + e);
 		}
 		
-		//Test MANIFEST
-		
-		//Test properties
-		
+		//Test resource
+		AssetProcessable resourceProcessor = new ResourceProcessor();
+		try {
+			resourceProcessor.process(context, tibrules, manager);
+		} catch (EngineException e) {
+			LOGGER.error("Unable to process resources: " + e);
+		}
 		
 		LOGGER.info("Engine processing stop");
 		try {

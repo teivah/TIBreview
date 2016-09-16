@@ -16,22 +16,21 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for rule complex type.
+ * <p>Java class for resourcerule complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="rule">
+ * &lt;complexType name="resourcerule">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="impl" type="{exchange.tibco.com/tibreview}impl"/>
+ *         &lt;element name="configuration" type="{exchange.tibco.com/tibreview}configuration"/>
  *       &lt;/sequence>
  *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="ruleset" type="{http://www.w3.org/2001/XMLSchema}string" />
  *       &lt;attribute name="prority" type="{http://www.w3.org/2001/XMLSchema}int" />
  *       &lt;attribute name="description" type="{http://www.w3.org/2001/XMLSchema}string" />
- *       &lt;attribute name="global" type="{http://www.w3.org/2001/XMLSchema}boolean" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -40,13 +39,13 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "rule", propOrder = {
-    "impl"
+@XmlType(name = "resourcerule", propOrder = {
+    "configuration"
 })
-public class Rule {
+public class Resourcerule {
 
     @XmlElement(required = true)
-    protected Impl impl;
+    protected Configuration configuration;
     @XmlAttribute(name = "name")
     protected String name;
     @XmlAttribute(name = "ruleset")
@@ -55,31 +54,29 @@ public class Rule {
     protected Integer prority;
     @XmlAttribute(name = "description")
     protected String description;
-    @XmlAttribute(name = "global")
-    protected Boolean global;
 
     /**
-     * Gets the value of the impl property.
+     * Gets the value of the configuration property.
      * 
      * @return
      *     possible object is
-     *     {@link Impl }
+     *     {@link Configuration }
      *     
      */
-    public Impl getImpl() {
-        return impl;
+    public Configuration getConfiguration() {
+        return configuration;
     }
 
     /**
-     * Sets the value of the impl property.
+     * Sets the value of the configuration property.
      * 
      * @param value
      *     allowed object is
-     *     {@link Impl }
+     *     {@link Configuration }
      *     
      */
-    public void setImpl(Impl value) {
-        this.impl = value;
+    public void setConfiguration(Configuration value) {
+        this.configuration = value;
     }
 
     /**
@@ -176,30 +173,6 @@ public class Rule {
      */
     public void setDescription(String value) {
         this.description = value;
-    }
-
-    /**
-     * Gets the value of the global property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
-     */
-    public Boolean isGlobal() {
-        return global == null ? false : global;
-    }
-
-    /**
-     * Sets the value of the global property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
-     */
-    public void setGlobal(Boolean value) {
-        this.global = value;
     }
 
 }

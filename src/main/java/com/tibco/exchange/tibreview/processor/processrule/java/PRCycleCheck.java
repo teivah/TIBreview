@@ -11,7 +11,6 @@ import com.tibco.exchange.tibreview.common.TIBProcess;
 import com.tibco.exchange.tibreview.common.TIBProcessManager;
 import com.tibco.exchange.tibreview.common.Util;
 import com.tibco.exchange.tibreview.engine.Context;
-import com.tibco.exchange.tibreview.engine.Engine;
 import com.tibco.exchange.tibreview.exception.ProcessorException;
 import com.tibco.exchange.tibreview.model.pmd.Violation;
 import com.tibco.exchange.tibreview.model.rules.Rule;

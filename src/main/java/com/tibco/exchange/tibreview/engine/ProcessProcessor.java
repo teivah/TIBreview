@@ -17,11 +17,12 @@ import com.tibco.exchange.tibreview.model.rules.Impl;
 import com.tibco.exchange.tibreview.model.rules.Rule;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
 import com.tibco.exchange.tibreview.processor.processrule.ImplProcessor;
+import com.tibco.exchange.tibreview.processor.processrule.PRProcessable;
 
 public class ProcessProcessor implements AssetProcessable {
 	private static final String PATH_PROCESSES = "/Processes";
 	private static final String PROCESS_EXTENSION = ".bwp";
-	private static final Logger LOGGER = Logger.getLogger(AssetProcessable.class);
+	private static final Logger LOGGER = Logger.getLogger(ProcessProcessor.class);
 	
 	@Override
 	public void process(Context context, Tibrules tibrules, PMDManager manager) throws EngineException {
@@ -57,7 +58,6 @@ public class ProcessProcessor implements AssetProcessable {
 		for(String process : processes) {
 			try {
 				TIBProcess tibProcess = new TIBProcess(process);
-				LOGGER.debug("Process: " + tibProcess);
 				tibProcesses.add(tibProcess);
 				processUnitProcess(context, tibrules, manager, tibProcess);
 			} catch(ParsingException e) {
@@ -80,7 +80,7 @@ public class ProcessProcessor implements AssetProcessable {
 						LOGGER.debug("Applying rule: " + rule.getName());
 						
 						Impl impl = rule.getImpl();
-						ImplProcessor processor = new ImplProcessor();
+						PRProcessable processor = new ImplProcessor();
 						try {
 							manager.addViolations(tibProcess.getFilePath(), processor.process(context, tibProcess, rule, impl));
 						} catch (ProcessorException e) {

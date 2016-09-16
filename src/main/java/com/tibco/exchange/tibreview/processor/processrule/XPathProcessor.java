@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import com.tibco.exchange.tibreview.common.Constants;
 import com.tibco.exchange.tibreview.common.ContextReplaceable;
 import com.tibco.exchange.tibreview.common.NamespaceContextMap;
 import com.tibco.exchange.tibreview.common.TIBProcess;
@@ -27,10 +28,6 @@ public final class XPathProcessor implements PRProcessable {
 	private final XPath xpath;
 
 	private static final Logger LOGGER = Logger.getLogger(PRProcessable.class);
-	public static final String[] TIBCO_NAMESPACES = { "bpws",
-			"http://docs.oasis-open.org/wsbpel/2.0/process/executable", "tibex",
-			"http://www.tibco.com/bpel/2007/extensions", "bwext", "http://tns.tibco.com/bw/model/core/bwext", "xsl",
-			"http://www.w3.org/1999/XSL/Transform", "notation", "http://www.eclipse.org/gmf/runtime/1.0.2/notation"};
 	private static XPathProcessor INSTANCE = null;
 	private static String DELIMITER_PROPERTY = "%";
 	private static String DELIMITER_FUNCTION = "*";
@@ -45,7 +42,7 @@ public final class XPathProcessor implements PRProcessable {
 	}
 
 	private XPathProcessor() {
-		NamespaceContext context = new NamespaceContextMap(TIBCO_NAMESPACES);
+		NamespaceContext context = new NamespaceContextMap(Constants.PROCESSES_NAMESPACES);
 		XPathFactory factory = XPathFactory.newInstance();
 		this.xpath = factory.newXPath();
 		this.xpath.setNamespaceContext(context);

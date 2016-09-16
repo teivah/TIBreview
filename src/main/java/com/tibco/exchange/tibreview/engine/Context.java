@@ -3,9 +3,6 @@ package com.tibco.exchange.tibreview.engine;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Stack;
-
-import com.tibco.exchange.tibreview.common.Util;
 
 public class Context {
 	private Map<String, String> xpathFunctions;

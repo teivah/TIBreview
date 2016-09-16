@@ -12,83 +12,81 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for xpathfunction complex type.
+ * <p>Java class for property complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="xpathfunction">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
- *       &lt;attribute name="id" type="{http://www.w3.org/2001/XMLSchema}string" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
+ * &lt;complexType name="property">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;attribute name="name" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="check" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
  * 
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "xpathfunction", propOrder = {
-    "value"
-})
-public class Xpathfunction {
+@XmlType(name = "property")
+public class Property {
 
-    @XmlValue
-    protected String value;
-    @XmlAttribute(name = "id")
-    protected String id;
+    @XmlAttribute(name = "name")
+    protected String name;
+    @XmlAttribute(name = "check")
+    protected String check;
 
     /**
-     * Gets the value of the value property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getValue() {
-        return value;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setValue(String value) {
-        this.value = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the check property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getId() {
-        return id;
+    public String getCheck() {
+        return check;
     }
 
     /**
-     * Sets the value of the id property.
+     * Sets the value of the check property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setId(String value) {
-        this.id = value;
+    public void setCheck(String value) {
+        this.check = value;
     }
 
 }
