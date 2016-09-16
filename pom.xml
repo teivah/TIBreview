@@ -36,6 +36,10 @@
 							<mainClass>com.tibco.exchange.tibreview.Main</mainClass>
 						</manifest>
 					</archive>
+					<includes>
+						<include>**/pmd.xsd</include>
+						<include>**/tibrules.xsd</include>
+					</includes>
 					<excludes>
 						<exclude>**/log4j.properties</exclude>
 					</excludes>
@@ -54,6 +58,10 @@
 							<mainClass>com.tibco.exchange.tibreview.Main</mainClass>
 						</manifest>
 					</archive>
+					<includes>
+						<include>**/pmd.xsd</include>
+						<include>**/tibrules.xsd</include>
+					</includes>
 					<excludes>
 						<exclude>**/log4j.properties</exclude>
 					</excludes>
