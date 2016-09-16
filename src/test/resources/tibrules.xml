@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tibrules xmlns="exchange.tibco.com/tibreview" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="exchange.tibco.com/tibreview ../../main/resources/schemas/tibrules.xsd ">
+	<process>
+		<!-- Forbidden activity -->
+		<rule name="Copy File activity" ruleset="Forbidden activity"
+			prority="5"
+			description="For performance concerns, the Copy File activity is forbidden.">
+			<impl>
+				<xpath>
+					count(*activityExtensionConfig*/bwext:BWActivity[@activityTypeID = 'bw.file.copy']) = 0
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Checkpoint activity" ruleset="Forbidden activity"
+			prority="1" description="The Checkpoint activity is forbidden.">
+			<impl>
+				<xpath>
+					count(*extActivity*[@type = 'bw.internal.checkpoint']) = 0
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="SQL Direct activity" ruleset="Forbidden activity"
+			prority="3"
+			description="The SQL Direct activity is forbidden. You must use a JDBC Query activity or a JDBC Update activity">
+			<impl>
+				<xpath>
+					count(*activityExtensionConfig*/bwext:BWActivity[@activityTypeID = 'bw.jdbc.SQLDirect']) = 0
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="File Poller activity" ruleset="Forbidden activity"
+			prority="2"
+			description="The File Poller activity is forbidden. For improving the monitoring, you must use a Timer activity and a List Files activity.">
+			<impl>
+				<xpath>
+					count(*eventSource*/bwext:BWActivity[@activityTypeID = 'bw.file.poller']) = 0
+				</xpath>
+			</impl>
+		</rule>
+		<!-- Forbidden asset -->
+		<rule name="Direct subprocess" ruleset="Forbidden asset" prority="1"
+			description="Direct subprocesses are forbidden. You must use a service subprocess.">
+			<impl>
+				<xpath>
+					*processInfo*/@callable = 'false'
+				</xpath>
+			</impl>
+		</rule>
+		<!-- TIBCO standard conventions -->
+		<rule name="Process without activity" ruleset="TIBCO convention"
+			prority="3"
+			description="The process contains no activity. If the process is not used, you must remove it. Otherwise use at least a Mapper activity in between start and stop.">
+			<impl>
+				<xpath>
+					count(*extensionActivity*) > 0
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Process containing too many activities" ruleset="TIBCO convention"
+			prority="3"
+			description="The process contains too many activities. You should split it in new subprocesses.">
+			<impl>
+				<xpath>
+					%process.max.activities% > count(*extensionActivity*) 
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Default namespace" ruleset="TIBCO convention"
+			prority="5" description="The use of the default TIBCO namespace is discouraged.">
+			<impl>
+				<xpath>
+					not(contains(*process*/@targetNamespace, 'http://xmlns.example.com')) 
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Process description empty" ruleset="TIBCO convention"
+			prority="4" description="A process description must be set.">
+			<impl>
+				<xpath>
+					*documentation* != ''
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Conditioned transition not documented" ruleset="TIBCO convention"
+			prority="3"
+			description="A conditioned transition is not documented. You must set a Label value.">
+			<impl>
+				<xpath type="none"
+					detail="*link*[@tibex:linkType = 'SUCCESSWITHCONDITION' and not(boolean(@tibex:label))]/@name">
+					*link*[@tibex:linkType = 'SUCCESSWITHCONDITION' and not(boolean(@tibex:label))]
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Critical section: Send HTTP Request" ruleset="TIBCO convention"
+			prority="2"
+			description="A synchronous blocking Send HTTP Request activity must no be called within a critical section scope.">
+			<impl>
+				<xpath type="none"
+					detail="*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity/../../@name">
+					*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity[@activityTypeID = 'bw.http.sendHTTPRequest']
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Critical section: Invoke REST API" ruleset="TIBCO convention"
+			prority="2"
+			description="A synchronous blocking Invoke REST API activity must no be called within a critical section scope.">
+			<impl>
+				<xpath type="none"
+					detail="*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity/../../@name">
+					*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity[@activityTypeID = 'bw.http.sendHTTPRequest']
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Critical section: Sleep" ruleset="TIBCO convention"
+			prority="2"
+			description="A Sleep activity must no be called within a critical section scope.">
+			<impl>
+				<xpath type="none"
+					detail="*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity[@activityTypeID = 'bw.generalactivities.sleep']/../../@name">
+					*scope*/.//bpws:scope[@tibex:group = 'critical']/.//bwext:BWActivity[@activityTypeID = 'bw.generalactivities.sleep']
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Critical section: Invoke Binding" ruleset="TIBCO convention"
+			prority="2"
+			description="An Invoke Binding activity must not be called within a critical section scope.">
+			<impl>
+				<xpath type="none"
+					detail="*scope*/.//bpws:scope[@tibex:group = 'critical' and .//bpws:invoke[@partnerLink = /*//bpws:partnerLink[boolean(./tibex:ReferenceBinding)]/@name]]/@name">
+					*scope*/.//bpws:scope[@tibex:group = 'critical' and .//bpws:invoke[@partnerLink = /*//bpws:partnerLink[boolean(./tibex:ReferenceBinding)]/@name]]
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Multiple transitions join" ruleset="TIBCO convention"
+			prority="3"
+			description="An Empty activity must be used to join multiple success transitions.">
+			<impl>
+				<xpath type="none"
+					detail="//bpws:targets[count(bpws:target [@linkName = ../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESS']/@name]) > 1]/../@name">
+					//bpws:targets[count(bpws:target [@linkName = ../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESS']/@name]) > 1]
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Multiple transitions join" ruleset="TIBCO convention"
+			prority="3"
+			description="An Empty activity must be used to join multiple success transitions.">
+			<impl>
+				<xpath type="none"
+					detail="//bpws:targets[count(bpws:target [@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESS']/@name]) > 1]/../@name">
+					//bpws:targets[count(bpws:target [@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESS']/@name]) > 1]
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Success with no matching condition transition missing"
+			ruleset="TIBCO convention" prority="2"
+			description="When at least one Success with condition transition is used, you must use a Success with no matching condition transition.">
+			<impl>
+				<xpath type="none"
+					detail="//bpws:sources[count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHCONDITION']/@name]) > 0 and count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHNOCONDITION']/@name]) = 0]/../@name">					
+					//bpws:sources[count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHCONDITION']/@name]) > 0 and count(bpws:source[@linkName = ../../../../bpws:links/bpws:link[@tibex:linkType = 'SUCCESSWITHNOCONDITION']/@name]) = 0]
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Cycle found" ruleset="TIBCO conventions" prority="3"
+			description="A infinite cycle of process calls has been found. This may lead to potential severe problems."
+			global="true">
+			<impl>
+				<java>PRCycleCheck</java>
+			</impl>
+		</rule>
+		<rule name="Process size: width" ruleset="TIBCO conventions"
+			prority="5"
+			description="The process width is too great. You may consider to redesign your process or to split it in another subprocess.">
+			<impl>
+				<xpath>
+					not(boolean(*diagram*/children/layoutConstraint[@height > %process.max.x%]))
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Process size: height" ruleset="TIBCO conventions"
+			prority="5"
+			description="The process height is too great. You may consider to redesign your process or to split it in another subprocess.">
+			<impl>
+				<xpath>
+					not(boolean(*diagram*/children/layoutConstraint[@width > %process.max.y%]))
+				</xpath>
+			</impl>
+		</rule>
+		<rule name="Catch All missing" ruleset="TIBCO conventions"
+			prority="1" description="A Catch All scope must be implemented.">
+			<impl>
+				<xpath>
+					boolean(//bpws:catchAll)
+				</xpath>
+			</impl>
+		</rule>
+	</process>
+	<resource>
+		<rule name="HTTP Client resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="HTTP Client resource configuration error.">
+			<configuration type="http:HttpClientConfiguration">
+				<property name="maxTotalConnections" check="configurable" />
+				<property name="retryCount" check="configurable" />
+				<property name="connectionTimeout" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="FTP Connection resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="FTP Connection resource configuration error.">
+			<configuration type="ftpconnection:ftpconnection">
+				<property name="host" check="configurable" />
+				<property name="port" check="configurable" />
+				<property name="userName" check="configurable" />
+				<property name="password" check="configurable" />
+				<property name="timeout" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="HTTP Connector resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="HTTP Connector resource configuration error.">
+			<configuration type="httpconnector:HttpConnectorConfiguration">
+				<property name="host" check="configurable" />
+				<property name="port" check="configurable" />
+				<property name="acceptQueueSize" check="configurable" />
+				<property name="acceptors" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="JDBC Connection resource configuration error"
+			ruleset="TIBCO conventions" prority="2"
+			description="JDBC Connection resource configuration error.">
+			<configuration type="jdbc:JdbcDataSource">
+				<property name="maxConnections" check="configurable" />
+				<property name="username" check="configurable" />
+				<property name="password" check="configurable" />
+				<property name="jdbcDriver" check="configurable" />
+				<property name="dbURL" check="configurable" />
+				<property name="loginTimeout" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="JMS Connection resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="JMS Connection resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory">
+				<property name="jndiName" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="JNDI Connection resource configuration error"
+			ruleset="TIBCO conventions" prority="2"
+			description="JNDI Connection resource configuration error.">
+			<configuration type="jms:JNDIConnection">
+				<property name="initialContextFactory" check="configurable" />
+				<property name="providerUrl" check="configurable" />
+			</configuration>
+		</rule>
+		<rule name="TCP Connection resource configuration error" ruleset="TIBCO conventions"
+			prority="2" description="TCP Connection resource configuration error.">
+			<configuration type="tcpconnection:tcpconnection">
+				<property name="host" check="configurable" />
+				<property name="port" check="configurable" />
+				<property name="maxConnections" check="configurable" />
+				<property name="maxWaitTime" check="configurable" />
+			</configuration>
+		</rule>
+	</resource>
+	<xpathfunctions>
+		<xpathfunction id="process">/bpws:process</xpathfunction>
+		<xpathfunction id="scope">/bpws:process/bpws:scope</xpathfunction>
+		<xpathfunction id="flow">/bpws:process/bpws:scope/bpws:flow</xpathfunction>
+		<xpathfunction id="extensionActivity">//bpws:extensionActivity</xpathfunction>
+		<xpathfunction id="extActivity">//tibex:extActivity</xpathfunction>
+		<xpathfunction id="activityExtension">//tibex:activityExtension</xpathfunction>
+		<xpathfunction id="activityExtensionConfig">//tibex:config</xpathfunction>
+		<xpathfunction id="processInfo">/bpws:process/tibex:ProcessInfo</xpathfunction>
+		<xpathfunction id="receiveEvent">//bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
+		<xpathfunction id="eventSource">//bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
+		<xpathfunction id="documentation">/bpws:process/bpws:documentation</xpathfunction>
+		<xpathfunction id="reply">//bpws:reply</xpathfunction>
+		<xpathfunction id="layoutConstraint">//layoutConstraint</xpathfunction>
+		<xpathfunction id="diagram">//notation:Diagram</xpathfunction>
+	</xpathfunctions>
+</tibrules>

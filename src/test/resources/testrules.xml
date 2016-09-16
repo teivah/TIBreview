@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tibrules xmlns="exchange.tibco.com/tibreview" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="exchange.tibco.com/tibreview ../../main/resources/schemas/tibrules.xsd ">
+	<process>
+		
+	</process>
+	<resource>
+		<rule name="HTTP Client resource configuration error" ruleset="TIBCO conventions" prority="2"
+			description="HTTP Client resource configuration error.">
+			<configuration type="http:HttpClientConfiguration">
+				<property name="maxTotalConnections" check="configurable"/>
+				<property name="retryCount" check="configurable"/>
+				<property name="connectionTimeout" check="configurable"/>
+			</configuration>
+		</rule>
+		<rule name="FTP Connection resource configuration error" ruleset="TIBCO conventions" prority="2"
+			description="FTP Connection resource configuration error.">
+			<configuration type="ftpconnection:ftpconnection">
+				<property name="host" check="configurable"/>
+				<property name="port" check="configurable"/>
+				<property name="userName" check="configurable"/>
+				<property name="password" check="configurable"/>
+				<property name="timeout" check="configurable"/>
+			</configuration>
+		</rule>
+		<rule name="HTTP Connector resource configuration error" ruleset="TIBCO conventions" prority="2"
+			description="HTTP Connector resource configuration error.">
+			<configuration type="httpconnector:HttpConnectorConfiguration">
+				<property name="host" check="configurable"/>
+				<property name="port" check="configurable"/>
+				<property name="acceptQueueSize" check="configurable"/>
+				<property name="acceptors" check="configurable"/>
+			</configuration>
+		</rule>
+		<rule name="JDBC Connection resource configuration error" ruleset="TIBCO conventions" prority="2"
+			description="JDBC Connection resource configuration error.">
+			<configuration type="jdbc:JdbcDataSource">
+				<property name="maxConnections" check="configurable"/>
+				<property name="username" check="configurable"/>
+				<property name="password" check="configurable"/>
+				<property name="jdbcDriver" check="configurable"/>
+				<property name="dbURL" check="configurable"/>
+				<property name="loginTimeout" check="configurable"/>
+			</configuration>
+		</rule>
+		<rule name="JMS Connection resource configuration error" ruleset="TIBCO conventions" prority="2"
+			description="JMS Connection resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory">
+				<property name="jndiName" check="configurable"/>
+			</configuration>
+		</rule>
+		<rule name="JNDI Connection resource configuration error" ruleset="TIBCO conventions" prority="2"
+			description="JNDI Connection resource configuration error.">
+			<configuration type="jms:JNDIConnection">
+				<property name="initialContextFactory" check="configurable"/>
+				<property name="providerUrl" check="configurable"/>
+			</configuration>
+		</rule>
+		<rule name="TCP Connection resource configuration error" ruleset="TIBCO conventions" prority="2"
+			description="TCP Connection resource configuration error.">
+			<configuration type="tcpconnection:tcpconnection">
+				<property name="host" check="configurable"/>
+				<property name="port" check="configurable"/>
+				<property name="maxConnections" check="configurable"/>
+				<property name="maxWaitTime" check="configurable"/>
+			</configuration>
+		</rule>
+	</resource>
+	<xpathfunctions>
+		<xpathfunction id="process">/bpws:process</xpathfunction>
+		<xpathfunction id="scope">/bpws:process/bpws:scope</xpathfunction>
+		<xpathfunction id="flow">/bpws:process/bpws:scope/bpws:flow</xpathfunction>
+		<xpathfunction id="extensionActivity">//bpws:extensionActivity</xpathfunction>
+		<xpathfunction id="extActivity">//tibex:extActivity</xpathfunction>
+		<xpathfunction id="activityExtension">//tibex:activityExtension</xpathfunction>
+		<xpathfunction id="activityExtensionConfig">//tibex:config</xpathfunction>
+		<xpathfunction id="processInfo">/bpws:process/tibex:ProcessInfo</xpathfunction>
+		<xpathfunction id="receiveEvent">//bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
+		<xpathfunction id="eventSource">//bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
+		<xpathfunction id="documentation">/bpws:process/bpws:documentation</xpathfunction>
+		<xpathfunction id="reply">//bpws:reply</xpathfunction>
+		<xpathfunction id="layoutConstraint">//layoutConstraint</xpathfunction>
+		<xpathfunction id="diagram">//notation:Diagram</xpathfunction>
+	</xpathfunctions>
+</tibrules>

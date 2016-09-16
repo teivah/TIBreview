@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:complexType name="violation">
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="line" use="required" type="xs:int" />
+					<xs:attribute name="rule" use="required" type="xs:string" />
+					<xs:attribute name="ruleset" use="required" type="xs:string" />
+					<xs:attribute name="priority" use="required" type="xs:int" />
+				</xs:extension>
+			</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="pmd">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="file" type="file" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="file">
+			<xs:sequence>
+				<xs:element name="violation" type="violation" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="name" use="required" type="xs:string" />
+	</xs:complexType>
+</xs:schema>
