@@ -4,7 +4,6 @@
 # TIBreview: Quality code review for TIBCO BusinessWorks 6
 
 ##What is TIBReview?
-<img src="http://www.enterprise-integration.com/wp-content/uploads/2016/09/tibreview.png" width="191" height="74" />
 
 TIBReview is an **automated tool** for analyzing the **quality** of a **TIBCO BusinessWorks 6 project**. It provides:
 * An extensible and configurable engine for implementing **automated rules in XPath or Java**.
