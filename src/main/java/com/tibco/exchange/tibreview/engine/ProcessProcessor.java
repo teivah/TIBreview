@@ -37,6 +37,9 @@ public class ProcessProcessor implements AssetProcessable {
 		if(Engine.INPUT_PROJECT.equals(context.getInputType())) {
 			try {
 				processes = listProcesses(context.getSource() + PATH_PROCESSES);
+			} catch(IllegalArgumentException e) {
+				LOGGER.warn("Directory " + PATH_PROCESSES + " does not exist, cannot analyze the processes");
+				return;
 			} catch (IOException e) {
 				throw new EngineException("Unable to list processes", e);
 			}
