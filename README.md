@@ -1,5 +1,5 @@
-# Versions
-* [0.0.1](https://github.com/teivah/TIBreview/releases/tag/0.0.1): Initial version
+# Latest stable version
+* [0.0.2](https://github.com/teivah/TIBreview/releases/tag/0.02): Bug fix if the folder /Processes or /Resources does not exist
 
 # TIBreview: Quality code review for TIBCO BusinessWorks 6
 

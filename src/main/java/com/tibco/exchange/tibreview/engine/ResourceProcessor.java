@@ -36,6 +36,9 @@ public class ResourceProcessor implements AssetProcessable {
 		if (Engine.INPUT_PROJECT.equals(context.getInputType())) {
 			try {
 				resources = listResources(context.getSource() + PATH_RESOURCES);
+			} catch(IllegalArgumentException e) {
+				LOGGER.warn("Directory " + PATH_RESOURCES + " does not exist, cannot analyze the resources");
+				return;
 			} catch (IOException e) {
 				throw new EngineException("Unable to list resources", e);
 			}
