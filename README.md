@@ -1,5 +1,5 @@
 # Latest stable version
-* [0.0.2](https://github.com/teivah/TIBreview/releases/tag/0.02): Bug fix if the folder /Processes or /Resources does not exist
+* [0.0.3](https://github.com/teivah/TIBreview/releases/tag/0.0.3): Remove the folder management while listing assets
 
 # TIBreview: Quality code review for TIBCO BusinessWorks 6
 
