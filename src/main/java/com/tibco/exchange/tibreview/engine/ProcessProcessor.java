@@ -20,7 +20,6 @@ import com.tibco.exchange.tibreview.processor.processrule.ImplProcessor;
 import com.tibco.exchange.tibreview.processor.processrule.PRProcessable;
 
 public class ProcessProcessor implements AssetProcessable {
-	private static final String PATH_PROCESSES = "/Processes";
 	private static final String PROCESS_EXTENSION = ".bwp";
 	private static final Logger LOGGER = Logger.getLogger(ProcessProcessor.class);
 	
@@ -36,12 +35,10 @@ public class ProcessProcessor implements AssetProcessable {
 		
 		if(Engine.INPUT_PROJECT.equals(context.getInputType())) {
 			try {
-				processes = listProcesses(context.getSource() + PATH_PROCESSES);
-			} catch(IllegalArgumentException e) {
-				LOGGER.warn("Directory " + PATH_PROCESSES + " does not exist, cannot analyze the processes");
+				processes = listProcesses(context.getSource());
+			} catch(Exception e) {
+				LOGGER.warn("Error while listing processes");
 				return;
-			} catch (IOException e) {
-				throw new EngineException("Unable to list processes", e);
 			}
 		} else if(Engine.INPUT_PROCESS.equals(context.getInputType())){
 			processes = new ArrayList<>();
