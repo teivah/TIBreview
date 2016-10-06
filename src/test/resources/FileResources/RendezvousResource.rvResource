@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmlns:rvsharedresource="http://ns.tibco.com/bw/palette/rvsharedresource" xmi:id="_HgNNoYugEeaNjbIQkCrAcQ" name="test.RendezvousResource" type="rvsharedresource:RVResource">
+  <jndi:configuration xsi:type="rvsharedresource:RVTransport" xmi:id="_HgndUIugEeaNjbIQkCrAcQ" rvType="Reliable">
+    <substitutionBindings xmi:id="_Z5LJAIugEeaNjbIQkCrAcQ" template="daemon" propName="Property3"/>
+    <substitutionBindings xmi:id="_aXmKYIugEeaNjbIQkCrAcQ" template="network" propName="Property4"/>
+    <substitutionBindings xmi:id="_auwGIIugEeaNjbIQkCrAcQ" template="service" propName="BW.MODULE.NAME"/>
+  </jndi:configuration>
+</jndi:namedResource>
