@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmlns:ldapconnection="http://ns.tibco.com/bw/palette/srldap" xmlns:sslclient="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/sslclient" xmlns:subject="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/identity/subject" xmi:id="_BWaPwIueEeaNjbIQkCrAcQ" name="test.LDAPConnectionResource" type="ldapconnection:LDAPConnection">
+  <jndi:reference xmi:id="_Bld_cIueEeaNjbIQkCrAcQ" key="identityServiceProvider" type="subject:SubjectConfiguration" value="test.IdentityProvider"/>
+  <jndi:reference xmi:id="_BmR3wIueEeaNjbIQkCrAcQ" key="sslClientServiceProvider" type="sslclient:SSLClientConfiguration" value=""/>
+  <jndi:configuration xsi:type="ldapconnection:LDAPConnection" xmi:id="_BWcsAIueEeaNjbIQkCrAcQ" serverType="Microsoft ADS/ADAM" ldapPort="1" authenticationMode="Simple" authenticationEnabled="true">
+    <substitutionBindings xmi:id="_DCpIEIueEeaNjbIQkCrAcQ" template="reconnectionTimes" propName="Property"/>
+    <substitutionBindings xmi:id="_D7cYUIueEeaNjbIQkCrAcQ" template="reconnectionInterval" propName="Property1"/>
+    <substitutionBindings xmi:id="_Sti6sIueEeaNjbIQkCrAcQ" template="serverName" propName="BW.DEPLOYMENTUNIT.TYPE"/>
+  </jndi:configuration>
+</jndi:namedResource>

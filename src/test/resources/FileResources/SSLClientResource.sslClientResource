@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmlns:keystore="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/cred/keystore" xmlns:sslclient="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/sslclient" xmi:id="_1HQ1gIuhEeaNjbIQkCrAcQ" name="test.SSLClientResource" type="sslclient:SSLClientConfiguration">
+  <jndi:reference xmi:id="_1HSDoIuhEeaNjbIQkCrAcQ" key="trustStoreServiceProvider" type="keystore:KeystoreConfiguration" value=""/>
+  <jndi:configuration xsi:type="sslclient:SSLClientConfiguration" xmi:id="_1HSDoYuhEeaNjbIQkCrAcQ">
+    <substitutionBindings xmi:id="_U8qEUIujEeaNjbIQkCrAcQ" template="sslProvider" propName="BW.APPNODE.NAME"/>
+  </jndi:configuration>
+</jndi:namedResource>

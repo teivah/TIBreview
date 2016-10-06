@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ftlsr="http://ns.tibco.com/bw/sharedresource/ftl" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmi:id="_XENjgYufEeaNjbIQkCrAcQ" name="test.FTLRealmServerConnection" type="ftlsr:FTLRealmServerConnection">
+  <jndi:configuration xsi:type="ftlsr:FTLRealmServerConnection" xmi:id="_XEOxoIufEeaNjbIQkCrAcQ" 
+  realmServerURL="http://localhost:8080" 
+  secondaryRealmServerURL="a" 
+  applicationName="aa" 
+  applicationInstanceIdentifier="a" 
+  username="a" 
+  password="#!Jdf44dYSlDPXGX0wPFDQcA=="/>
+</jndi:namedResource>
+

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:httpproxy="http://xsd.tns.tibco.com/bw/models/sharedresource/httpproxy" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmi:id="_00J-MYufEeaNjbIQkCrAcQ" name="test.ProxyConfigurationResource" type="httpproxy:ProxyConfiguration">
+  <jndi:configuration xsi:type="httpproxy:HttpProxyConfiguration" xmi:id="_00LMUIufEeaNjbIQkCrAcQ" proxyHost="a">
+    <substitutionBindings xmi:id="_ASr3AIugEeaNjbIQkCrAcQ" template="proxyPort" propName=""/>
+    <proxyAuthentication xmi:id="_025JIIufEeaNjbIQkCrAcQ"/>
+  </jndi:configuration>
+</jndi:namedResource>
