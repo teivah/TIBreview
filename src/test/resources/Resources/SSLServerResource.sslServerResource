@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmlns:sslserver="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/sslserver" xmi:id="_hMNxcYujEeaNjbIQkCrAcQ" name="test.SSLServerResource" type="sslserver:SSLServerConfiguration">
-  <jndi:configuration xsi:type="sslserver:SSLServerConfiguration" xmi:id="_hMOYgIujEeaNjbIQkCrAcQ" keyAlias="1" keyPassword="#!amnv6zbLhHldiD72UZAhQA==" sslProvider="1">
-    <substitutionBindings xmi:id="_zoA-YIujEeaNjbIQkCrAcQ" template="expectedRemoteHostName" propName="BW.APPNODE.NAME"/>
-  </jndi:configuration>
-</jndi:namedResource>

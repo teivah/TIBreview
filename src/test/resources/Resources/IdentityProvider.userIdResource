@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmlns:sp="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/securityprovider" xmlns:subject="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/identity/subject" xmi:id="_dM1kEYueEeaNjbIQkCrAcQ" name="test.IdentityProvider" type="subject:SubjectConfiguration">
-  <jndi:configuration xsi:type="sp:IdentitySecurityProvider" xmi:id="_dM4nYIueEeaNjbIQkCrAcQ">
-    <configuration xsi:type="subject:SubjectConfiguration" xmi:id="_dM5OcIueEeaNjbIQkCrAcQ" username="1" userpassword="#!SE0x+0nKR+V3GtJUNvXyeA=="/>
-  </jndi:configuration>
-</jndi:namedResource>
