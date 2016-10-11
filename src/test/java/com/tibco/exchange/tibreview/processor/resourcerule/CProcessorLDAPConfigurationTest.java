@@ -28,21 +28,21 @@ import com.tibco.exchange.tibreview.model.rules.Resourcerule;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
 import com.tibco.exchange.tibreview.parser.RulesParser;
 
-public class CProcessorJMSTest {
-	private static final Logger LOGGER = Logger.getLogger(CProcessorJMSTest.class);
+public class CProcessorLDAPConfigurationTest {
+	private static final Logger LOGGER = Logger.getLogger(CProcessorLDAPConfigurationTest.class);
 
 	@Test
 	public void testProcess() {
 		TIBResource fileresource;
 		try {
 
-			fileresource = new TIBResource("src/test/resources/FileResources/JMSConnectionResource.jmsConnResource");
+			fileresource = new TIBResource("src/test/resources/FileResources/LDAPConfigurationResource.ldapResource");
 			fileresource.toString();
 			System.out.println(fileresource.toString());
-			assertTrue(fileresource.toString().equals("TIBResource [filePath=src/test/resources/FileResources/JMSConnectionResource.jmsConnResource, type=jms:JMSConnectionFactory]"));
+			assertTrue(fileresource.toString().equals("TIBResource [filePath=src/test/resources/FileResources/LDAPConfigurationResource.ldapResource, type=ldapauth:LDAPConfiguration]"));
 			Resourcerule rule = new Resourcerule();
 			
-			Tibrules tibrules= RulesParser.getInstance().parseFile("src/test/resources/FileResources/xml/JMSConnectionResource.xml");
+			Tibrules tibrules= RulesParser.getInstance().parseFile("src/test/resources/FileResources/xml/LDAPConfigurationResource.xml");
 			Resource resource = tibrules.getResource();
 			System.out.println(resource.getRule().size());
 			assertEquals(resource.getRule().size(),1);
@@ -50,9 +50,7 @@ public class CProcessorJMSTest {
 			Configuration Configuracion = resource.getRule().get(0).getConfiguration();
 			
 			List<Violation> b = a.process(new Context(), fileresource, resource.getRule().get(0), Configuracion);
-
-				assertEquals(2, b.size());
-
+			assertEquals(3, b.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

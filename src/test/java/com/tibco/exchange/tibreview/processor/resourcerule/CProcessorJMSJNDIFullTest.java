@@ -51,6 +51,7 @@ public class CProcessorJMSJNDIFullTest {
 			
 			List<Violation> b = a.process(new Context(), fileresource, resource.getRule().get(0), Configuracion);
 			assertEquals(2, b.size());
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

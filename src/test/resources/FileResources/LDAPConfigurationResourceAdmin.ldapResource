@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmlns:ldapauth="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/auth/ldap" xmlns:sp="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/securityprovider" xmi:id="_055AgYukEeaNjbIQkCrAcQ" name="test.LDAPConfigurationResourceAdmin" type="ldapauth:LDAPConfiguration">
+  <jndi:reference xmi:id="_zmhVAI-SEeaitNl5sY13uQ" key="loginAsAdministratorCredential" type="sp:CredentialSecurityProvider"/>
+  <jndi:configuration xsi:type="ldapauth:LDAPConfiguration" xmi:id="_0561sIukEeaNjbIQkCrAcQ">
+    <substitutionBindings xmi:id="_AxUr8I-fEeaRUdhwfUETFw" template="serverURL" propName="BW.DEPLOYMENTUNIT.TYPE"/>
+  </jndi:configuration>
+</jndi:namedResource>

@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmlns:ldapauth="http://xsd.tns.tibco.com/bw/sharedresource/trinity/models/auth/ldap" xmi:id="_055AgYukEeaNjbIQkCrAcQ" name="test.LDAPConfigurationResource" type="ldapauth:LDAPConfiguration">
-  <jndi:configuration xsi:type="ldapauth:LDAPConfiguration" xmi:id="_0561sIukEeaNjbIQkCrAcQ">
-    <substitutionBindings xmi:id="_30V_cIukEeaNjbIQkCrAcQ" template="serverURL" propName="BW.DEPLOYMENTUNIT.TYPE"/>
-    <substitutionBindings xmi:id="_4BMvsIukEeaNjbIQkCrAcQ" template="userSearchExpression" propName="BW.HOST.NAME"/>
-  </jndi:configuration>
+  <jndi:configuration xsi:type="ldapauth:LDAPConfiguration" xmi:id="_0561sIukEeaNjbIQkCrAcQ"/>
 </jndi:namedResource>
