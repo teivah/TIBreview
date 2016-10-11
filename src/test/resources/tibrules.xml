@@ -267,6 +267,18 @@
 				<property name="colSeparator" check="configurable"/>
 			</configuration>
 		</rule>
+		<!-- FTL Realm --> 
+		<rule name="FTL Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="FTL Realm resource configuration error.">
+			<configuration type="ftlsr:FTLRealmServerConnection">
+				<property name="realmServerURL" check="configurable"/>
+				<property name="secondaryRealmServerURL" check="configurable"/>
+				<property name="applicationName" check="configurable"/>
+				<property name="applicationInstanceIdentifier" check="configurable"/>
+				<property name="username" check="configurable"/>
+				<property name="password" check="configurable"/>
+			</configuration>
+		</rule>
 
 		
 	</resource>
