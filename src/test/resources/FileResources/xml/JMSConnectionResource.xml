@@ -7,12 +7,11 @@
 
 
 	<resource>
-		<rule name="Identity Provider resource configuration error" ruleset="TIBCO conventions" prority="3"
-			description="IdentityProvider resource configuration error.">
-			<configuration type="subject:SubjectConfiguration">
-				<property name="username" check="configurable"/>
-				<property name="userpassword" check="configurable"/>
-
+		<rule name="JMS Connection JDNI Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="JMS Connection JDNI resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory" filter="@xsi:type='jms:DirectConnectionFactory'">
+				<property name="providerURL" check="configurable"/>
+				<property name="ufo" check="configurable"/>
 			</configuration>
 		</rule>
 	</resource>
