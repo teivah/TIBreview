@@ -32,7 +32,7 @@ public class CProcessorLDAPConfigurationTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorLDAPConfigurationTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorLDAPConfigurationTest() {
 		TIBResource fileresource;
 		try {
 

@@ -32,7 +32,7 @@ public class CProcessorRendezvousResourceCertifiedTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorRendezvousResourceCertifiedTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorRendezvousResourceCertifiedTest() {
 		TIBResource fileresource;
 		try {
 

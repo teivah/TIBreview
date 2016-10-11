@@ -32,7 +32,7 @@ public class CProcessorJMSJNDIFullTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorJMSJNDIFullTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorJMSJNDIFullTest() {
 		TIBResource fileresource;
 		try {
 

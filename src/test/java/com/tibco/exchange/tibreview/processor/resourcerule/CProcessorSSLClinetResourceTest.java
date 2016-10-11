@@ -28,22 +28,22 @@ import com.tibco.exchange.tibreview.model.rules.Resourcerule;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
 import com.tibco.exchange.tibreview.parser.RulesParser;
 
-public class CProcessorRendezvousResourceReliableTest {
-	private static final Logger LOGGER = Logger.getLogger(CProcessorRendezvousResourceReliableTest.class);
+public class CProcessorSSLClinetResourceTest {
+	private static final Logger LOGGER = Logger.getLogger(CProcessorSSLClinetResourceTest.class);
 
 	@Test
-	public void testCProcessorRendezvousResourceReliableTest() {
+	public void testCProcessorSSLClinetResourceTest() {
 		TIBResource fileresource;
 		try {
 
 			
-			fileresource = new TIBResource("src/test/resources/FileResources/RendezvousResourceReliable.rvResource");
+			fileresource = new TIBResource("src/test/resources/FileResources/SSLClientResource.sslClientResource");
 			fileresource.toString();
 			System.out.println(fileresource.toString());
-			assertTrue(fileresource.toString().equals("TIBResource [filePath=src/test/resources/FileResources/RendezvousResourceReliable.rvResource, type=rvsharedresource:RVResource]"));
+			assertTrue(fileresource.toString().equals("TIBResource [filePath=src/test/resources/FileResources/SSLClientResource.sslClientResource, type=sslclient:SSLClientConfiguration]"));
 			Resourcerule rule = new Resourcerule();
 			
-			Tibrules tibrules= RulesParser.getInstance().parseFile("src/test/resources/FileResources/xml/RendezvousResourceReliable.xml");
+			Tibrules tibrules= RulesParser.getInstance().parseFile("src/test/resources/FileResources/xml/SSLClientResource.xml");
 			Resource resource = tibrules.getResource();
 			System.out.println(resource.getRule().size());
 			assertEquals(resource.getRule().size(),1);
@@ -51,7 +51,7 @@ public class CProcessorRendezvousResourceReliableTest {
 			Configuration Configuracion = resource.getRule().get(0).getConfiguration();
 			
 			List<Violation> b = a.process(new Context(), fileresource, resource.getRule().get(0), Configuracion);
-			assertEquals(3, b.size());
+			assertEquals(1, b.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

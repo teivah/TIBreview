@@ -32,7 +32,7 @@ public class CProcessorProxyConfigurationTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorProxyConfigurationTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorLDAPConfigurationTest() {
 		TIBResource fileresource;
 		try {
 

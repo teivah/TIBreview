@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmlns:tp="http://xsd.tns.tibco.com/bw/models/sharedresource/threadpool" xmi:id="_JA7csYukEeaNjbIQkCrAcQ" name="test.ThreadPoolResource" type="tp:ThreadPoolConfiguration">
   <jndi:configuration xsi:type="tp:ThreadPoolConfiguration" xmi:id="_JA9R4IukEeaNjbIQkCrAcQ" keepAliveTimeUnit="MILLISECONDS">
-    <substitutionBindings xmi:id="_LUEkAIukEeaNjbIQkCrAcQ" template="coreThreadPolSize" propName="Property1"/>
-    <substitutionBindings xmi:id="_L0ja4IukEeaNjbIQkCrAcQ" template="maxPoolSize" propName="Property1"/>
-    <substitutionBindings xmi:id="_MNbN4IukEeaNjbIQkCrAcQ" template="keepAliveTime" propName="Property1"/>
-    <substitutionBindings xmi:id="_M8Hf4IukEeaNjbIQkCrAcQ" template="threadNamePrefix" propName="BW.APPNODE.NAME"/>
-    <substitutionBindings xmi:id="_NddSYIukEeaNjbIQkCrAcQ" template="daemon" propName="Property14"/>
-    <substitutionBindings xmi:id="_OOg74IukEeaNjbIQkCrAcQ" template="autoStartCoreThreads" propName="Property14"/>
-    <substitutionBindings xmi:id="_Q3kBwIukEeaNjbIQkCrAcQ" template="priority" propName="Property"/>
   </jndi:configuration>
 </jndi:namedResource>

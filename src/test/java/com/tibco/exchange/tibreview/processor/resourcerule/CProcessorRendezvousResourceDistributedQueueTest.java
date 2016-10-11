@@ -32,7 +32,7 @@ public class CProcessorRendezvousResourceDistributedQueueTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorRendezvousResourceDistributedQueueTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorRendezvousResourceDistributedQueueTest() {
 		TIBResource fileresource;
 		try {
 

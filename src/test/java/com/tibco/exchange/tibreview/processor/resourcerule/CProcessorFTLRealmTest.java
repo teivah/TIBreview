@@ -32,7 +32,7 @@ public class CProcessorFTLRealmTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorFTLRealmTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorFTLRealmTest() {
 		TIBResource fileresource;
 		try {
 

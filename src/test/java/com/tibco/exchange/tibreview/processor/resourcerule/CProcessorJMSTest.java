@@ -32,7 +32,7 @@ public class CProcessorJMSTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorJMSTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorJMSTest() {
 		TIBResource fileresource;
 		try {
 

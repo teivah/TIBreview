@@ -41,19 +41,17 @@ public class ConfigurationProcessor implements RRProcessable {
 		try {
 			
 			String requestFilter = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY_FILTER, filter);
-			System.out.println("requestFilter XPath request: " + requestFilter);
 			String evalFilter = Util.xpathEvalInputSource(is,Constants.RESOURCES_NAMESPACES, requestFilter);
-			System.out.println("evalFilter : "+evalFilter);
 			if (evalFilter.equals("true") )
 					{
 					String request = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY, property);
-					System.out.println("evalFilter XPath request: " + request);
+					
 					LOGGER.debug("XPath request: " + request);
 					XPathExpression expression = this.xpath.compile(request);
 					//String eval = (String) expression.evaluate(is);
 					String eval = Util.xpathEvalInputSource(is,Constants.RESOURCES_NAMESPACES, request);
 					LOGGER.debug("Eval: " + eval);
-					System.out.println("Eval: " + eval);
+					
 					return eval;
 					}
 			return "";
@@ -68,12 +66,12 @@ public class ConfigurationProcessor implements RRProcessable {
 		try {
 
 			String request = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY, property);
-			System.out.println("XPath request: " + request);
+			
 			LOGGER.debug("XPath request: " + request);
 			XPathExpression expression = this.xpath.compile(request);
 			String eval = (String) expression.evaluate(is);
 			LOGGER.debug("Eval: " + eval);
-			System.out.println("Eval: " + eval);
+			
 			return eval;
 		} catch (Exception e) {
 
@@ -86,12 +84,12 @@ public class ConfigurationProcessor implements RRProcessable {
 		try {
 			String eval = new String();
 			String evalbrich = rule.getConfiguration().getFilter();
-			System.out.println("rule.getConfiguration().getFilter()" + rule.getConfiguration().getFilter());
+			
 			if (evalbrich.equals("")) {
-				System.out.println("eval init");
+				
 				eval = eval(is, property);
 			} else {
-				System.out.println("evalFilter init");
+				
 				eval = evalFilter(is, property, rule.getConfiguration().getFilter());
 			}
 			if (eval.equals(""))
@@ -115,14 +113,12 @@ public class ConfigurationProcessor implements RRProcessable {
 	public List<Violation> process(Context context, TIBResource resource, Resourcerule rule,
 			Configuration configuration) throws ProcessorException {
 		if (configuration.getType().equals(resource.getType())) {
-			System.out.println("Matching resource " + resource.getType());
 			LOGGER.debug("Matching resource " + resource.getType());
 			try {
 				InputSource is = new InputSource(resource.getFilePath());
 
 				List<Violation> violations = new ArrayList<>();
 				for (Property property : configuration.getProperty()) {
-					System.out.println("Analyze : " + property.getName());
 					Violation violation = eval(rule, is, property.getName());
 					if (violation != null) {
 						violations.add(violation);
@@ -132,7 +128,7 @@ public class ConfigurationProcessor implements RRProcessable {
 			} catch (ProcessorException e) {
 				throw e;
 			} catch (Exception e) {
-				System.err.println("Query evaluation error on the file " + resource);
+				
 				LOGGER.error("Query evaluation error on the file " + resource, e);
 				throw new ProcessorException(e);
 			}

@@ -32,7 +32,7 @@ public class CProcessorIdentifyProviderTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorIdentifyProviderTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorIdentifyProviderTest() {
 		TIBResource fileresource;
 		try {
 

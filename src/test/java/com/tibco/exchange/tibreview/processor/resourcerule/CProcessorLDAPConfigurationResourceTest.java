@@ -32,17 +32,17 @@ public class CProcessorLDAPConfigurationResourceTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorLDAPConfigurationResourceTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorLDAPConfigurationResourceTest() {
 		TIBResource fileresource;
 		try {
 
-			fileresource = new TIBResource("src/test/resources/FileResources/LDAPConnectionResource.ldapconnectionResource");
+			fileresource = new TIBResource("src/test/resources/FileResources/LDAPConfigurationResource.ldapResource");
 			fileresource.toString();
 			System.out.println(fileresource.toString());
-			assertTrue(fileresource.toString().equals("TIBResource [filePath=src/test/resources/FileResources/LDAPConnectionResource.ldapconnectionResource, type=ldapauth:LDAPConfiguration]"));
+			assertTrue(fileresource.toString().equals("TIBResource [filePath=src/test/resources/FileResources/LDAPConfigurationResource.ldapResource, type=ldapauth:LDAPConfiguration]"));
 			Resourcerule rule = new Resourcerule();
 			
-			Tibrules tibrules= RulesParser.getInstance().parseFile("src/test/resources/FileResources/xml/LDAPConnectionResource.xml");
+			Tibrules tibrules= RulesParser.getInstance().parseFile("src/test/resources/FileResources/xml/LDAPConfigurationResource.xml");
 			Resource resource = tibrules.getResource();
 			System.out.println(resource.getRule().size());
 			assertEquals(resource.getRule().size(),1);

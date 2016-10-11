@@ -32,7 +32,7 @@ public class CProcessorDataFormatTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorDataFormatTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorDataFormatTest() {
 		TIBResource fileresource;
 		try {
 

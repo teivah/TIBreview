@@ -32,7 +32,7 @@ public class CProcessorKeyStoreTest {
 	private static final Logger LOGGER = Logger.getLogger(CProcessorKeyStoreTest.class);
 
 	@Test
-	public void testProcess() {
+	public void testCProcessorKeyStoreTest() {
 		TIBResource fileresource;
 		try {
 
