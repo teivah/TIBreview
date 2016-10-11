@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dataformat="http://ns.tibco.com/bw/palette/dataformat" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmi:id="_-IKVoYueEeaNjbIQkCrAcQ" name="test.DataFormatResource" type="dataformat:DataFormat">
-  <jndi:configuration xsi:type="dataformat:DataFormat" xmi:id="_-IMK0IueEeaNjbIQkCrAcQ" formatType="Delimiter separated" colSeparator="," colSeparatorParseRule="Treat all characters as entered as a single column separator string" lineSeparator="New Line" fillCharacter="Space"/>
+  <jndi:configuration xsi:type="dataformat:DataFormat" xmi:id="_-IMK0IueEeaNjbIQkCrAcQ" formatType="Delimiter separated" colSeparator="" colSeparatorParseRule="Treat all characters as entered as a single column separator string" lineSeparator="New Line" fillCharacter="Space"/>
 </jndi:namedResource>
