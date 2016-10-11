@@ -259,6 +259,16 @@
 				<property name="maxWaitTime" check="configurable" />
 			</configuration>
 		</rule>
+		
+		<!-- data Format -->
+		<rule name="Data Format resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="Data Format resource configuration error.">
+			<configuration type="dataformat:DataFormat">
+				<property name="colSeparator" check="configurable"/>
+			</configuration>
+		</rule>
+
+		
 	</resource>
 	<xpathfunctions>
 		<xpathfunction id="process">/bpws:process</xpathfunction>
