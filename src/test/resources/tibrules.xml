@@ -320,7 +320,44 @@
 				<property name="initialContextFactory" check="configurable"/>
 			</configuration>
 		</rule>
-
+	<!-- KEY store -->
+			<rule name="Key Store resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="Key Store resource configuration error.">
+			<configuration type="keystore:KeystoreConfiguration" >
+				<property name="keystoreURL" check="configurable"/>
+				<property name="keystorePassword" check="configurable"/>
+				<property name="keystoreRefreshInterval" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- LDAP Configuration -->
+		<rule name="LDAP Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="LDAP Configurationresource configuration error.">
+			<configuration type="ldapauth:LDAPConfiguration" >
+				<property name="serverURL" check="configurable"/>
+				<property name="userSearchExpression" check="configurable"/>
+				<property name="userDNTemplate" check="configurable"/>
+			</configuration>
+		</rule>
+		
+		<!-- LDAp Configuration Admin -->
+		<rule name="LDAP Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="LDAP Configurationresource configuration error.">
+			<configuration type="ldapauth:LDAPConfiguration" filter="../jndi:reference[@type='sp:CredentialSecurityProvider']">
+				<property name="serverURL" check="configurable"/>
+				<property name="userSearchExpression" check="configurable"/>
+				<property name="userSearchBaseDN" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- LDAp Connectino -->
+		<rule name="LDAP Connection resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="LDAP Connection resource configuration error.">
+			<configuration type="ldapconnection:LDAPConnection" >
+				<property name="reconnectionTimes" check="configurable"/>
+				<property name="reconnectionInterval" check="configurable"/>
+				<property name="serverName" check="configurable"/>
+				<property name="ldapPort" check="configurable"/>
+			</configuration>
+		</rule>
 		
 	</resource>
 	<xpathfunctions>

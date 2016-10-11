@@ -28,21 +28,21 @@ import com.tibco.exchange.tibreview.model.rules.Resourcerule;
 import com.tibco.exchange.tibreview.model.rules.Tibrules;
 import com.tibco.exchange.tibreview.parser.RulesParser;
 
-public class CProcessorLDAPConfigurationTest {
-	private static final Logger LOGGER = Logger.getLogger(CProcessorLDAPConfigurationTest.class);
+public class CProcessorLDAPConfigurationResourceTest {
+	private static final Logger LOGGER = Logger.getLogger(CProcessorLDAPConfigurationResourceTest.class);
 
 	@Test
 	public void testProcess() {
 		TIBResource fileresource;
 		try {
 
-			fileresource = new TIBResource("src/test/resources/FileResources/LDAPConfigurationResource.ldapResource");
+			fileresource = new TIBResource("src/test/resources/FileResources/LDAPConnectionResource.ldapconnectionResource");
 			fileresource.toString();
 			System.out.println(fileresource.toString());
-			assertTrue(fileresource.toString().equals("TIBResource [filePath=src/test/resources/FileResources/LDAPConfigurationResource.ldapResource, type=ldapauth:LDAPConfiguration]"));
+			assertTrue(fileresource.toString().equals("TIBResource [filePath=src/test/resources/FileResources/LDAPConnectionResource.ldapconnectionResource, type=ldapauth:LDAPConfiguration]"));
 			Resourcerule rule = new Resourcerule();
 			
-			Tibrules tibrules= RulesParser.getInstance().parseFile("src/test/resources/FileResources/xml/LDAPConfigurationResource.xml");
+			Tibrules tibrules= RulesParser.getInstance().parseFile("src/test/resources/FileResources/xml/LDAPConnectionResource.xml");
 			Resource resource = tibrules.getResource();
 			System.out.println(resource.getRule().size());
 			assertEquals(resource.getRule().size(),1);
@@ -59,7 +59,6 @@ public class CProcessorLDAPConfigurationTest {
 		}
 		
 	}
-	
 
 
 

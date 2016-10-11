@@ -7,12 +7,13 @@
 
 
 	<resource>
-		<rule name="LDAP Configuration admin resource configuration error" ruleset="TIBCO conventions" prority="3"
-			description="LDAP Configurationresource admin configuration error.">
-			<configuration type="ldapauth:LDAPConfiguration" filter="../jndi:reference[@type='sp:CredentialSecurityProvider']">
-				<property name="serverURL" check="configurable"/>
-				<property name="userSearchExpression" check="configurable"/>
-				<property name="userSearchBaseDN" check="configurable"/>
+		<rule name="LDAP Connection resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="LDAP Connection resource configuration error.">
+			<configuration type="ldapconnection:LDAPConnection" >
+				<property name="reconnectionTimes" check="configurable"/>
+				<property name="reconnectionInterval" check="configurable"/>
+				<property name="serverName" check="configurable"/>
+				<property name="ldapPort" check="configurable"/>
 			</configuration>
 		</rule>
 	</resource>
