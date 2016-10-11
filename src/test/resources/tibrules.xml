@@ -279,6 +279,39 @@
 				<property name="password" check="configurable"/>
 			</configuration>
 		</rule>
+		<!-- IdentyProvider -->
+		<rule name="Identity Provider resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="IdentityProvider resource configuration error.">
+			<configuration type="subject:SubjectConfiguration">
+				<property name="username" check="configurable"/>
+				<property name="userpassword" check="configurable"/>
+
+			</configuration>
+		</rule>
+		<!-- JMS Normal -->
+		<rule name="JMS Connection Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="JMS Connection JDNI resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory" filter="@xsi:type='jms:DirectConnectionFactory'">
+				<property name="providerURL" check="configurable"/>
+				<property name="ufo" check="configurable"/>
+			</configuration>
+		</rule>
+		
+		<!-- JMS JNDI -->
+		<rule name="JMS Connection JDNI Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="JMS Connection JDNI resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory" filter="@xsi:type='jms:JNDIConnectionFactory' and count(@factoryType)=0 and  @jndiName='QueueConnectionFactory'">
+				<property name="jndiName" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- JMS JNDI Topic / Queue --> 
+		<rule name="JMS Connection JDNI Topic/Queue Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="JMS Connection JDNI Topic/Queue resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory" filter="@xsi:type='jms:JNDIConnectionFactory' and @factoryType='Queue/Topic' and @jndiName='QueueConnectionFactory'">
+				<property name="jndiName" check="configurable"/>
+				<property name="topicFactoryJNDIName" check="configurable"/>
+			</configuration>
+		</rule>
 
 		
 	</resource>

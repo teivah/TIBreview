@@ -7,7 +7,7 @@
 
 
 	<resource>
-		<rule name="JMS Connection JDNI Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+		<rule name="JMS Connection Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="JMS Connection JDNI resource configuration error.">
 			<configuration type="jms:JMSConnectionFactory" filter="@xsi:type='jms:DirectConnectionFactory'">
 				<property name="providerURL" check="configurable"/>
