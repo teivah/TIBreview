@@ -312,6 +312,14 @@
 				<property name="topicFactoryJNDIName" check="configurable"/>
 			</configuration>
 		</rule>
+		<!-- JNDI Config -->
+		<rule name="JNDI Connection resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="JNDI Connection resource configuration error.">
+			<configuration type="jms:JNDIConnection">
+				<property name="providerUrl" check="configurable"/>
+				<property name="initialContextFactory" check="configurable"/>
+			</configuration>
+		</rule>
 
 		
 	</resource>

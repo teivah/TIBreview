@@ -53,7 +53,7 @@ public class ConfigurationProcessor implements RRProcessable {
 		} catch (Exception e) {
 			
 			LOGGER.error("Unable to evaluate XPath query {" + xpath + "}: " + e);
-			throw new ProcessorException("String eval Unable to evaluate XPath query {" + xpath + "}", e);
+			throw new ProcessorException("String evalFilter Unable to evaluate XPath query {" + xpath + "}", e);
 		}
 	}
 	
@@ -81,12 +81,16 @@ public class ConfigurationProcessor implements RRProcessable {
 	private Violation eval(Resourcerule rule, InputSource is, String property) throws ProcessorException {
 		try {
 			String eval = new String();
-			if (rule.getConfiguration().getFilter().equals(""))
+			String evalbrich = rule.getConfiguration().getFilter();
+			System.out.println("rule.getConfiguration().getFilter()"+rule.getConfiguration().getFilter());
+			if (evalbrich.equals("")  )
 			{
-			eval = eval(is, property);
+				System.out.println("eval init");
+				eval = eval(is, property);
 			}
 			else
 			{
+				System.out.println("evalFilter init");
 				eval = evalFilter(is, property,rule.getConfiguration().getFilter());
 			}
 			boolean fine = Boolean.valueOf(eval);

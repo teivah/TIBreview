@@ -48,7 +48,7 @@ public class Configuration {
     @XmlAttribute(name = "type")
     protected String type;
     @XmlAttribute(name = "filter")
-    protected String filter;
+    protected String filter="";
 
     /**
      * Gets the value of the property property.
