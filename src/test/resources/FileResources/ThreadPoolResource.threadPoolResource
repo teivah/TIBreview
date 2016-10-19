@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jndi:namedResource xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jndi="http://xsd.tns.tibco.com/amf/models/sharedresource/jndi" xmlns:tp="http://xsd.tns.tibco.com/bw/models/sharedresource/threadpool" xmi:id="_JA7csYukEeaNjbIQkCrAcQ" name="test.ThreadPoolResource" type="tp:ThreadPoolConfiguration">
+  <jndi:configuration xsi:type="tp:ThreadPoolConfiguration" xmi:id="_JA9R4IukEeaNjbIQkCrAcQ" keepAliveTimeUnit="MILLISECONDS">
+  </jndi:configuration>
+</jndi:namedResource>

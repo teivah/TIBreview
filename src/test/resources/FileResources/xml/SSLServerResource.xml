@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tibrules xmlns="exchange.tibco.com/tibreview" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="exchange.tibco.com/tibreview ../../main/resources/schemas/tibrules.xsd ">
+	<process>
+
+	</process>
+
+<resource>
+		<rule name="SSL Server Resource Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="SSL Server Resource configuration error.">
+			<configuration type="sslserver:SSLServerConfiguration" >
+				<property name="keyAlias" check="configurable"/>
+				<property name="keyPassword" check="configurable"/>
+				<property name="sslProvider" check="configurable"/>
+				
+			</configuration>
+		</rule>
+	</resource>
+
+	<xpathfunctions>
+		<xpathfunction id="process">/bpws:process</xpathfunction>
+		<xpathfunction id="scope">/bpws:process/bpws:scope</xpathfunction>
+		<xpathfunction id="flow">/bpws:process/bpws:scope/bpws:flow</xpathfunction>
+		<xpathfunction id="extensionActivity">//bpws:extensionActivity</xpathfunction>
+		<xpathfunction id="extActivity">//tibex:extActivity</xpathfunction>
+		<xpathfunction id="activityExtension">//tibex:activityExtension</xpathfunction>
+		<xpathfunction id="activityExtensionConfig">//tibex:config</xpathfunction>
+		<xpathfunction id="processInfo">/bpws:process/tibex:ProcessInfo</xpathfunction>
+		<xpathfunction id="receiveEvent">//bpws:extensionActivity/tibex:receiveEvent</xpathfunction>
+		<xpathfunction id="eventSource">//bpws:extensionActivity/tibex:receiveEvent/tibex:eventSource</xpathfunction>
+		<xpathfunction id="documentation">/bpws:process/bpws:documentation</xpathfunction>
+		<xpathfunction id="reply">//bpws:reply</xpathfunction>
+		<xpathfunction id="layoutConstraint">//layoutConstraint</xpathfunction>
+		<xpathfunction id="diagram">//notation:Diagram</xpathfunction>
+	</xpathfunctions>
+</tibrules>

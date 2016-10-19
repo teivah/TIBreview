@@ -47,6 +47,19 @@ public class Util {
 		return (String) expression.evaluate(new InputSource(file));
 	}
 
+	public static String xpathEvalInputSource(InputSource file, String[] namespaces, String request) throws Exception {
+		final XPath xpath;
+		XPathFactory factory = XPathFactory.newInstance();
+		xpath = factory.newXPath();
+		if (namespaces != null && namespaces.length > 0) {
+			NamespaceContext context = new NamespaceContextMap(namespaces);
+			xpath.setNamespaceContext(context);
+		}
+		XPathExpression expression = xpath.compile(request);
+
+		return (String) expression.evaluate(file);
+	}
+
 	public static List<String> listFile(final String path, final String extension) throws IOException {
 		if (!new File(path).isDirectory()) {
 			throw new IllegalArgumentException("Path " + path + " is not a directory");
@@ -146,7 +159,7 @@ public class Util {
 		violation.setPriority(rule.getPrority());
 		violation.setRule(rule.getName());
 		violation.setRuleset(rule.getRuleset());
-		if(detailOnly) {
+		if (detailOnly) {
 			violation.setValue(detail);
 		} else {
 			violation.setValue(rule.getDescription() + " Detail: " + detail);
