@@ -1,6 +1,3 @@
-# Latest stable version
-* [0.0.3](https://github.com/teivah/TIBreview/releases/tag/0.0.3): Remove the folder management while listing assets
-
 # TIBreview: Quality code review for TIBCO BusinessWorks 6
 
 ##What is TIBReview?
