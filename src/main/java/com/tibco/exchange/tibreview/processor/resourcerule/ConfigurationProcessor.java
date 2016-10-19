@@ -37,46 +37,41 @@ public class ConfigurationProcessor implements RRProcessable {
 		this.xpath.setNamespaceContext(context);
 	}
 
-	private String evalFilter(InputSource is, String property,String filter) throws ProcessorException {
+	private String evalFilter(InputSource is, String property, String filter) throws ProcessorException {
 		try {
-			
 			String requestFilter = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY_FILTER, filter);
-			String evalFilter = Util.xpathEvalInputSource(is,Constants.RESOURCES_NAMESPACES, requestFilter);
-			if (evalFilter.equals("true") )
-					{
-					String request = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY, property);
-					
-					LOGGER.debug("XPath request: " + request);
-					XPathExpression expression = this.xpath.compile(request);
-					//String eval = (String) expression.evaluate(is);
-					String eval = Util.xpathEvalInputSource(is,Constants.RESOURCES_NAMESPACES, request);
-					LOGGER.debug("Eval: " + eval);
-					
-					return eval;
-					}
+			String evalFilter = Util.xpathEvalInputSource(is, Constants.RESOURCES_NAMESPACES, requestFilter);
+			if ("true".equals(evalFilter)) {
+				String request = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY, property);
+
+				LOGGER.debug("XPath request: " + request);
+				String eval = Util.xpathEvalInputSource(is, Constants.RESOURCES_NAMESPACES, request);
+				LOGGER.debug("Eval: " + eval);
+
+				return eval;
+			}
 			return "";
 		} catch (Exception e) {
-			
+
 			LOGGER.error("Unable to evaluate XPath query {" + xpath + "}: " + e);
-			throw new ProcessorException("String evalFilter Unable to evaluate XPath query {" + xpath + "}", e);
+			throw new ProcessorException("Unable to evaluate XPath query in evalFilter function {" + xpath + "}", e);
 		}
 	}
 
 	private String eval(InputSource is, String property) throws ProcessorException {
 		try {
-
 			String request = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY, property);
-			
+
 			LOGGER.debug("XPath request: " + request);
 			XPathExpression expression = this.xpath.compile(request);
 			String eval = (String) expression.evaluate(is);
 			LOGGER.debug("Eval: " + eval);
-			
+
 			return eval;
 		} catch (Exception e) {
 
 			LOGGER.error("Unable to evaluate XPath query {" + xpath + "}: " + e);
-			throw new ProcessorException("String eval Unable to evaluate XPath query {" + xpath + "}", e);
+			throw new ProcessorException("Unable to evaluate XPath query in eval function {" + xpath + "}", e);
 		}
 	}
 
@@ -84,16 +79,15 @@ public class ConfigurationProcessor implements RRProcessable {
 		try {
 			String eval = new String();
 			String evalbrich = rule.getConfiguration().getFilter();
-			
-			if (evalbrich.equals("")) {
-				
+
+			if ("".equals(evalbrich)) {
 				eval = eval(is, property);
 			} else {
-				
 				eval = evalFilter(is, property, rule.getConfiguration().getFilter());
 			}
-			if (eval.equals(""))
-				eval="true";
+			if ("".equals(eval)) {
+				eval = "true";
+			}
 
 			boolean fine = Boolean.valueOf(eval);
 			if (fine) {
@@ -105,7 +99,7 @@ public class ConfigurationProcessor implements RRProcessable {
 			throw e;
 		} catch (Exception e) {
 			LOGGER.error("Unable to manage XPath query {" + xpath + "}: " + e);
-			throw new ProcessorException("Violation eval Unable to manage XPath query {" + xpath + "}: ", e);
+			throw new ProcessorException("Unable to manage XPath query {" + xpath + "}: ", e);
 		}
 	}
 
@@ -128,7 +122,7 @@ public class ConfigurationProcessor implements RRProcessable {
 			} catch (ProcessorException e) {
 				throw e;
 			} catch (Exception e) {
-				
+
 				LOGGER.error("Query evaluation error on the file " + resource, e);
 				throw new ProcessorException(e);
 			}

@@ -1,6 +1,6 @@
 package com.tibco.exchange.tibreview.parser;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -12,17 +12,13 @@ public class RulesParserTest {
 
 	@Test
 	public void testParseFile() {
-
 		try {
 			Tibrules a = RulesParser.getInstance().parseFile("src/test/resources/tibrules.xml");
 			Resource resource = a.getResource();
-			System.out.println(resource.getRule().size());
-			//assertEquals(resource.getRule().size(),7);
+			assertEquals(resource.getRule().size(), 26);
 		} catch (ParsingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 }

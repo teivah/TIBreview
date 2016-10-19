@@ -46,8 +46,7 @@ public class Util {
 
 		return (String) expression.evaluate(new InputSource(file));
 	}
-	
-	
+
 	public static String xpathEvalInputSource(InputSource file, String[] namespaces, String request) throws Exception {
 		final XPath xpath;
 		XPathFactory factory = XPathFactory.newInstance();
@@ -160,7 +159,7 @@ public class Util {
 		violation.setPriority(rule.getPrority());
 		violation.setRule(rule.getName());
 		violation.setRuleset(rule.getRuleset());
-		if(detailOnly) {
+		if (detailOnly) {
 			violation.setValue(detail);
 		} else {
 			violation.setValue(rule.getDescription() + " Detail: " + detail);

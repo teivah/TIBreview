@@ -196,6 +196,7 @@
 			</impl>
 		</rule>
 	</process>
+	
 	<resource>
 		<rule name="HTTP Client resource configuration error" ruleset="TIBCO conventions"
 			prority="2" description="HTTP Client resource configuration error.">
@@ -259,8 +260,7 @@
 				<property name="maxWaitTime" check="configurable" />
 			</configuration>
 		</rule>
-
-		<!-- data Format -->
+		<!-- Data Format -->
 		<rule name="Data Format resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="Data Format resource configuration error.">
 			<configuration type="dataformat:DataFormat">
@@ -285,7 +285,6 @@
 			<configuration type="subject:SubjectConfiguration">
 				<property name="username" check="configurable"/>
 				<property name="userpassword" check="configurable"/>
-
 			</configuration>
 		</rule>
 		<!-- JMS Normal -->
@@ -296,7 +295,6 @@
 				<property name="ufo" check="configurable"/>
 			</configuration>
 		</rule>
-
 		<!-- JMS JNDI -->
 		<rule name="JMS Connection JDNI Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="JMS Connection JDNI resource configuration error.">
@@ -338,7 +336,6 @@
 				<property name="userDNTemplate" check="configurable"/>
 			</configuration>
 		</rule>
-
 		<!-- LDAp Configuration Admin -->
 		<rule name="LDAP Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="LDAP Configurationresource configuration error.">
@@ -348,7 +345,7 @@
 				<property name="userSearchBaseDN" check="configurable"/>
 			</configuration>
 		</rule>
-		<!-- LDAp Connectino -->
+		<!-- LDAP Connection-->
 		<rule name="LDAP Connection resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="LDAP Connection resource configuration error.">
 			<configuration type="ldapconnection:LDAPConnection" >
@@ -379,7 +376,6 @@
 				<property name="relayAgent" check="configurable"/>
 				<property name="msgTimeout" check="configurable"/>
 				<property name="requireOldMsg" check="configurable"/>
-
 			</configuration>
 		</rule>
 		<!-- Rv tranport Distributed Queue-->
@@ -389,7 +385,6 @@
 				<property name="daemon" check="configurable"/>
 				<property name="network" check="configurable"/>
 				<property name="service" check="configurable"/>
-
 				<property name="cmqName" check="configurable"/>
 				<property name="workerWeight" check="configurable"/>
 				<property name="workerTasks" check="configurable"/>
@@ -397,11 +392,8 @@
 				<property name="schedulerWeight" check="configurable"/>
 				<property name="schedulerHeartbeat" check="configurable"/>
 				<property name="schedulerActivation" check="configurable"/>
-
 			</configuration>
 		</rule>
-
-
 		<!-- Rv tranport Reliable -->
 		<rule name="RV Transport Reliable Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="RV Transport Reliable resource configuration error.">
@@ -411,8 +403,7 @@
 				<property name="service" check="configurable"/>
 			</configuration>
 		</rule>
-
-		<!-- SMTP Resource   -->
+		<!-- SMTP Resource -->
 		<rule name="SMTP Resource Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="SMTP Resource resource configuration error.">
 			<configuration type="smtp:SmtpConfiguration" >
@@ -423,34 +414,26 @@
 				<property name="password" check="configurable"/>
 			</configuration>
 		</rule>
-
-
-		<!-- ssl client   -->
+		<!-- SSL Client -->
 		<rule name="SSL Client Resource Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="SSL Client Resource configuration error.">
 			<configuration type="sslclient:SSLClientConfiguration" >
 				<property name="sslProvider" check="configurable"/>
 			</configuration>
 		</rule>
-
-		<!-- ssl SERVER   -->
-
+		<!-- SSL Server -->
 		<rule name="SSL Server Resource Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="SSL Server Resource configuration error.">
 			<configuration type="sslserver:SSLServerConfiguration" >
 				<property name="keyAlias" check="configurable"/>
 				<property name="keyPassword" check="configurable"/>
 				<property name="sslProvider" check="configurable"/>
-
 			</configuration>
 		</rule>
-
 		<!-- ThreadPoolResource   -->
-
 		<rule name="Thread Pool Resource Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
 			description="Thread Pool Resource configuration error.">
 			<configuration type="tp:ThreadPoolConfiguration" >
-
 				<property name="coreThreadPoolSize" check="configurable"/>
 				<property name="maxPoolSize" check="configurable"/>
 				<property name="keepAliveTime" check="configurable"/>
@@ -458,12 +441,10 @@
 				<property name="daemon" check="configurable"/>
 				<property name="autoStartCoreThreads" check="configurable"/>
 				<property name="priority" check="configurable"/>
-
 			</configuration>
 		</rule>
-
-
 	</resource>
+	
 	<xpathfunctions>
 		<xpathfunction id="process">/bpws:process</xpathfunction>
 		<xpathfunction id="scope">/bpws:process/bpws:scope</xpathfunction>

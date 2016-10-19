@@ -1,9 +1,9 @@
 package com.tibco.exchange.tibreview.processor.resourcerule;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.logging.Level;
 
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.xpath.XPath;
@@ -35,7 +35,7 @@ public class ConfigurationProcessorTest {
 
 			fileresource = new TIBResource("src/test/resources/FileResources/ThreadPoolResource.threadPoolResource");
 			fileresource.toString();
-			System.out.println(fileresource.toString());
+			LOGGER.info(fileresource.toString());
 			assertTrue(fileresource.toString().equals("TIBResource [filePath=src/test/resources/FileResources/ThreadPoolResource.threadPoolResource, type=tp:ThreadPoolConfiguration]"));
 			Configuration configuration = new Configuration();
 			configuration.setType("tp:ThreadPoolConfiguration");
@@ -51,12 +51,12 @@ public class ConfigurationProcessorTest {
 			rule.setDescription("ConfigurationProcessorTest Desc");
 			List<Violation> b = a.process(new Context(), fileresource, rule, configuration);
 			
-			System.out.println("numero de errores:"+b.size());
+			LOGGER.info("numero de errores:"+b.size());
 			assertEquals(1, b.size());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("error testProcess ");
+			LOGGER.info("error testProcess ");
 			
 		}
 		
@@ -81,11 +81,11 @@ public class ConfigurationProcessorTest {
 			String eval2 = Util.xpathEval("src/test/resources/FileResources/ThreadPoolResource.threadPoolResource", Constants.RESOURCES_NAMESPACES, 
 					"boolean(//jndi:configuration[ @xsi:type = 'tp:ThreadPoolConfiguration']/substitutionBindings[@template = 'coreThreadPolSize' and @propName != ''])");
 			
-			System.out.println("eval2"+eval2);
+			LOGGER.info("eval2"+eval2);
 			
 			expression = xpath.compile("//jndi:configuration[ @xsi:type = 'tp:ThreadPoolConfiguration']/@keepAliveTimeUnit");
 
-		    System.out.println(expression.evaluate(ns1xml));
+		    LOGGER.info(expression.evaluate(ns1xml));
 		    
 		    expression = xpath.compile(" boolean(//jndi:configuration[ @xsi:type = 'tp:ThreadPoolConfiguration']/substitutionBindings[@template = 'coreThreadPolSize' and @propName != ''])");
 		    
@@ -93,7 +93,7 @@ public class ConfigurationProcessorTest {
 		} catch (XPathExpressionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("error testProcessNameSpace ");
+			LOGGER.info("error testProcessNameSpace ");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
