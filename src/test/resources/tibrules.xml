@@ -259,6 +259,210 @@
 				<property name="maxWaitTime" check="configurable" />
 			</configuration>
 		</rule>
+
+		<!-- data Format -->
+		<rule name="Data Format resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="Data Format resource configuration error.">
+			<configuration type="dataformat:DataFormat">
+				<property name="colSeparator" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- FTL Realm --> 
+		<rule name="FTL Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="FTL Realm resource configuration error.">
+			<configuration type="ftlsr:FTLRealmServerConnection">
+				<property name="realmServerURL" check="configurable"/>
+				<property name="secondaryRealmServerURL" check="configurable"/>
+				<property name="applicationName" check="configurable"/>
+				<property name="applicationInstanceIdentifier" check="configurable"/>
+				<property name="username" check="configurable"/>
+				<property name="password" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- IdentyProvider -->
+		<rule name="Identity Provider resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="IdentityProvider resource configuration error.">
+			<configuration type="subject:SubjectConfiguration">
+				<property name="username" check="configurable"/>
+				<property name="userpassword" check="configurable"/>
+
+			</configuration>
+		</rule>
+		<!-- JMS Normal -->
+		<rule name="JMS Connection Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="JMS Connection JDNI resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory" filter="@xsi:type='jms:DirectConnectionFactory'">
+				<property name="providerURL" check="configurable"/>
+				<property name="ufo" check="configurable"/>
+			</configuration>
+		</rule>
+
+		<!-- JMS JNDI -->
+		<rule name="JMS Connection JDNI Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="JMS Connection JDNI resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory" filter="@xsi:type='jms:JNDIConnectionFactory' and count(@factoryType)=0 and  @jndiName='QueueConnectionFactory'">
+				<property name="jndiName" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- JMS JNDI Topic / Queue --> 
+		<rule name="JMS Connection JDNI Topic/Queue Realm resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="JMS Connection JDNI Topic/Queue resource configuration error.">
+			<configuration type="jms:JMSConnectionFactory" filter="@xsi:type='jms:JNDIConnectionFactory' and @factoryType='Queue/Topic' and @jndiName='QueueConnectionFactory'">
+				<property name="jndiName" check="configurable"/>
+				<property name="topicFactoryJNDIName" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- JNDI Config -->
+		<rule name="JNDI Connection resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="JNDI Connection resource configuration error.">
+			<configuration type="jms:JNDIConnection">
+				<property name="providerUrl" check="configurable"/>
+				<property name="initialContextFactory" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- KEY store -->
+		<rule name="Key Store resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="Key Store resource configuration error.">
+			<configuration type="keystore:KeystoreConfiguration" >
+				<property name="keystoreURL" check="configurable"/>
+				<property name="keystorePassword" check="configurable"/>
+				<property name="keystoreRefreshInterval" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- LDAP Configuration -->
+		<rule name="LDAP Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="LDAP Configurationresource configuration error.">
+			<configuration type="ldapauth:LDAPConfiguration" >
+				<property name="serverURL" check="configurable"/>
+				<property name="userSearchExpression" check="configurable"/>
+				<property name="userDNTemplate" check="configurable"/>
+			</configuration>
+		</rule>
+
+		<!-- LDAp Configuration Admin -->
+		<rule name="LDAP Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="LDAP Configurationresource configuration error.">
+			<configuration type="ldapauth:LDAPConfiguration" filter="../jndi:reference[@type='sp:CredentialSecurityProvider']">
+				<property name="serverURL" check="configurable"/>
+				<property name="userSearchExpression" check="configurable"/>
+				<property name="userSearchBaseDN" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- LDAp Connectino -->
+		<rule name="LDAP Connection resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="LDAP Connection resource configuration error.">
+			<configuration type="ldapconnection:LDAPConnection" >
+				<property name="reconnectionTimes" check="configurable"/>
+				<property name="reconnectionInterval" check="configurable"/>
+				<property name="serverName" check="configurable"/>
+				<property name="ldapPort" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- Proxy Configuration -->
+		<rule name="Proxy Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="Proxy Configuration resource configuration error.">
+			<configuration type="httpproxy:ProxyConfiguration" >
+				<property name="proxyHost" check="configurable"/>
+				<property name="proxyPort" check="configurable"/>
+			</configuration>
+		</rule>
+		<!-- Rv tranport Certified-->
+		<rule name="RV Transport Certified Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="RV Transport Certified resource configuration error.">
+			<configuration type="rvsharedresource:RVResource" filter=" @rvType = 'Certified' " >
+				<property name="daemon" check="configurable"/>
+				<property name="network" check="configurable"/>
+				<property name="service" check="configurable"/>
+				<property name="cmName" check="configurable"/>
+				<property name="ledgerFile" check="configurable"/>
+				<property name="syncLedgerFile" check="configurable"/>
+				<property name="relayAgent" check="configurable"/>
+				<property name="msgTimeout" check="configurable"/>
+				<property name="requireOldMsg" check="configurable"/>
+
+			</configuration>
+		</rule>
+		<!-- Rv tranport Distributed Queue-->
+		<rule name="RV Transport Distributed Queue Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="RV Transport Distributed Queue resource configuration error.">
+			<configuration type="rvsharedresource:RVResource" filter=" @rvType='Distributed Queue'" >
+				<property name="daemon" check="configurable"/>
+				<property name="network" check="configurable"/>
+				<property name="service" check="configurable"/>
+
+				<property name="cmqName" check="configurable"/>
+				<property name="workerWeight" check="configurable"/>
+				<property name="workerTasks" check="configurable"/>
+				<property name="workerCompleteTime" check="configurable"/>
+				<property name="schedulerWeight" check="configurable"/>
+				<property name="schedulerHeartbeat" check="configurable"/>
+				<property name="schedulerActivation" check="configurable"/>
+
+			</configuration>
+		</rule>
+
+
+		<!-- Rv tranport Reliable -->
+		<rule name="RV Transport Reliable Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="RV Transport Reliable resource configuration error.">
+			<configuration type="rvsharedresource:RVResource" filter=" @rvType='Reliable'" >
+				<property name="daemon" check="configurable"/>
+				<property name="network" check="configurable"/>
+				<property name="service" check="configurable"/>
+			</configuration>
+		</rule>
+
+		<!-- SMTP Resource   -->
+		<rule name="SMTP Resource Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="SMTP Resource resource configuration error.">
+			<configuration type="smtp:SmtpConfiguration" >
+				<property name="host" check="configurable"/>
+				<property name="port" check="configurable"/>
+				<property name="soTimeout" check="configurable"/>
+				<property name="username" check="configurable"/>
+				<property name="password" check="configurable"/>
+			</configuration>
+		</rule>
+
+
+		<!-- ssl client   -->
+		<rule name="SSL Client Resource Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="SSL Client Resource configuration error.">
+			<configuration type="sslclient:SSLClientConfiguration" >
+				<property name="sslProvider" check="configurable"/>
+			</configuration>
+		</rule>
+
+		<!-- ssl SERVER   -->
+
+		<rule name="SSL Server Resource Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="SSL Server Resource configuration error.">
+			<configuration type="sslserver:SSLServerConfiguration" >
+				<property name="keyAlias" check="configurable"/>
+				<property name="keyPassword" check="configurable"/>
+				<property name="sslProvider" check="configurable"/>
+
+			</configuration>
+		</rule>
+
+		<!-- ThreadPoolResource   -->
+
+		<rule name="Thread Pool Resource Configuration resource configuration error" ruleset="TIBCO conventions" prority="3"
+			description="Thread Pool Resource configuration error.">
+			<configuration type="tp:ThreadPoolConfiguration" >
+
+				<property name="coreThreadPoolSize" check="configurable"/>
+				<property name="maxPoolSize" check="configurable"/>
+				<property name="keepAliveTime" check="configurable"/>
+				<property name="threadNamePrefix" check="configurable"/>
+				<property name="daemon" check="configurable"/>
+				<property name="autoStartCoreThreads" check="configurable"/>
+				<property name="priority" check="configurable"/>
+
+			</configuration>
+		</rule>
+
+
 	</resource>
 	<xpathfunctions>
 		<xpathfunction id="process">/bpws:process</xpathfunction>

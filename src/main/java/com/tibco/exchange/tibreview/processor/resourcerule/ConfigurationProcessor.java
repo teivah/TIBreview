@@ -25,8 +25,9 @@ import com.tibco.exchange.tibreview.model.rules.Resourcerule;
 public class ConfigurationProcessor implements RRProcessable {
 
 	private final XPath xpath;
-	
+
 	private static final Logger LOGGER = Logger.getLogger(RRProcessable.class);
+	private static final String REQUEST_CHECK_CONFIGURABLE_PROPERTY_FILTER = "boolean(//jndi:configuration[ %s ])";
 	private static final String REQUEST_CHECK_CONFIGURABLE_PROPERTY = "boolean(//substitutionBindings[@template = '%s' and @propName != ''])";
 
 	public ConfigurationProcessor() {
@@ -35,26 +36,67 @@ public class ConfigurationProcessor implements RRProcessable {
 		this.xpath = factory.newXPath();
 		this.xpath.setNamespaceContext(context);
 	}
-	
+
+	private String evalFilter(InputSource is, String property,String filter) throws ProcessorException {
+		try {
+			
+			String requestFilter = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY_FILTER, filter);
+			String evalFilter = Util.xpathEvalInputSource(is,Constants.RESOURCES_NAMESPACES, requestFilter);
+			if (evalFilter.equals("true") )
+					{
+					String request = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY, property);
+					
+					LOGGER.debug("XPath request: " + request);
+					XPathExpression expression = this.xpath.compile(request);
+					//String eval = (String) expression.evaluate(is);
+					String eval = Util.xpathEvalInputSource(is,Constants.RESOURCES_NAMESPACES, request);
+					LOGGER.debug("Eval: " + eval);
+					
+					return eval;
+					}
+			return "";
+		} catch (Exception e) {
+			
+			LOGGER.error("Unable to evaluate XPath query {" + xpath + "}: " + e);
+			throw new ProcessorException("String evalFilter Unable to evaluate XPath query {" + xpath + "}", e);
+		}
+	}
+
 	private String eval(InputSource is, String property) throws ProcessorException {
 		try {
+
 			String request = String.format(REQUEST_CHECK_CONFIGURABLE_PROPERTY, property);
+			
 			LOGGER.debug("XPath request: " + request);
 			XPathExpression expression = this.xpath.compile(request);
 			String eval = (String) expression.evaluate(is);
 			LOGGER.debug("Eval: " + eval);
+			
 			return eval;
 		} catch (Exception e) {
+
 			LOGGER.error("Unable to evaluate XPath query {" + xpath + "}: " + e);
-			throw new ProcessorException("Unable to evaluate XPath query {" + xpath + "}", e);
+			throw new ProcessorException("String eval Unable to evaluate XPath query {" + xpath + "}", e);
 		}
 	}
-	
+
 	private Violation eval(Resourcerule rule, InputSource is, String property) throws ProcessorException {
 		try {
-			String eval = eval(is, property);
+			String eval = new String();
+			String evalbrich = rule.getConfiguration().getFilter();
+			
+			if (evalbrich.equals("")) {
+				
+				eval = eval(is, property);
+			} else {
+				
+				eval = evalFilter(is, property, rule.getConfiguration().getFilter());
+			}
+			if (eval.equals(""))
+				eval="true";
+
 			boolean fine = Boolean.valueOf(eval);
-			if(fine) {
+			if (fine) {
 				return null;
 			} else {
 				return Util.formatViolation(rule, "Property " + property + " not configurable", true);
@@ -63,30 +105,30 @@ public class ConfigurationProcessor implements RRProcessable {
 			throw e;
 		} catch (Exception e) {
 			LOGGER.error("Unable to manage XPath query {" + xpath + "}: " + e);
-			throw new ProcessorException("Unable to manage XPath query {" + xpath + "}: ", e);
+			throw new ProcessorException("Violation eval Unable to manage XPath query {" + xpath + "}: ", e);
 		}
 	}
-	
+
 	@Override
-	public List<Violation> process(Context context, TIBResource resource, Resourcerule rule, Configuration configuration)
-			throws ProcessorException {
-		if(configuration.getType().equals(resource.getType())) {
+	public List<Violation> process(Context context, TIBResource resource, Resourcerule rule,
+			Configuration configuration) throws ProcessorException {
+		if (configuration.getType().equals(resource.getType())) {
 			LOGGER.debug("Matching resource " + resource.getType());
 			try {
 				InputSource is = new InputSource(resource.getFilePath());
-	
+
 				List<Violation> violations = new ArrayList<>();
-				for(Property property : configuration.getProperty()) {
+				for (Property property : configuration.getProperty()) {
 					Violation violation = eval(rule, is, property.getName());
-					if(violation != null) {
+					if (violation != null) {
 						violations.add(violation);
 					}
 				}
-				
 				return violations.size() == 0 ? null : violations;
 			} catch (ProcessorException e) {
 				throw e;
 			} catch (Exception e) {
+				
 				LOGGER.error("Query evaluation error on the file " + resource, e);
 				throw new ProcessorException(e);
 			}

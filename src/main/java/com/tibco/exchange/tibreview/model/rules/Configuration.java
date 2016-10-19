@@ -47,6 +47,8 @@ public class Configuration {
     protected List<Property> property;
     @XmlAttribute(name = "type")
     protected String type;
+    @XmlAttribute(name = "filter")
+    protected String filter="";
 
     /**
      * Gets the value of the property property.
@@ -99,6 +101,30 @@ public class Configuration {
      */
     public void setType(String value) {
         this.type = value;
+    }
+    
+    /**
+     * Gets the value of the type property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getFilter() {
+        return filter;
+    }
+
+    /**
+     * Sets the value of the type property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setFilter(String filter) {
+        this.filter = filter;
     }
 
 }
