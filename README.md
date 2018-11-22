@@ -1,13 +1,13 @@
 # TIBreview: Quality code review for TIBCO BusinessWorks 6
 
-##What is TIBReview?
+## What is TIBReview?
 
 TIBReview is an **automated tool** for analyzing the **quality** of a **TIBCO BusinessWorks 6 project**. It provides:
 * An extensible and configurable engine for implementing **automated rules in XPath or Java**.
 * A output mechanism for generating a **quality report** either in a **CSV** or a **PMD** format (directly then integrable in Jenkins or Sonar).
 * A mechanism for managing the rules processing based on a **configuration file** (this way on an environment you can choose to modify property values or to disable only certain rules).
 
-##What is TIBReview able to analyze?
+## What is TIBReview able to analyze?
 
 So far the **process** and **resource** assets.
 
@@ -23,7 +23,7 @@ In terms of resource quality check, TIBReview is able to detect **hardcoded** va
 
 In total, TIBReview provides about **50 automated checks** for the first version (and we keep working on it to improve the quality coverage).
 
-##How can I implement my own rules?
+## How can I implement my own rules?
 
 Yes you can and you should ;) Because each context is **unique**, it was important to have an **extensible engine** to be able to easily and quickly implement new quality rules. The rules logic is defined in the **tibrules.xml** file.
 
@@ -39,14 +39,14 @@ It is also possible to add complex conditions management and to use **if / elsei
 
 For resources, you can easily extend the tibrules.xml by adding new resource type or new property. Each property will be then checked to make sure it has been managed using a property.
 
-##How to configure TIBReview?
+## How to configure TIBReview?
 
 You can use the config.properties file:
 
 * rules.disable: a list of disabled rule name separated by a *;* character.
 * property.< myProperty >: allows to set a value for the <myProperty> property. This property will be used in the tibrules.xml file if an implementation uses %myProperty%. For a concrete example, you should take a look at the *Process size: width* rule.
 
-##How to run TIBReview?
+## How to run TIBReview?
 
 The JAR syntax is the following:
 
@@ -63,10 +63,10 @@ For example:
 
 *$java -Dlog4j.configuration=file:"log4.properties" -jar tibreview-0.0.1.jar -r tibrules.xml -c config.properties -i project -s C:/tibco/workspace/myProject -o pmd -t C:/output*
 
-##How to build TIBReview?
+## How to build TIBReview?
 
 Using Maven, you just have to run a *$mvn package*. A fat JAR will be packaged in the /target folder.
 
-##Can I participate to the project?
+## Can I participate to the project?
 
 It would be with **pleasure** :) Please feel free to contact me if you would like to work on the project or for any questions / remarks. 
